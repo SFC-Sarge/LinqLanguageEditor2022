@@ -54,8 +54,6 @@
     <Compile Include="Commands\LinqPadStatements.cs" />
     <Compile Include="Commands\LinqQueryEditor.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Intellisense\CompletionController.cs" />
-    <Compile Include="Intellisense\CompletionSource.cs" />
     <Compile Include="LinqEditor\LinqEditorFeatures.cs" />
     <Compile Include="LinqEditor\LinqLanguageFactory.cs" />
     <Compile Include="Options\AdvancedOptions.cs" />
@@ -64,7 +62,6 @@
     <Compile Include="Parse\LinqDocument.cs" />
     <Compile Include="Parse\LinqDocumentParser.cs" />
     <Compile Include="Parse\LinqDocumentValidator.cs" />
-    <Compile Include="Parse\LinqItemType.cs" />
     <Compile Include="Parse\LinqKeywords.cs" />
     <Compile Include="Parse\LinqMethodParameterKeywords.cs" />
     <Compile Include="Parse\LinqModifierKeywords.cs" />
@@ -105,7 +102,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <None Include="test.linq" />
   </ItemGroup>
   <ItemGroup>
     <VSCTCompile Include="VSCommandTable.vsct">

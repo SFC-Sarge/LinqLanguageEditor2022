@@ -35,7 +35,7 @@ namespace LinqLanguageEditor2022.Parse
             foreach (LinqParseItem item in Items)
             {
                 // Unknown symbols
-                if (item.Type == LinqItemType.Unknown)
+                if (item.Type == LinqTokenTypes.Unknown)
                 {
                     AddError(item, LinqErrors.PL001);
                 }
@@ -43,26 +43,26 @@ namespace LinqLanguageEditor2022.Parse
                 // Registry key
 
                 // Properties
-                else if (item.Type == LinqItemType.Operator)
+                else if (item.Type == LinqTokenTypes.Operator)
                 {
                     LinqParseItem name = item.Previous;
                     LinqParseItem value = item.Next;
 
-                    if (name?.Type == LinqItemType.String)
+                    if (name?.Type == LinqTokenTypes.String)
                     {
                         if (name.Text == "\"@\"")
                         {
                             AddError(name, LinqErrors.PL004);
                         }
                     }
-                    else if (name?.Type == LinqItemType.Literal && name?.Text != "@")
+                    else if (name?.Type == LinqTokenTypes.Literal && name?.Text != "@")
                     {
                         AddError(name, LinqErrors.PL005);
                     }
                 }
 
                 // Make sure strings are correctly closed with quotation mark
-                if (item.Type == LinqItemType.String)
+                if (item.Type == LinqTokenTypes.String)
                 {
                     if (!item.Text.EndsWith("\""))
                     {

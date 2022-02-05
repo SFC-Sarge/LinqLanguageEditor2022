@@ -1,14 +1,4 @@
-﻿//***************************************************************************
-//
-//    Copyright (c) Microsoft Corporation. All rights reserved.
-//    This code is licensed under the Visual Studio SDK license terms.
-//    THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
-//    ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY
-//    IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
-//    PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
-//
-//***************************************************************************
-
+﻿
 using LinqLanguageEditor2022.Parse;
 
 namespace LinqLanguageEditor2022.Classification
@@ -24,19 +14,19 @@ namespace LinqLanguageEditor2022.Classification
     using System.ComponentModel.Composition;
 
     [Export(typeof(ITaggerProvider))]
-    [ContentType("Linq!")]
+    [ContentType(Constants.LinqLanguageName)]
     [TagType(typeof(ClassificationTag))]
     internal sealed class LinqClassifierProvider : ITaggerProvider
     {
 
         [Export]
-        [Name("Linq!")]
-        [BaseDefinition("code")]
+        [Name(Constants.LinqLanguageName)]
+        [BaseDefinition(Constants.LinqBaselanguageName)]
         internal static ContentTypeDefinition LinqContentType = null;
 
         [Export]
-        [FileExtension(".Linq")]
-        [ContentType("Linq!")]
+        [FileExtension(Constants.LinqExt)]
+        [ContentType(Constants.LinqLanguageName)]
         internal static FileExtensionToContentTypeDefinition LinqFileType = null;
 
         [Import]
@@ -71,9 +61,14 @@ namespace LinqLanguageEditor2022.Classification
             _buffer = buffer;
             _aggregator = LinqTagAggregator;
             _LinqTypes = new Dictionary<LinqTokenTypes, IClassificationType>();
-            _LinqTypes[LinqTokenTypes.LinqExclamation] = typeService.GetClassificationType("Linq!");
-            _LinqTypes[LinqTokenTypes.LinqPeriod] = typeService.GetClassificationType("Linq.");
-            _LinqTypes[LinqTokenTypes.LinqQuestion] = typeService.GetClassificationType("Linq?");
+            _LinqTypes[LinqTokenTypes.Comment] = typeService.GetClassificationType("Comment"); ;
+            _LinqTypes[LinqTokenTypes.String] = typeService.GetClassificationType("String"); ;
+            _LinqTypes[LinqTokenTypes.Keyword] = typeService.GetClassificationType("Keyword"); ;
+            _LinqTypes[LinqTokenTypes.Number] = typeService.GetClassificationType("Number"); ;
+            _LinqTypes[LinqTokenTypes.Operator] = typeService.GetClassificationType("Operator"); ;
+            _LinqTypes[LinqTokenTypes.WhiteSpace] = typeService.GetClassificationType("WhiteSpace"); ;
+            _LinqTypes[LinqTokenTypes.Unknown] = typeService.GetClassificationType("Unknown"); ;
+
         }
 
         public event EventHandler<SnapshotSpanEventArgs> TagsChanged
@@ -91,8 +86,7 @@ namespace LinqLanguageEditor2022.Classification
             {
                 var tagSpans = tagSpan.Span.GetSpans(spans[0].Snapshot);
                 yield return
-                    new TagSpan<ClassificationTag>(tagSpans[0],
-                                                   new ClassificationTag(_LinqTypes[tagSpan.Tag.type]));
+                    new TagSpan<ClassificationTag>(tagSpans[0], new ClassificationTag(_LinqTypes[tagSpan.Tag.type]));
             }
         }
     }

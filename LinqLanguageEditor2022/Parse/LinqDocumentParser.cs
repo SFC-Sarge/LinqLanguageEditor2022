@@ -1,6 +1,4 @@
 ﻿
-using Microsoft.VisualStudio.Package;
-
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -9,10 +7,7 @@ namespace LinqLanguageEditor2022.Parse
 {
     public partial class LinqDocument
     {
-        private TokenInfo tokenInfo = new();
 
-        //private static readonly Regex _regexProperty = new(@"^(?<name>""[^""]+""|@)(\s)*(?<equals>=)\s*(?<value>((dword:|hex).+|"".+))", RegexOptions.Compiled);
-        //private static readonly Regex _regexRef = new(@"\$[\w]+\$?", RegexOptions.Compiled);
         public void Parse()
         {
             int start = 0;
@@ -21,8 +16,7 @@ namespace LinqLanguageEditor2022.Parse
 
             foreach (string line in _lines)
             {
-                tokenInfo = new();
-                IEnumerable<LinqParseItem> current = ParseLine(start, line, items, tokenInfo);
+                IEnumerable<LinqParseItem> current = ParseLine(start, line, items);
                 items.AddRange(current);
                 start += line.Length;
             }
@@ -31,7 +25,7 @@ namespace LinqLanguageEditor2022.Parse
 
         }
 
-        private IEnumerable<LinqParseItem> ParseLine(int start, string line, List<LinqParseItem> tokens, TokenInfo tokenInfo)
+        private IEnumerable<LinqParseItem> ParseLine(int start, string line, List<LinqParseItem> tokens)
         {
             string trimmedLine = line.Trim();
             List<LinqParseItem> items = new();
@@ -41,52 +35,31 @@ namespace LinqLanguageEditor2022.Parse
             {
                 if (LinqNamespaceKeywords.NamespaceKeywords.Any(myToken.Contains))
                 {
-                    tokenInfo.Color = TokenColor.Keyword;
-                    tokenInfo.Type = TokenType.Keyword;
-                    tokenInfo.StartIndex = start;
-                    items.Add(ToParseItem(line, start, LinqItemType.Keywords, tokenInfo));
+                    items.Add(ToParseItem(line, start, LinqTokenTypes.Keyword));
                 }
                 else if (LinqOperatorKeywords.OperatorKeywords.Any(myToken.Contains))
                 {
-                    tokenInfo.Color = TokenColor.Keyword;
-                    tokenInfo.Type = TokenType.Operator;
-                    tokenInfo.StartIndex = start;
-                    items.Add(ToParseItem(line, start, LinqItemType.Operator, tokenInfo));
+                    items.Add(ToParseItem(line, start, LinqTokenTypes.Operator));
                 }
                 else if (LinqModifierKeywords.ModifierKeywords.Any(myToken.Contains))
                 {
-                    tokenInfo.Color = TokenColor.Keyword;
-                    tokenInfo.Type = TokenType.Keyword;
-                    tokenInfo.StartIndex = start;
-                    items.Add(ToParseItem(line, start, LinqItemType.Keywords, tokenInfo));
+                    items.Add(ToParseItem(line, start, LinqTokenTypes.Keyword));
                 }
                 else if (LinqOperators.Operators.Any(myToken.Contains))
                 {
-                    tokenInfo.Color = TokenColor.Keyword;
-                    tokenInfo.Type = TokenType.Operator;
-                    tokenInfo.StartIndex = start;
-                    items.Add(ToParseItem(line, start, LinqItemType.Operator, tokenInfo));
+                    items.Add(ToParseItem(line, start, LinqTokenTypes.Operator));
                 }
                 else if (LinqSeparators.Separators.Any(myToken.Contains))
                 {
-                    tokenInfo.Color = TokenColor.Keyword;
-                    tokenInfo.Type = TokenType.Text;
-                    tokenInfo.StartIndex = start;
-                    items.Add(ToParseItem(line, start, LinqItemType.Identifier, tokenInfo));
+                    items.Add(ToParseItem(line, start, LinqTokenTypes.Identifier));
                 }
                 else if (LinqStatementModifierKeywords.StatementModifierKeywords.Any(myToken.Contains))
                 {
-                    tokenInfo.Color = TokenColor.Keyword;
-                    tokenInfo.Type = TokenType.Keyword;
-                    tokenInfo.StartIndex = start;
-                    items.Add(ToParseItem(line, start, LinqItemType.Keywords, tokenInfo));
+                    items.Add(ToParseItem(line, start, LinqTokenTypes.Keyword));
                 }
                 else if (LinqSpecialCharacters.SpecialCharacters.Any(myToken.Contains))
                 {
-                    tokenInfo.Color = TokenColor.Keyword;
-                    tokenInfo.Type = TokenType.String;
-                    tokenInfo.StartIndex = start;
-                    items.Add(ToParseItem(line, start, LinqItemType.String, tokenInfo));
+                    items.Add(ToParseItem(line, start, LinqTokenTypes.String));
                 }
                 else
                 {
@@ -104,24 +77,24 @@ namespace LinqLanguageEditor2022.Parse
             return match.Success;
         }
 
-        public LinqParseItem ToParseItem(string line, int start, LinqItemType type, TokenInfo tokenInfo)
+        public LinqParseItem ToParseItem(string line, int start, LinqTokenTypes type)
         {
-            LinqParseItem item = new(start, line, this, type, tokenInfo);
+            LinqParseItem item = new(start, line, this, type);
 
             return item;
         }
 
-        public LinqParseItem ToParseItem(Match match, int start, string groupName, LinqItemType type, TokenInfo tokenInfo)
+        public LinqParseItem ToParseItem(Match match, int start, string groupName, LinqTokenTypes type)
         {
             Group group = match.Groups[groupName];
-            return ToParseItem(group.Value, start + group.Index, type, tokenInfo);
+            return ToParseItem(group.Value, start + group.Index, type);
         }
 
-        public LinqParseItem ToParseItem(Match match, int start, string groupName, TokenInfo tokenInfo)
+        public LinqParseItem ToParseItem(Match match, int start, string groupName)
         {
             Group group = match.Groups[groupName];
-            LinqItemType type = group.Value.StartsWith("\"") ? LinqItemType.String : LinqItemType.Literal;
-            return ToParseItem(group.Value, start + group.Index, type, tokenInfo);
+            LinqTokenTypes type = group.Value.StartsWith("\"") ? LinqTokenTypes.String : LinqTokenTypes.Literal;
+            return ToParseItem(group.Value, start + group.Index, type);
         }
 
     }

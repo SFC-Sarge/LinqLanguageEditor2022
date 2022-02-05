@@ -11,18 +11,17 @@ namespace LinqLanguageEditor2022.Parse
     {
         public HashSet<LinqError> _errors = new();
 
-        public LinqParseItem(int start, string text, LinqDocument document, LinqItemType type, TokenInfo tokenInfo)
+        public LinqParseItem(int start, string text, LinqDocument document, LinqTokenTypes type)
         {
             Text = text;
             Document = document;
             Type = type;
-            _TokenInfo = tokenInfo;
             Span = new Span(start, Text.Length);
         }
 
         public List<LinqParseItem> Children = new();
 
-        public LinqItemType Type { get; }
+        public LinqTokenTypes Type { get; }
         public TokenInfo _TokenInfo { get; }
 
         public virtual Span Span { get; }

@@ -1,14 +1,4 @@
-﻿//***************************************************************************
-// 
-//    Copyright (c) Microsoft Corporation. All rights reserved.
-//    This code is licensed under the Visual Studio SDK license terms.
-//    THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
-//    ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY
-//    IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
-//    PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
-//
-//***************************************************************************
-
+﻿
 namespace LinqLanguageEditor2022.Parse
 {
     using Microsoft.VisualStudio.Text;
@@ -20,7 +10,7 @@ namespace LinqLanguageEditor2022.Parse
     using System.ComponentModel.Composition;
 
     [Export(typeof(ITaggerProvider))]
-    [ContentType("Linq!")]
+    [ContentType(Constants.LinqLanguageName)]
     [TagType(typeof(LinqTokenTag))]
     internal sealed class LinqTokenTagProvider : ITaggerProvider
     {
@@ -51,9 +41,126 @@ namespace LinqLanguageEditor2022.Parse
         {
             _buffer = buffer;
             _LinqTypes = new Dictionary<string, LinqTokenTypes>();
-            _LinqTypes["Linq!"] = LinqTokenTypes.LinqExclamation;
-            _LinqTypes["Linq."] = LinqTokenTypes.LinqPeriod;
-            _LinqTypes["Linq?"] = LinqTokenTypes.LinqQuestion;
+            _LinqTypes["///"] = LinqTokenTypes.Comment;
+            _LinqTypes["//"] = LinqTokenTypes.Comment;
+            _LinqTypes["/*"] = LinqTokenTypes.Comment;
+            _LinqTypes["*/"] = LinqTokenTypes.Comment;
+            _LinqTypes["*/"] = LinqTokenTypes.Comment;
+            _LinqTypes["+"] = LinqTokenTypes.Operator;
+            _LinqTypes["-"] = LinqTokenTypes.Operator;
+            _LinqTypes["*"] = LinqTokenTypes.Operator;
+            _LinqTypes["/"] = LinqTokenTypes.Operator;
+            _LinqTypes["%"] = LinqTokenTypes.Operator;
+            _LinqTypes["&"] = LinqTokenTypes.Operator;
+            _LinqTypes["("] = LinqTokenTypes.Operator;
+            _LinqTypes[")"] = LinqTokenTypes.Operator;
+            _LinqTypes["["] = LinqTokenTypes.Operator;
+            _LinqTypes["]"] = LinqTokenTypes.Operator;
+            _LinqTypes["|"] = LinqTokenTypes.Operator;
+            _LinqTypes["^"] = LinqTokenTypes.Operator;
+            _LinqTypes["!"] = LinqTokenTypes.Operator;
+            _LinqTypes["~"] = LinqTokenTypes.Operator;
+            _LinqTypes["&&"] = LinqTokenTypes.Operator;
+            _LinqTypes["||"] = LinqTokenTypes.Operator;
+            _LinqTypes[","] = LinqTokenTypes.Operator;
+            _LinqTypes["++"] = LinqTokenTypes.Operator;
+            _LinqTypes["--"] = LinqTokenTypes.Operator;
+            _LinqTypes["<<"] = LinqTokenTypes.Operator;
+            _LinqTypes[">>"] = LinqTokenTypes.Operator;
+            _LinqTypes["=="] = LinqTokenTypes.Operator;
+            _LinqTypes["!="] = LinqTokenTypes.Operator;
+            _LinqTypes["<"] = LinqTokenTypes.Operator;
+            _LinqTypes[">"] = LinqTokenTypes.Operator;
+            _LinqTypes["<="] = LinqTokenTypes.Operator;
+            _LinqTypes[">="] = LinqTokenTypes.Operator;
+            _LinqTypes["="] = LinqTokenTypes.Operator;
+            _LinqTypes["+="] = LinqTokenTypes.Operator;
+            _LinqTypes["-="] = LinqTokenTypes.Operator;
+            _LinqTypes["*="] = LinqTokenTypes.Operator;
+            _LinqTypes["/="] = LinqTokenTypes.Operator;
+            _LinqTypes["%="] = LinqTokenTypes.Operator;
+            _LinqTypes["&="] = LinqTokenTypes.Operator;
+            _LinqTypes["|="] = LinqTokenTypes.Operator;
+            _LinqTypes["^="] = LinqTokenTypes.Operator;
+            _LinqTypes["<<="] = LinqTokenTypes.Operator;
+            _LinqTypes[">>="] = LinqTokenTypes.Operator;
+            _LinqTypes["."] = LinqTokenTypes.Operator;
+            _LinqTypes["[]"] = LinqTokenTypes.Operator;
+            _LinqTypes["()"] = LinqTokenTypes.Operator;
+            _LinqTypes["?:"] = LinqTokenTypes.Operator;
+            _LinqTypes["=>"] = LinqTokenTypes.Operator;
+            _LinqTypes["??"] = LinqTokenTypes.Operator;
+            _LinqTypes["$"] = LinqTokenTypes.String;
+            _LinqTypes["@"] = LinqTokenTypes.String;
+            _LinqTypes["Unknown"] = LinqTokenTypes.Unknown;
+            _LinqTypes["using"] = LinqTokenTypes.Keyword;
+            _LinqTypes["."] = LinqTokenTypes.Keyword;
+            _LinqTypes[":"] = LinqTokenTypes.Keyword;
+            _LinqTypes["extern alias"] = LinqTokenTypes.Keyword;
+            _LinqTypes["as"] = LinqTokenTypes.Keyword;
+            _LinqTypes["await"] = LinqTokenTypes.Keyword;
+            _LinqTypes["is"] = LinqTokenTypes.Keyword;
+            _LinqTypes["new"] = LinqTokenTypes.Keyword;
+            _LinqTypes["sizeof"] = LinqTokenTypes.Keyword;
+            _LinqTypes["typeof"] = LinqTokenTypes.Keyword;
+            _LinqTypes["stackalloc"] = LinqTokenTypes.Keyword;
+            _LinqTypes["checked"] = LinqTokenTypes.Keyword;
+            _LinqTypes["unchecked"] = LinqTokenTypes.Keyword;
+            _LinqTypes["public"] = LinqTokenTypes.Keyword;
+            _LinqTypes["private"] = LinqTokenTypes.Keyword;
+            _LinqTypes["internal"] = LinqTokenTypes.Keyword;
+            _LinqTypes["protected"] = LinqTokenTypes.Keyword;
+            _LinqTypes["params"] = LinqTokenTypes.Keyword;
+            _LinqTypes["ref"] = LinqTokenTypes.Keyword;
+            _LinqTypes["out"] = LinqTokenTypes.Keyword;
+            _LinqTypes["abstract"] = LinqTokenTypes.Keyword;
+            _LinqTypes["async"] = LinqTokenTypes.Keyword;
+            _LinqTypes["const"] = LinqTokenTypes.Keyword;
+            _LinqTypes["event"] = LinqTokenTypes.Keyword;
+            _LinqTypes["extern"] = LinqTokenTypes.Keyword;
+            _LinqTypes["new"] = LinqTokenTypes.Keyword;
+            _LinqTypes["override"] = LinqTokenTypes.Keyword;
+            _LinqTypes["partial"] = LinqTokenTypes.Keyword;
+            _LinqTypes["readonly"] = LinqTokenTypes.Keyword;
+            _LinqTypes["sealed"] = LinqTokenTypes.Keyword;
+            _LinqTypes["static"] = LinqTokenTypes.Keyword;
+            _LinqTypes["unsafe"] = LinqTokenTypes.Keyword;
+            _LinqTypes["virtual"] = LinqTokenTypes.Keyword;
+            _LinqTypes["volatile"] = LinqTokenTypes.Keyword;
+            _LinqTypes["if"] = LinqTokenTypes.Keyword;
+            _LinqTypes["else"] = LinqTokenTypes.Keyword;
+            _LinqTypes["switch"] = LinqTokenTypes.Keyword;
+            _LinqTypes["case"] = LinqTokenTypes.Keyword;
+            _LinqTypes["do"] = LinqTokenTypes.Keyword;
+            _LinqTypes["for"] = LinqTokenTypes.Keyword;
+            _LinqTypes["foreach"] = LinqTokenTypes.Keyword;
+            _LinqTypes["in"] = LinqTokenTypes.Keyword;
+            _LinqTypes["while"] = LinqTokenTypes.Keyword;
+            _LinqTypes["break"] = LinqTokenTypes.Keyword;
+            _LinqTypes["continue"] = LinqTokenTypes.Keyword;
+            _LinqTypes["default"] = LinqTokenTypes.Keyword;
+            _LinqTypes["goto"] = LinqTokenTypes.Keyword;
+            _LinqTypes["return"] = LinqTokenTypes.Keyword;
+            _LinqTypes["yield"] = LinqTokenTypes.Keyword;
+            _LinqTypes["throw"] = LinqTokenTypes.Keyword;
+            _LinqTypes["try"] = LinqTokenTypes.Keyword;
+            _LinqTypes["catch"] = LinqTokenTypes.Keyword;
+            _LinqTypes["finally"] = LinqTokenTypes.Keyword;
+            _LinqTypes["checked"] = LinqTokenTypes.Keyword;
+            _LinqTypes["unchecked"] = LinqTokenTypes.Keyword;
+            _LinqTypes["fixed"] = LinqTokenTypes.Keyword;
+            _LinqTypes["lock"] = LinqTokenTypes.Keyword;
+            _LinqTypes["0"] = LinqTokenTypes.Number;
+            _LinqTypes["1"] = LinqTokenTypes.Number;
+            _LinqTypes["2"] = LinqTokenTypes.Number;
+            _LinqTypes["3"] = LinqTokenTypes.Number;
+            _LinqTypes["4"] = LinqTokenTypes.Number;
+            _LinqTypes["5"] = LinqTokenTypes.Number;
+            _LinqTypes["6"] = LinqTokenTypes.Number;
+            _LinqTypes["7"] = LinqTokenTypes.Number;
+            _LinqTypes["8"] = LinqTokenTypes.Number;
+            _LinqTypes["9"] = LinqTokenTypes.Number;
+            _LinqTypes[" "] = LinqTokenTypes.WhiteSpace;
         }
 
         public event EventHandler<SnapshotSpanEventArgs> TagsChanged
@@ -77,10 +184,8 @@ namespace LinqLanguageEditor2022.Parse
                     {
                         var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
                         if (tokenSpan.IntersectsWith(curSpan))
-                            yield return new TagSpan<LinqTokenTag>(tokenSpan,
-                                                                  new LinqTokenTag(_LinqTypes[LinqToken]));
+                            yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(_LinqTypes[LinqToken]));
                     }
-
                     //add an extra char location because of the space
                     curLoc += LinqToken.Length + 1;
                 }

@@ -19,15 +19,15 @@ namespace LinqLanguageEditor2022.LinqEditor
     {
         public override Dictionary<object, string> ClassificationMap { get; } = new()
         {
-            { LinqItemType.String, PredefinedClassificationTypeNames.String },
-            { LinqItemType.Literal, PredefinedClassificationTypeNames.Literal },
-            { LinqItemType.Comment, PredefinedClassificationTypeNames.Comment },
-            { LinqItemType.Operator, PredefinedClassificationTypeNames.Operator },
-            { LinqItemType.Identifier, PredefinedClassificationTypeNames.Identifier },
-            { LinqItemType.Keywords, PredefinedClassificationTypeNames.Keyword },
-            { LinqItemType.Number, PredefinedClassificationTypeNames.Number },
-            { LinqItemType.WhiteSpace, PredefinedClassificationTypeNames.WhiteSpace },
-            { LinqItemType.Punctuation, PredefinedClassificationTypeNames.Punctuation },
+            { LinqTokenTypes.String, PredefinedClassificationTypeNames.String },
+            { LinqTokenTypes.Literal, PredefinedClassificationTypeNames.Literal },
+            { LinqTokenTypes.Comment, PredefinedClassificationTypeNames.Comment },
+            { LinqTokenTypes.Operator, PredefinedClassificationTypeNames.Operator },
+            { LinqTokenTypes.Identifier, PredefinedClassificationTypeNames.Identifier },
+            { LinqTokenTypes.Keyword, PredefinedClassificationTypeNames.Keyword },
+            { LinqTokenTypes.Number, PredefinedClassificationTypeNames.Number },
+            { LinqTokenTypes.WhiteSpace, PredefinedClassificationTypeNames.WhiteSpace },
+            { LinqTokenTypes.Punctuation, PredefinedClassificationTypeNames.Punctuation },
         };
     }
 

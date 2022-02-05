@@ -31,11 +31,6 @@ namespace LinqLanguageEditor2022.Parse
             {
                 Project project = await VS.Solutions.GetActiveProjectAsync();
                 ProjectName = project?.Name;
-                //DocumentView doc = await VS.Documents.GetActiveDocumentViewAsync();
-                //if (doc?.TextBuffer != null && doc.TextBuffer.ContentType.IsOfType(Constants.LinqBaselanguageName))
-                //{
-
-                //}
 
             });
 #pragma warning restore VSTHRD104 // Offer async methods
@@ -76,8 +71,8 @@ namespace LinqLanguageEditor2022.Parse
 
             try
             {
-                Parse();
-                LinqValidateDocument();
+                //Parse();
+                //LinqValidateDocument();
                 success = true;
             }
             catch (Exception ex)

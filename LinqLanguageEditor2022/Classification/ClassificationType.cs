@@ -1,14 +1,4 @@
-﻿//***************************************************************************
-// 
-//    Copyright (c) Microsoft Corporation. All rights reserved.
-//    This code is licensed under the Visual Studio SDK license terms.
-//    THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
-//    ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY
-//    IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
-//    PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
-//
-//***************************************************************************
-
+﻿
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
 
@@ -21,25 +11,53 @@ namespace LinqLanguageEditor2022.Classification
         #region Type definition
 
         /// <summary>
-        /// Defines the "LinqExclamation" classification type.
+        /// Defines the "LinqComment" classification type.
         /// </summary>
         [Export(typeof(ClassificationTypeDefinition))]
-        [Name("Linq!")]
-        internal static ClassificationTypeDefinition LinqExclamation = null;
+        [Name("Comment")]
+        internal static ClassificationTypeDefinition LinqComment = null;
 
         /// <summary>
-        /// Defines the "LinqQuestion" classification type.
+        /// Defines the "LinqString" classification type.
         /// </summary>
         [Export(typeof(ClassificationTypeDefinition))]
-        [Name("Linq?")]
-        internal static ClassificationTypeDefinition LinqQuestion = null;
+        [Name("String")]
+        internal static ClassificationTypeDefinition LinqString = null;
 
         /// <summary>
-        /// Defines the "LinqPeriod" classification type.
+        /// Defines the "LinqKeyword" classification type.
         /// </summary>
         [Export(typeof(ClassificationTypeDefinition))]
-        [Name("Linq.")]
-        internal static ClassificationTypeDefinition LinqPeriod = null;
+        [Name("Keyword")]
+        internal static ClassificationTypeDefinition LinqKeyword = null;
+
+        /// <summary>
+        /// Defines the "LinqOperator" classification type.
+        /// </summary>
+        [Export(typeof(ClassificationTypeDefinition))]
+        [Name("Operator")]
+        internal static ClassificationTypeDefinition LinqOperator = null;
+
+        /// <summary>
+        /// Defines the "LinqNumber" classification type.
+        /// </summary>
+        [Export(typeof(ClassificationTypeDefinition))]
+        [Name("Number")]
+        internal static ClassificationTypeDefinition LinqNumber = null;
+
+        /// <summary>
+        /// Defines the "LinqWhiteSpace" classification type.
+        /// </summary>
+        [Export(typeof(ClassificationTypeDefinition))]
+        [Name("WhiteSpace")]
+        internal static ClassificationTypeDefinition LinqWhiteSpace = null;
+
+        /// <summary>
+        /// Defines the "LinqUnknown" classification type.
+        /// </summary>
+        [Export(typeof(ClassificationTypeDefinition))]
+        [Name("Unknown")]
+        internal static ClassificationTypeDefinition LinqUnknown = null;
 
         #endregion
     }
