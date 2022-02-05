@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Include href="KnownImageIds.vsct"/>
+  <Include href="VSGlobals.vsct"/>
+
+  <Commands package="LinqLanguageEditor2022">
+    <!--This section defines the elements the user can interact with, like a menu command or a button or combo box in a toolbar. -->
+    <Menus>
+      <Menu guid="LinqLanguageEditor2022" id="TWindowToolbar" type="ToolWindowToolbar">
+        <CommandFlag>DefaultDocked</CommandFlag>
+        <Strings>
+          <ButtonText>Tool Window Toolbar</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>
+
+    <Groups>
+      <Group guid="LinqLanguageEditor2022" id="EditorGroup" priority="9000">
+        <Parent guid="guidSHLMainMenu" id ="IDM_VS_CTXT_CODEWIN"/>
+      </Group>
+      <Group guid="LinqLanguageEditor2022" id="TWindowToolbarGroup" priority="0x0000">
+        <Parent guid="LinqLanguageEditor2022" id="TWindowToolbar" />
+      </Group>
+    </Groups>
+
+    <Buttons>
+
+      <Button guid="LinqLanguageEditor2022" id="MyCommand" priority="0x0100" type="Button">
+        <Parent guid="VSMainMenu" id="View.DevWindowsGroup.OtherWindows.Group1"/>
+        <Icon guid="ImageCatalogGuid" id="ToolWindow" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>My Query Tool Window</ButtonText>
+          <LocCanonicalName>.View.MyToolWindow</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="LinqLanguageEditor2022" id="DisplayLinqPadStatementsResults" priority="0x0001" type="Button">
+        <Parent guid="LinqLanguageEditor2022" id="TWindowToolbarGroup"/>
+        <Icon guid="ImageCatalogGuid" id="Linq"/>
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <!--<CommandFlag>IconAndText</CommandFlag>-->
+        <Strings>
+          <ButtonText>Run Selected Query Statement!</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="LinqLanguageEditor2022" id="DisplayLinqPadMethodResults" priority="0x0002" type="Button">
+        <Parent guid="LinqLanguageEditor2022" id="TWindowToolbarGroup"/>
+        <Icon guid="ImageCatalogGuid" id="LinkValidator"/>
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <!--<CommandFlag>IconAndText</CommandFlag>-->
+        <Strings>
+          <ButtonText>Run Selected Query Method!</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="LinqLanguageEditor2022" id="EditorLinqPad" priority="0x0003" type="Button">
+        <Parent guid="LinqLanguageEditor2022" id="TWindowToolbarGroup"/>
+        <Icon guid="ImageCatalogGuid" id="Editor"/>
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <!--<CommandFlag>IconAndText</CommandFlag>-->
+        <Strings>
+          <ButtonText>Run Editor Linq Query!</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="EditorFactory" value="{C09B2281-C414-4773-961F-F5B613C49EF3}" />
+    <GuidSymbol name="LinqLanguageEditor2022" value="{472ACD30-B221-4944-90F2-D763BCFBC8AB}">
+      <IDSymbol name="MyCommand" value="0x0100" />
+      <IDSymbol name="TWindowToolbar" value="0x1000" />
+      <IDSymbol name="TWindowToolbarGroup" value="0x1050" />
+      <IDSymbol name="DisplayLinqPadStatementsResults" value="0x0111" />
+      <IDSymbol name="DisplayLinqPadMethodResults" value="0x0112" />
+      <IDSymbol name="EditorLinqPad" value="0x0114" />
+      <IDSymbol name="EditorGroup" value="0x0001"/>
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
