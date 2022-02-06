@@ -1,0 +1,4 @@
+CreateExpInstance.exe /Reset /VSInstance=17.0_04c26e08 /RootSuffix=Exp
+
+CreateExpInstance.exe /Reset /VSInstance=17.0_d1793340 /RootSuffix=Exp
+CreateExpInstance.exe /Reset /VSInstance=17.0.5 /RootSuffix=Exp

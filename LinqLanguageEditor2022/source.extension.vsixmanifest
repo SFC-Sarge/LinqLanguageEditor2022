@@ -4,6 +4,7 @@
         <Identity Id="LinqLanguageEditor2022.acbb8393-6756-4c43-acca-e353cc952b47" Version="1.0" Language="en-US" Publisher="Danny McNaught" />
         <DisplayName>LinqLanguageEditor2022</DisplayName>
         <Description xml:space="preserve">Using Linq Editor inside of Visual Studio ToolWindow to run and test linq queries.</Description>
+        <MoreInfo>https://github.com/SFC-Sarge/LinqLanguageEditor2022</MoreInfo>
         <Icon>Resources\Icon.png</Icon>
         <PreviewImage>Resources\Icon.png</PreviewImage>
     </Metadata>

@@ -6,7 +6,6 @@ global using System;
 
 global using Task = System.Threading.Tasks.Task;
 
-using LinqLanguageEditor2022.Commands;
 using LinqLanguageEditor2022.ToolWindows;
 
 using Microsoft.VisualStudio;
@@ -50,8 +49,6 @@ namespace LinqLanguageEditor2022
             ((IServiceContainer)this).AddService(typeof(LinqLanguageFactory), Linqlanguage, true);
 
             await this.RegisterCommandsAsync();
-            await LinqFormatDocument.InitializeAsync();
-            await LinqCommentDocument.InitializeAsync();
 
             this.RegisterToolWindows();
         }

@@ -3,7 +3,6 @@ using LinqLanguageEditor2022.Parse;
 
 namespace LinqLanguageEditor2022.Classification
 {
-
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Classification;
     using Microsoft.VisualStudio.Text.Tagging;
@@ -38,8 +37,7 @@ namespace LinqLanguageEditor2022.Classification
         public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag
         {
 
-            ITagAggregator<LinqTokenTag> LinqTagAggregator =
-                                            aggregatorFactory.CreateTagAggregator<LinqTokenTag>(buffer);
+            ITagAggregator<LinqTokenTag> LinqTagAggregator = aggregatorFactory.CreateTagAggregator<LinqTokenTag>(buffer);
 
             return new LinqClassifier(buffer, LinqTagAggregator, ClassificationTypeRegistry) as ITagger<T>;
         }
@@ -54,12 +52,11 @@ namespace LinqLanguageEditor2022.Classification
         /// <summary>
         /// Construct the classifier and define search tokens
         /// </summary>
-        internal LinqClassifier(ITextBuffer buffer,
-                               ITagAggregator<LinqTokenTag> LinqTagAggregator,
-                               IClassificationTypeRegistryService typeService)
+        internal LinqClassifier(ITextBuffer buffer, ITagAggregator<LinqTokenTag> LinqTagAggregator, IClassificationTypeRegistryService typeService)
         {
             _buffer = buffer;
             _aggregator = LinqTagAggregator;
+
             _LinqTypes = new Dictionary<LinqTokenTypes, IClassificationType>();
             _LinqTypes[LinqTokenTypes.Comment] = typeService.GetClassificationType("Comment"); ;
             _LinqTypes[LinqTokenTypes.String] = typeService.GetClassificationType("String"); ;
@@ -85,8 +82,7 @@ namespace LinqLanguageEditor2022.Classification
             foreach (var tagSpan in _aggregator.GetTags(spans))
             {
                 var tagSpans = tagSpan.Span.GetSpans(spans[0].Snapshot);
-                yield return
-                    new TagSpan<ClassificationTag>(tagSpans[0], new ClassificationTag(_LinqTypes[tagSpan.Tag.type]));
+                yield return new TagSpan<ClassificationTag>(tagSpans[0], new ClassificationTag(_LinqTypes[tagSpan.Tag.type]));
             }
         }
     }
