@@ -64,6 +64,9 @@ namespace LinqLanguageEditor2022.Classification
             _LinqTypes[LinqTokenTypes.Number] = typeService.GetClassificationType("Number"); ;
             _LinqTypes[LinqTokenTypes.Operator] = typeService.GetClassificationType("Operator"); ;
             _LinqTypes[LinqTokenTypes.WhiteSpace] = typeService.GetClassificationType("WhiteSpace"); ;
+            _LinqTypes[LinqTokenTypes.Punctuation] = typeService.GetClassificationType("Punctuation"); ;
+            _LinqTypes[LinqTokenTypes.Identifier] = typeService.GetClassificationType("Identifier"); ;
+            _LinqTypes[LinqTokenTypes.Literal] = typeService.GetClassificationType("Literal"); ;
             _LinqTypes[LinqTokenTypes.Unknown] = typeService.GetClassificationType("Unknown"); ;
 
         }

@@ -119,6 +119,74 @@ namespace LinqLanguageEditor2022.Classification
     }
 
     /// <summary>
+    /// Defines the editor format for the LinqPunctuation classification type. Text is colored Red
+    /// </summary>
+    [Export(typeof(EditorFormatDefinition))]
+    [ClassificationType(ClassificationTypeNames = "Punctuation")]
+    [Name("Punctuation")]
+    //this should be visible to the end user
+    [UserVisible(true)]
+    //set the priority to be after the default classifiers
+    [Order(Before = Priority.Default)]
+    internal sealed class LinqPunctuation : ClassificationFormatDefinition
+    {
+        /// <summary>
+        /// Defines the visual format for the "Punctuation" classification type
+        /// </summary>
+        public LinqPunctuation()
+        {
+            DisplayName = "Punctuation"; //human readable version of the name
+            ForegroundColor = Colors.Gray;
+
+        }
+    }
+    /// <summary>
+    /// Defines the editor format for the LinqIdentifier classification type. Text is colored Red
+    /// </summary>
+    [Export(typeof(EditorFormatDefinition))]
+    [ClassificationType(ClassificationTypeNames = "Identifier")]
+    [Name("Identifier")]
+    //this should be visible to the end user
+    [UserVisible(true)]
+    //set the priority to be after the default classifiers
+    [Order(Before = Priority.Default)]
+    internal sealed class LinqIdentifier : ClassificationFormatDefinition
+    {
+        /// <summary>
+        /// Defines the visual format for the "Identifier" classification type
+        /// </summary>
+        public LinqIdentifier()
+        {
+            DisplayName = "Identifier"; //human readable version of the name
+            ForegroundColor = Colors.LightBlue;
+
+        }
+    }
+
+    /// <summary>
+    /// Defines the editor format for the LinqLiteral classification type. Text is colored Red
+    /// </summary>
+    [Export(typeof(EditorFormatDefinition))]
+    [ClassificationType(ClassificationTypeNames = "Literal")]
+    [Name("Literal")]
+    //this should be visible to the end user
+    [UserVisible(true)]
+    //set the priority to be after the default classifiers
+    [Order(Before = Priority.Default)]
+    internal sealed class LinqLiteral : ClassificationFormatDefinition
+    {
+        /// <summary>
+        /// Defines the visual format for the "Literal" classification type
+        /// </summary>
+        public LinqLiteral()
+        {
+            DisplayName = "Literal"; //human readable version of the name
+            ForegroundColor = Colors.Brown;
+
+        }
+    }
+
+    /// <summary>
     /// Defines the editor format for the LinqUnknown classification type. Text is colored Red
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]

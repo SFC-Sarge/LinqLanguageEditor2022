@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="LinqLanguageEditor2022.acbb8393-6756-4c43-acca-e353cc952b47" Version="1.0" Language="en-US" Publisher="Danny McNaught" />
+        <Identity Id="LinqLanguageEditor2022.acbb8393-6756-4c43-acca-e353cc952b47" Version="1.1" Language="en-US" Publisher="Danny McNaught" />
         <DisplayName>LinqLanguageEditor2022</DisplayName>
         <Description xml:space="preserve">Using Linq Editor inside of Visual Studio ToolWindow to run and test linq queries.</Description>
         <MoreInfo>https://github.com/SFC-Sarge/LinqLanguageEditor2022</MoreInfo>

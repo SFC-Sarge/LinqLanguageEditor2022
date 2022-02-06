@@ -53,6 +53,13 @@ namespace LinqLanguageEditor2022.Classification
         internal static ClassificationTypeDefinition LinqWhiteSpace = null;
 
         /// <summary>
+        /// Defines the "LinqPunctuation" classification type.
+        /// </summary>
+        [Export(typeof(ClassificationTypeDefinition))]
+        [Name("Punctuation")]
+        internal static ClassificationTypeDefinition LinqPunctuation = null;
+
+        /// <summary>
         /// Defines the "LinqUnknown" classification type.
         /// </summary>
         [Export(typeof(ClassificationTypeDefinition))]

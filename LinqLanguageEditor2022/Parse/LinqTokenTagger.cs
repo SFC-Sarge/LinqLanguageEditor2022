@@ -6,6 +6,7 @@ namespace LinqLanguageEditor2022.Parse
 
     using System;
     using System.Collections.Generic;
+
     internal sealed class LinqTokenTagger : ITagger<LinqTokenTag>
     {
 
@@ -26,8 +27,6 @@ namespace LinqLanguageEditor2022.Parse
             _LinqTypes["7"] = LinqTokenTypes.Number;
             _LinqTypes["8"] = LinqTokenTypes.Number;
             _LinqTypes["9"] = LinqTokenTypes.Number;
-            _LinqTypes["1,"] = LinqTokenTypes.Number;
-
             _LinqTypes["///"] = LinqTokenTypes.Comment;
             _LinqTypes["//"] = LinqTokenTypes.Comment;
             _LinqTypes["/*"] = LinqTokenTypes.Comment;
@@ -81,8 +80,7 @@ namespace LinqLanguageEditor2022.Parse
             _LinqTypes["@"] = LinqTokenTypes.String;
             _LinqTypes["Unknown"] = LinqTokenTypes.Unknown;
             _LinqTypes["using"] = LinqTokenTypes.Keyword;
-            //_LinqTypes["."] = LinqTokenTypes.Keyword;
-            //_LinqTypes[":"] = LinqTokenTypes.Keyword;
+            _LinqTypes[":"] = LinqTokenTypes.Keyword;
             _LinqTypes["namespace"] = LinqTokenTypes.Keyword;
             _LinqTypes["extern alias"] = LinqTokenTypes.Keyword;
             _LinqTypes["as"] = LinqTokenTypes.Keyword;
@@ -144,6 +142,18 @@ namespace LinqLanguageEditor2022.Parse
             _LinqTypes["var"] = LinqTokenTypes.Keyword;
             _LinqTypes["lock"] = LinqTokenTypes.Keyword;
             _LinqTypes[" "] = LinqTokenTypes.WhiteSpace;
+            _LinqTypes[","] = LinqTokenTypes.Punctuation;
+            _LinqTypes["Debug"] = LinqTokenTypes.Identifier;
+            _LinqTypes["WriteLine"] = LinqTokenTypes.Identifier;
+            _LinqTypes["Write"] = LinqTokenTypes.Identifier;
+            _LinqTypes["result"] = LinqTokenTypes.Identifier;
+            _LinqTypes["Aggregate"] = LinqTokenTypes.Identifier;
+            _LinqTypes["Distinct"] = LinqTokenTypes.Identifier;
+            _LinqTypes["Where"] = LinqTokenTypes.Identifier;
+            _LinqTypes["Any"] = LinqTokenTypes.Identifier;
+            _LinqTypes["All"] = LinqTokenTypes.Identifier;
+            _LinqTypes["StartsWith"] = LinqTokenTypes.Identifier;
+            _LinqTypes["   "] = LinqTokenTypes.Literal;
         }
 
         public event EventHandler<SnapshotSpanEventArgs> TagsChanged
@@ -163,6 +173,72 @@ namespace LinqLanguageEditor2022.Parse
 
                 foreach (string LinqToken in tokens)
                 {
+                    if (!_LinqTypes.ContainsKey(LinqToken))
+                    {
+                        if (LinqToken.Contains("int") && LinqToken.Contains("[]"))
+                        {
+                            string[] tempArray = { "int", "[]" };
+
+                            foreach (string LinqTemp in tempArray)
+                            {
+                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqTemp.Length));
+                                if (tokenSpan.IntersectsWith(curSpan))
+                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(_LinqTypes[LinqTemp]));
+                                //curLoc += LinqToken.Length + 1;
+                            }
+                        }
+                        else if (LinqToken.Contains("string") && LinqToken.Contains("[]"))
+                        {
+                            string[] tempArray = { "string", "[]" };
+
+                            foreach (string LinqTemp in tempArray)
+                            {
+                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqTemp.Length));
+                                if (tokenSpan.IntersectsWith(curSpan))
+                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(_LinqTypes[LinqTemp]));
+                                //curLoc += LinqToken.Length + 1;
+                            }
+                        }
+                        else if (LinqToken.Contains(",") && LinqToken.EndsWith(",") && LinqToken.Length > 1)
+                        {
+                            string[] tempArray = LinqToken.Split(',');
+                            if (int.TryParse(tempArray[0], out _))
+                            {
+
+                                foreach (string LinqTemp in tempArray)
+                                {
+                                    if (LinqTemp == ",")
+                                    {
+                                        var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqTemp.Length));
+                                        if (tokenSpan.IntersectsWith(curSpan))
+                                            yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Punctuation));
+                                    }
+                                    else
+                                    {
+                                        if (LinqTemp.Length > 0)
+                                        {
+                                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqTemp.Length));
+                                            if (tokenSpan.IntersectsWith(curSpan))
+                                                yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Number));
+                                        }
+                                    }
+                                    //curLoc += LinqToken.Length + 1;
+                                }
+                            }
+                        }
+                        else if (int.TryParse(LinqToken, out _))
+                        {
+
+                            if (LinqToken.Length > 0)
+                            {
+                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
+                                if (tokenSpan.IntersectsWith(curSpan))
+                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Number));
+                            }
+                        }
+
+                    }
+
                     if (_LinqTypes.ContainsKey(LinqToken))
                     {
                         var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
@@ -175,5 +251,6 @@ namespace LinqLanguageEditor2022.Parse
             }
 
         }
+
     }
 }
