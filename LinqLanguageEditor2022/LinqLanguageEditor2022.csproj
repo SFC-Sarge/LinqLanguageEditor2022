@@ -59,9 +59,6 @@
     <Compile Include="Parse\LinqComments.cs" />
     <Compile Include="Parse\LinqDocument.cs" />
     <Compile Include="Parse\LinqDocumentExtensions.cs" />
-    <Compile Include="Parse\LinqDocumentParser.cs" />
-    <Compile Include="Parse\LinqDocumentValidator.cs" />
-    <Compile Include="Parse\LinqError.cs" />
     <Compile Include="Parse\LinqKeywords.cs" />
     <Compile Include="Parse\LinqMethodParameterKeywords.cs" />
     <Compile Include="Parse\LinqModifierKeywords.cs" />
@@ -69,7 +66,6 @@
     <Compile Include="Parse\LinqOperatorKeywords.cs" />
     <Compile Include="Parse\LinqOperators.cs" />
     <Compile Include="Parse\LinqParseItem.cs" />
-    <Compile Include="Parse\LinqPredefinedVariables.cs" />
     <Compile Include="Parse\LinqSeparators.cs" />
     <Compile Include="Parse\LinqSpecialCharacters.cs" />
     <Compile Include="Parse\LinqStatementKeywords.cs" />

@@ -37,13 +37,6 @@ namespace VSIXLinqLanguageEditor2022.LinqEditor
         [BaseDefinition(Constants.LinqBaselanguageName)]
         internal static ClassificationTypeDefinition LinqDefinition { get; set; }
 
-        //public override Colorizer GetColorizer(IVsTextLines vsTextLines)
-        //{
-        //    IVsLanguageInfo vsLanguageInfo = null;
-        //    vsLanguageInfo.GetColorizer(vsTextLines, out IVsColorizer vsColorizer);
-        //    return vsColorizer;
-        //}
-
         public LinqLanguageFactory(object site) : base(site)
         {
 
@@ -53,7 +46,6 @@ namespace VSIXLinqLanguageEditor2022.LinqEditor
 
         public override string[] FileExtensions { get; } = new[] { Constants.LinqExt };
 
-        //private LanguagePreferences preferences;
 
         public override void SetDefaultPreferences(LanguagePreferences preferences)
         {

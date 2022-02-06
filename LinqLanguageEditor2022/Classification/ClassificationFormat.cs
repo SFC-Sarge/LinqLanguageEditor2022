@@ -141,7 +141,7 @@ namespace LinqLanguageEditor2022.Classification
         }
     }
     /// <summary>
-    /// Defines the editor format for the LinqIdentifier classification type. Text is colored Red
+    /// Defines the editor format for the LinqIdentifier classification type. Text is colored Aquamarine
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]
     [ClassificationType(ClassificationTypeNames = "Identifier")]
@@ -158,10 +158,34 @@ namespace LinqLanguageEditor2022.Classification
         public LinqIdentifier()
         {
             DisplayName = "Identifier"; //human readable version of the name
-            ForegroundColor = Colors.LightBlue;
+            ForegroundColor = Colors.Aquamarine;
 
         }
     }
+
+    /// <summary>
+    /// Defines the editor format for the LinqQueryFilter classification type. Text is colored Yellow
+    /// </summary>
+    [Export(typeof(EditorFormatDefinition))]
+    [ClassificationType(ClassificationTypeNames = "QueryFilter")]
+    [Name("QueryFilter")]
+    //this should be visible to the end user
+    [UserVisible(true)]
+    //set the priority to be after the default classifiers
+    [Order(Before = Priority.Default)]
+    internal sealed class LinqQueryFilter : ClassificationFormatDefinition
+    {
+        /// <summary>
+        /// Defines the visual format for the "LinqQueryFilter" classification type
+        /// </summary>
+        public LinqQueryFilter()
+        {
+            DisplayName = "QueryFilter"; //human readable version of the name
+            ForegroundColor = Colors.Yellow;
+
+        }
+    }
+
 
     /// <summary>
     /// Defines the editor format for the LinqLiteral classification type. Text is colored Red

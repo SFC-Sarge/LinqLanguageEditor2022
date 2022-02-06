@@ -19,15 +19,15 @@ namespace LinqLanguageEditor2022.LinqEditor
     {
         public override Dictionary<object, string> ClassificationMap { get; } = new()
         {
-            { LinqTokenTypes.String, PredefinedClassificationTypeNames.String },
-            { LinqTokenTypes.Literal, PredefinedClassificationTypeNames.Literal },
-            { LinqTokenTypes.Comment, PredefinedClassificationTypeNames.Comment },
-            { LinqTokenTypes.Operator, PredefinedClassificationTypeNames.Operator },
-            { LinqTokenTypes.Identifier, PredefinedClassificationTypeNames.Identifier },
-            { LinqTokenTypes.Keyword, PredefinedClassificationTypeNames.Keyword },
-            { LinqTokenTypes.Number, PredefinedClassificationTypeNames.Number },
+            //{ LinqTokenTypes.String, PredefinedClassificationTypeNames.String },
+            //{ LinqTokenTypes.Literal, PredefinedClassificationTypeNames.Literal },
+            //{ LinqTokenTypes.Comment, PredefinedClassificationTypeNames.Comment },
+            //{ LinqTokenTypes.Operator, PredefinedClassificationTypeNames.Operator },
+            //{ LinqTokenTypes.Identifier, PredefinedClassificationTypeNames.Identifier },
+            //{ LinqTokenTypes.Keyword, PredefinedClassificationTypeNames.Keyword },
+            //{ LinqTokenTypes.Number, PredefinedClassificationTypeNames.Number },
             { LinqTokenTypes.WhiteSpace, PredefinedClassificationTypeNames.WhiteSpace },
-            { LinqTokenTypes.Punctuation, PredefinedClassificationTypeNames.Punctuation },
+            //{ LinqTokenTypes.Punctuation, PredefinedClassificationTypeNames.Punctuation },
         };
     }
 
@@ -54,8 +54,6 @@ namespace LinqLanguageEditor2022.LinqEditor
     [BracePair('{', '}')]
     [BracePair('[', ']')]
     [BracePair('(', ')')]
-    //[BracePair('"', '"')]
-    //[BracePair('$', '$')]
     [ContentType(Constants.LinqLanguageName)]
     [TagType(typeof(TextMarkerTag))]
     [ProvideBraceCompletion(Constants.LinqLanguageName)]

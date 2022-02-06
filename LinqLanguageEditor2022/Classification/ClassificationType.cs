@@ -60,6 +60,27 @@ namespace LinqLanguageEditor2022.Classification
         internal static ClassificationTypeDefinition LinqPunctuation = null;
 
         /// <summary>
+        /// Defines the "LinqIdentifier" classification type.
+        /// </summary>
+        [Export(typeof(ClassificationTypeDefinition))]
+        [Name("Identifier")]
+        internal static ClassificationTypeDefinition LinqIdentifier = null;
+
+        /// <summary>
+        /// Defines the "LinqLiteral" classification type.
+        /// </summary>
+        [Export(typeof(ClassificationTypeDefinition))]
+        [Name("Literal")]
+        internal static ClassificationTypeDefinition LinqLiteral = null;
+
+        /// <summary>
+        /// Defines the "LinqQueryFilter" classification type.
+        /// </summary>
+        [Export(typeof(ClassificationTypeDefinition))]
+        [Name("QueryFilter")]
+        internal static ClassificationTypeDefinition LinqQueryFilter = null;
+
+        /// <summary>
         /// Defines the "LinqUnknown" classification type.
         /// </summary>
         [Export(typeof(ClassificationTypeDefinition))]

@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.Package;
-using Microsoft.VisualStudio.Text;
+﻿using Microsoft.VisualStudio.Text;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,6 @@ namespace LinqLanguageEditor2022.Parse
 {
     public class LinqParseItem
     {
-        public HashSet<LinqError> _errors = new();
-
         public LinqParseItem(int start, string text, LinqDocument document, LinqTokenTypes type)
         {
             Text = text;
@@ -21,7 +18,6 @@ namespace LinqLanguageEditor2022.Parse
         public List<LinqParseItem> Children = new();
 
         public LinqTokenTypes Type { get; }
-        public TokenInfo _TokenInfo { get; }
 
         public virtual Span Span { get; }
 
@@ -31,9 +27,6 @@ namespace LinqLanguageEditor2022.Parse
 
         public List<LinqParseItem> References { get; } = new();
 
-        public ICollection<LinqError> Errors => _errors;
-
-        public bool IsValid => _errors.Count == 0;
 
         public LinqParseItem Previous
         {

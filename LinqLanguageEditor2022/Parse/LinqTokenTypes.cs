@@ -13,5 +13,6 @@ namespace LinqLanguageEditor2022.Parse
         Number,
         WhiteSpace,
         Punctuation,
+        QueryFilter,
     }
 }

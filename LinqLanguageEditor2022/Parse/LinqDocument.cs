@@ -72,7 +72,6 @@ namespace LinqLanguageEditor2022.Parse
             try
             {
                 //Parse();
-                //LinqValidateDocument();
                 success = true;
             }
             catch (Exception ex)
