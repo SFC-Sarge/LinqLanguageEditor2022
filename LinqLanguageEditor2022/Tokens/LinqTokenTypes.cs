@@ -1,5 +1,5 @@
 ﻿
-namespace LinqLanguageEditor2022.Parse
+namespace LinqLanguageEditor2022.Tokens
 {
     public enum LinqTokenTypes
     {
@@ -14,5 +14,7 @@ namespace LinqLanguageEditor2022.Parse
         WhiteSpace,
         Punctuation,
         QueryFilter,
+        Separator,
+        Variable,
     }
 }

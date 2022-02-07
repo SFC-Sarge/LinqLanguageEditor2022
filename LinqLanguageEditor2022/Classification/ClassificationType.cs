@@ -67,6 +67,20 @@ namespace LinqLanguageEditor2022.Classification
         internal static ClassificationTypeDefinition LinqIdentifier = null;
 
         /// <summary>
+        /// Defines the "LinqVariable" classification type.
+        /// </summary>
+        [Export(typeof(ClassificationTypeDefinition))]
+        [Name("Variable")]
+        internal static ClassificationTypeDefinition LinqVariable = null;
+
+        /// <summary>
+        /// Defines the "LinqSeparator" classification type.
+        /// </summary>
+        [Export(typeof(ClassificationTypeDefinition))]
+        [Name("Separator")]
+        internal static ClassificationTypeDefinition LinqSeparator = null;
+
+        /// <summary>
         /// Defines the "LinqLiteral" classification type.
         /// </summary>
         [Export(typeof(ClassificationTypeDefinition))]

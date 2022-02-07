@@ -6,6 +6,8 @@ global using System;
 
 global using Task = System.Threading.Tasks.Task;
 
+using LinqLanguageEditor2022.LinqEditor;
+
 using LinqLanguageEditor2022.ToolWindows;
 
 using Microsoft.VisualStudio;
@@ -15,7 +17,6 @@ using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-using VSIXLinqLanguageEditor2022.LinqEditor;
 
 namespace LinqLanguageEditor2022
 {

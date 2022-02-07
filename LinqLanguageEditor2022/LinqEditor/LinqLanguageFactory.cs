@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.Utilities;
 using System.ComponentModel.Composition;
 using System.Runtime.InteropServices;
 
-namespace VSIXLinqLanguageEditor2022.LinqEditor
+namespace LinqLanguageEditor2022.LinqEditor
 {
 
     [ComVisible(true)]

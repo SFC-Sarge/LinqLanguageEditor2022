@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LinqLanguageEditor2022.Parse
+namespace LinqLanguageEditor2022.Tokens
 {
     public class LinqParseItem
     {

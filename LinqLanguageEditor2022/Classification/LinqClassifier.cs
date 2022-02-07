@@ -1,5 +1,4 @@
-﻿
-using LinqLanguageEditor2022.Parse;
+﻿using LinqLanguageEditor2022.Tokens;
 
 namespace LinqLanguageEditor2022.Classification
 {
@@ -66,7 +65,9 @@ namespace LinqLanguageEditor2022.Classification
             _LinqTypes[LinqTokenTypes.WhiteSpace] = typeService.GetClassificationType("WhiteSpace"); ;
             _LinqTypes[LinqTokenTypes.Punctuation] = typeService.GetClassificationType("Punctuation"); ;
             _LinqTypes[LinqTokenTypes.Identifier] = typeService.GetClassificationType("Identifier"); ;
+            _LinqTypes[LinqTokenTypes.Separator] = typeService.GetClassificationType("Separator"); ;
             _LinqTypes[LinqTokenTypes.Literal] = typeService.GetClassificationType("Literal"); ;
+            _LinqTypes[LinqTokenTypes.Variable] = typeService.GetClassificationType("Variable"); ;
             _LinqTypes[LinqTokenTypes.QueryFilter] = typeService.GetClassificationType("QueryFilter"); ;
             _LinqTypes[LinqTokenTypes.Unknown] = typeService.GetClassificationType("Unknown"); ;
 

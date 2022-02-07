@@ -1,6 +1,8 @@
 ﻿
-namespace LinqLanguageEditor2022.Parse
+namespace LinqLanguageEditor2022.Tokens
 {
+    using LinqLanguageEditor2022.Lexical;
+
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Tagging;
 
@@ -9,6 +11,8 @@ namespace LinqLanguageEditor2022.Parse
 
     internal sealed class LinqTokenTagger : ITagger<LinqTokenTag>
     {
+        LinqLexicalAnalysis analyzer = new LinqLexicalAnalysis();
+
 
         ITextBuffer _buffer;
         IDictionary<string, LinqTokenTypes> _LinqTypes;
@@ -146,6 +150,8 @@ namespace LinqLanguageEditor2022.Parse
             _LinqTypes["lock"] = LinqTokenTypes.Keyword;
             _LinqTypes[" "] = LinqTokenTypes.WhiteSpace;
             _LinqTypes[","] = LinqTokenTypes.Punctuation;
+            _LinqTypes["{"] = LinqTokenTypes.Separator;
+            _LinqTypes["}"] = LinqTokenTypes.Separator;
             _LinqTypes["   "] = LinqTokenTypes.Literal;
         }
 
@@ -167,26 +173,65 @@ namespace LinqLanguageEditor2022.Parse
                 foreach (string LinqToken in tokens)
                 {
                     string linqToken = LinqToken.Trim(' ', '\t', '\r', '\n');
-                    if (!_LinqTypes.ContainsKey(linqToken))
+                    if (!_LinqTypes.ContainsKey(linqToken) && linqToken != "")
                     {
-                        if (LinqToken.Contains("int") && linqToken.Contains("[]"))
+                        if (linqToken.StartsWith("debug") || linqToken.StartsWith("console"))
+                        {
+                            List<string> lineTokens = BreakCodeLineIntoTokens(linqToken, analyzer);
+
+                            if (LinqToken.Length > 0)
+                            {
+                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
+                                if (tokenSpan.IntersectsWith(curSpan))
+                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Identifier));
+                            }
+                        }
+                        else if (linqToken.Contains("result") || linqToken.Contains("number"))
+                        {
+                            if (LinqToken.Length > 0)
+                            {
+                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
+                                if (tokenSpan.IntersectsWith(curSpan))
+                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Variable));
+                            }
+                        }
+                        else if (linqToken.Contains(".writeLine"))
+                        {
+                            if (LinqToken.Length > 0)
+                            {
+                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
+                                if (tokenSpan.IntersectsWith(curSpan))
+                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.QueryFilter));
+                            }
+                        }
+                        else if (linqToken.Contains("int") && linqToken.Contains("[]"))
                         {
                             string[] tempArray = { "int", "[]" };
                             foreach (string LinqTemp in tempArray)
                             {
-                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqTemp.Length));
+                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
                                 if (tokenSpan.IntersectsWith(curSpan))
                                     yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(_LinqTypes[LinqTemp]));
                             }
+
                         }
                         else if (linqToken.Contains("string") && linqToken.Contains("[]"))
                         {
                             string[] tempArray = { "string", "[]" };
                             foreach (string LinqTemp in tempArray)
                             {
-                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqTemp.Length));
+                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
                                 if (tokenSpan.IntersectsWith(curSpan))
                                     yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(_LinqTypes[LinqTemp]));
+                            }
+                        }
+                        else if (linqToken.Contains("result") || linqToken.Contains("number"))
+                        {
+                            if (LinqToken.Length > 0)
+                            {
+                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
+                                if (tokenSpan.IntersectsWith(curSpan))
+                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Variable));
                             }
                         }
                         else if (linqToken.Contains(",") && linqToken.EndsWith(",") && linqToken.Length > 1)
@@ -198,7 +243,7 @@ namespace LinqLanguageEditor2022.Parse
                                 {
                                     if (LinqTemp == ",")
                                     {
-                                        var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqTemp.Length));
+                                        var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
                                         if (tokenSpan.IntersectsWith(curSpan))
                                             yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Punctuation));
                                     }
@@ -206,7 +251,7 @@ namespace LinqLanguageEditor2022.Parse
                                     {
                                         if (linqToken.Length > 0)
                                         {
-                                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqTemp.Length));
+                                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
                                             if (tokenSpan.IntersectsWith(curSpan))
                                                 yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Number));
                                         }
@@ -215,7 +260,7 @@ namespace LinqLanguageEditor2022.Parse
                                     {
                                         if (linqToken.Length > 0)
                                         {
-                                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqTemp.Length));
+                                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
                                             if (tokenSpan.IntersectsWith(curSpan))
                                                 yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Identifier));
                                         }
@@ -226,7 +271,7 @@ namespace LinqLanguageEditor2022.Parse
                             {
                                 if (LinqToken.Length > 0)
                                 {
-                                    var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, linqToken.Length));
+                                    var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
                                     if (tokenSpan.IntersectsWith(curSpan))
                                         yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.QueryFilter));
                                 }
@@ -236,7 +281,7 @@ namespace LinqLanguageEditor2022.Parse
                         {
                             if (LinqToken.Length > 0)
                             {
-                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, linqToken.Length));
+                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
                                 if (tokenSpan.IntersectsWith(curSpan))
                                     yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.QueryFilter));
                             }
@@ -245,7 +290,7 @@ namespace LinqLanguageEditor2022.Parse
                         {
                             if (LinqToken.Length > 0)
                             {
-                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, linqToken.Length));
+                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
                                 if (tokenSpan.IntersectsWith(curSpan))
                                     yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Number));
                             }
@@ -254,40 +299,68 @@ namespace LinqLanguageEditor2022.Parse
                         {
                             if (linqToken.Length > 0)
                             {
-                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, linqToken.Length));
+                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
                                 if (tokenSpan.IntersectsWith(curSpan))
                                     yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Identifier));
                             }
                         }
                     }
-                    else if (linqToken.StartsWith("debug") || linqToken.StartsWith("console") || linqToken.Contains("result") || linqToken.Contains("number"))
+                    else if (linqToken.StartsWith("debug") || linqToken.StartsWith("console"))
+                    {
+                        List<string> lineTokens = BreakCodeLineIntoTokens(linqToken, analyzer);
+
+                        if (LinqToken.Length > 0)
+                        {
+                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
+                            if (tokenSpan.IntersectsWith(curSpan))
+                                yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Identifier));
+                        }
+                    }
+                    else if (linqToken.Contains("result") || linqToken.Contains("number"))
                     {
                         if (LinqToken.Length > 0)
                         {
-                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, linqToken.Length));
+                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
                             if (tokenSpan.IntersectsWith(curSpan))
-                                yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Identifier));
+                                yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Variable));
                         }
                     }
                     else if (linqToken.Contains(".writeLine"))
                     {
                         if (LinqToken.Length > 0)
                         {
-                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, linqToken.Length));
+                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
                             if (tokenSpan.IntersectsWith(curSpan))
                                 yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.QueryFilter));
                         }
                     }
                     else if (_LinqTypes.ContainsKey(linqToken))
                     {
-                        var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, linqToken.Length));
+                        var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
                         if (tokenSpan.IntersectsWith(curSpan))
                             yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(_LinqTypes[linqToken]));
                     }
                     //add an extra char location because of the space
-                    curLoc += linqToken.Length + 1;
+                    curLoc += LinqToken.Length + 1;
                 }
             }
         }
+        static List<string> BreakCodeLineIntoTokens(string codeLine, LinqLexicalAnalysis analyzer)
+        {
+            List<string> tokens = new() { };
+            // analyzer.Parse(text);
+            while (codeLine != null)
+            {
+                codeLine = codeLine.Trim(' ', '\t');
+                tokens.Add(analyzer.GetNextLexicalAtom(ref codeLine));
+                if (codeLine == "")
+                {
+                    return tokens;
+                }
+            }
+            return tokens;
+
+        }
+
     }
 }

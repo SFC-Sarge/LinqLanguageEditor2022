@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace LinqLanguageEditor2022.Parse
+namespace LinqLanguageEditor2022.Lexical
 {
     public class LinqSpecialCharacters
     {

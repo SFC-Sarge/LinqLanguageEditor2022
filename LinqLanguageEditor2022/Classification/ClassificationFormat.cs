@@ -97,6 +97,29 @@ namespace LinqLanguageEditor2022.Classification
     }
 
     /// <summary>
+    /// Defines the editor format for the LinqVariable classification type. Text is colored LightSkyBlue
+    /// </summary>
+    [Export(typeof(EditorFormatDefinition))]
+    [ClassificationType(ClassificationTypeNames = "Variable")]
+    [Name("Variable")]
+    //this should be visible to the end user
+    [UserVisible(true)]
+    //set the priority to be after the default classifiers
+    [Order(Before = Priority.Default)]
+    internal sealed class LinqVariable : ClassificationFormatDefinition
+    {
+        /// <summary>
+        /// Defines the visual format for the "Variable" classification type
+        /// </summary>
+        public LinqVariable()
+        {
+            DisplayName = "Variable"; //human readable version of the name
+            ForegroundColor = Colors.LightSkyBlue;
+        }
+    }
+
+
+    /// <summary>
     /// Defines the editor format for the LinqOperator classification type. Text is colored Gray
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]
@@ -140,6 +163,30 @@ namespace LinqLanguageEditor2022.Classification
 
         }
     }
+
+    /// <summary>
+    /// Defines the editor format for the LinqSeparator classification type. Text is colored Red
+    /// </summary>
+    [Export(typeof(EditorFormatDefinition))]
+    [ClassificationType(ClassificationTypeNames = "Separator")]
+    [Name("Separator")]
+    //this should be visible to the end user
+    [UserVisible(true)]
+    //set the priority to be after the default classifiers
+    [Order(Before = Priority.Default)]
+    internal sealed class LinqSeparator : ClassificationFormatDefinition
+    {
+        /// <summary>
+        /// Defines the visual format for the "Punctuation" classification type
+        /// </summary>
+        public LinqSeparator()
+        {
+            DisplayName = "Separator"; //human readable version of the name
+            ForegroundColor = Colors.White;
+
+        }
+    }
+
     /// <summary>
     /// Defines the editor format for the LinqIdentifier classification type. Text is colored Aquamarine
     /// </summary>

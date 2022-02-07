@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace LinqLanguageEditor2022.Parse
+namespace LinqLanguageEditor2022.Tokens
 {
     public partial class LinqDocument : IDisposable
     {

@@ -1,4 +1,4 @@
-﻿using LinqLanguageEditor2022.Parse;
+﻿using LinqLanguageEditor2022.Tokens;
 
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Language.Intellisense.AsyncCompletion;

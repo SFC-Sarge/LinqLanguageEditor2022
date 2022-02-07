@@ -1,5 +1,5 @@
 ﻿
-namespace LinqLanguageEditor2022.Parse
+namespace LinqLanguageEditor2022.Tokens
 {
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Tagging;
