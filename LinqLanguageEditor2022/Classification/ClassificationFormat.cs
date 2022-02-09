@@ -53,28 +53,6 @@ namespace LinqLanguageEditor2022.Classification
     }
 
     /// <summary>
-    /// Defines the editor format for the LinqString classification type. Text is colored Orange
-    /// </summary>
-    [Export(typeof(EditorFormatDefinition))]
-    [ClassificationType(ClassificationTypeNames = "String")]
-    [Name("String")]
-    //this should be visible to the end user
-    [UserVisible(true)]
-    //set the priority to be after the default classifiers
-    [Order(Before = Priority.Default)]
-    internal sealed class LinqString : ClassificationFormatDefinition
-    {
-        /// <summary>
-        /// Defines the visual format for the "String" classification type
-        /// </summary>
-        public LinqString()
-        {
-            DisplayName = "String"; //human readable version of the name
-            ForegroundColor = Colors.Orange;
-        }
-    }
-
-    /// <summary>
     /// Defines the editor format for the LinqNumber classification type. Text is colored LimeGreen
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]
@@ -97,29 +75,6 @@ namespace LinqLanguageEditor2022.Classification
     }
 
     /// <summary>
-    /// Defines the editor format for the LinqVariable classification type. Text is colored LightSkyBlue
-    /// </summary>
-    [Export(typeof(EditorFormatDefinition))]
-    [ClassificationType(ClassificationTypeNames = "Variable")]
-    [Name("Variable")]
-    //this should be visible to the end user
-    [UserVisible(true)]
-    //set the priority to be after the default classifiers
-    [Order(Before = Priority.Default)]
-    internal sealed class LinqVariable : ClassificationFormatDefinition
-    {
-        /// <summary>
-        /// Defines the visual format for the "Variable" classification type
-        /// </summary>
-        public LinqVariable()
-        {
-            DisplayName = "Variable"; //human readable version of the name
-            ForegroundColor = Colors.LightSkyBlue;
-        }
-    }
-
-
-    /// <summary>
     /// Defines the editor format for the LinqOperator classification type. Text is colored Gray
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]
@@ -137,7 +92,29 @@ namespace LinqLanguageEditor2022.Classification
         public LinqOperator()
         {
             DisplayName = "Operator"; //human readable version of the name
-            ForegroundColor = Colors.Gray;
+            ForegroundColor = Colors.LimeGreen;
+        }
+    }
+
+    /// <summary>
+    /// Defines the editor format for the LinqString classification type. Text is colored brown
+    /// </summary>
+    [Export(typeof(EditorFormatDefinition))]
+    [ClassificationType(ClassificationTypeNames = "String")]
+    [Name("String")]
+    //this should be visible to the end user
+    [UserVisible(true)]
+    //set the priority to be after the default classifiers
+    [Order(Before = Priority.Default)]
+    internal sealed class LinqString : ClassificationFormatDefinition
+    {
+        /// <summary>
+        /// Defines the visual format for the "String" classification type
+        /// </summary>
+        public LinqString()
+        {
+            DisplayName = "String"; //human readable version of the name
+            ForegroundColor = Colors.Brown;
         }
     }
 
@@ -159,7 +136,7 @@ namespace LinqLanguageEditor2022.Classification
         public LinqPunctuation()
         {
             DisplayName = "Punctuation"; //human readable version of the name
-            ForegroundColor = Colors.Gray;
+            ForegroundColor = Colors.DarkViolet;
 
         }
     }
@@ -182,7 +159,7 @@ namespace LinqLanguageEditor2022.Classification
         public LinqSeparator()
         {
             DisplayName = "Separator"; //human readable version of the name
-            ForegroundColor = Colors.White;
+            ForegroundColor = Colors.LightCyan;
 
         }
     }
@@ -205,30 +182,7 @@ namespace LinqLanguageEditor2022.Classification
         public LinqIdentifier()
         {
             DisplayName = "Identifier"; //human readable version of the name
-            ForegroundColor = Colors.Aquamarine;
-
-        }
-    }
-
-    /// <summary>
-    /// Defines the editor format for the LinqQueryFilter classification type. Text is colored Yellow
-    /// </summary>
-    [Export(typeof(EditorFormatDefinition))]
-    [ClassificationType(ClassificationTypeNames = "QueryFilter")]
-    [Name("QueryFilter")]
-    //this should be visible to the end user
-    [UserVisible(true)]
-    //set the priority to be after the default classifiers
-    [Order(Before = Priority.Default)]
-    internal sealed class LinqQueryFilter : ClassificationFormatDefinition
-    {
-        /// <summary>
-        /// Defines the visual format for the "LinqQueryFilter" classification type
-        /// </summary>
-        public LinqQueryFilter()
-        {
-            DisplayName = "QueryFilter"; //human readable version of the name
-            ForegroundColor = Colors.Yellow;
+            ForegroundColor = Colors.Silver;
 
         }
     }

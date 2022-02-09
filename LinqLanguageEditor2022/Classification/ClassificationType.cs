@@ -88,13 +88,6 @@ namespace LinqLanguageEditor2022.Classification
         internal static ClassificationTypeDefinition LinqLiteral = null;
 
         /// <summary>
-        /// Defines the "LinqQueryFilter" classification type.
-        /// </summary>
-        [Export(typeof(ClassificationTypeDefinition))]
-        [Name("QueryFilter")]
-        internal static ClassificationTypeDefinition LinqQueryFilter = null;
-
-        /// <summary>
         /// Defines the "LinqUnknown" classification type.
         /// </summary>
         [Export(typeof(ClassificationTypeDefinition))]

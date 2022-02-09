@@ -1,8 +1,9 @@
 ﻿
 namespace LinqLanguageEditor2022.Tokens
 {
-    using LinqLanguageEditor2022.Lexical;
+    using LinqLanguageEditor2022.Classification;
 
+    using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.VisualStudio.Text;
     using Microsoft.VisualStudio.Text.Tagging;
 
@@ -11,9 +12,6 @@ namespace LinqLanguageEditor2022.Tokens
 
     internal sealed class LinqTokenTagger : ITagger<LinqTokenTag>
     {
-        LinqLexicalAnalysis analyzer = new LinqLexicalAnalysis();
-
-
         ITextBuffer _buffer;
         IDictionary<string, LinqTokenTypes> _LinqTypes;
 
@@ -21,138 +19,16 @@ namespace LinqLanguageEditor2022.Tokens
         {
             _buffer = buffer;
             _LinqTypes = new Dictionary<string, LinqTokenTypes>();
-            _LinqTypes["0"] = LinqTokenTypes.Number;
-            _LinqTypes["1"] = LinqTokenTypes.Number;
-            _LinqTypes["2"] = LinqTokenTypes.Number;
-            _LinqTypes["3"] = LinqTokenTypes.Number;
-            _LinqTypes["4"] = LinqTokenTypes.Number;
-            _LinqTypes["5"] = LinqTokenTypes.Number;
-            _LinqTypes["6"] = LinqTokenTypes.Number;
-            _LinqTypes["7"] = LinqTokenTypes.Number;
-            _LinqTypes["8"] = LinqTokenTypes.Number;
-            _LinqTypes["9"] = LinqTokenTypes.Number;
-            _LinqTypes["debug"] = LinqTokenTypes.Identifier;
-            _LinqTypes["console"] = LinqTokenTypes.Identifier;
-            _LinqTypes["result"] = LinqTokenTypes.Identifier;
-            _LinqTypes["///"] = LinqTokenTypes.Comment;
-            _LinqTypes["//"] = LinqTokenTypes.Comment;
-            _LinqTypes["/*"] = LinqTokenTypes.Comment;
-            _LinqTypes["*/"] = LinqTokenTypes.Comment;
-            _LinqTypes["*/"] = LinqTokenTypes.Comment;
-            _LinqTypes["+"] = LinqTokenTypes.Operator;
-            _LinqTypes["-"] = LinqTokenTypes.Operator;
-            _LinqTypes["*"] = LinqTokenTypes.Operator;
-            _LinqTypes["/"] = LinqTokenTypes.Operator;
-            _LinqTypes["%"] = LinqTokenTypes.Operator;
-            _LinqTypes["&"] = LinqTokenTypes.Operator;
-            _LinqTypes["("] = LinqTokenTypes.Operator;
-            _LinqTypes[")"] = LinqTokenTypes.Operator;
-            _LinqTypes["["] = LinqTokenTypes.Operator;
-            _LinqTypes["]"] = LinqTokenTypes.Operator;
-            _LinqTypes["|"] = LinqTokenTypes.Operator;
-            _LinqTypes["^"] = LinqTokenTypes.Operator;
-            _LinqTypes["!"] = LinqTokenTypes.Operator;
-            _LinqTypes["~"] = LinqTokenTypes.Operator;
-            _LinqTypes["&&"] = LinqTokenTypes.Operator;
-            _LinqTypes["||"] = LinqTokenTypes.Operator;
-            _LinqTypes[","] = LinqTokenTypes.Operator;
-            _LinqTypes["++"] = LinqTokenTypes.Operator;
-            _LinqTypes["--"] = LinqTokenTypes.Operator;
-            _LinqTypes["<<"] = LinqTokenTypes.Operator;
-            _LinqTypes[">>"] = LinqTokenTypes.Operator;
-            _LinqTypes["=="] = LinqTokenTypes.Operator;
-            _LinqTypes["!="] = LinqTokenTypes.Operator;
-            _LinqTypes["<"] = LinqTokenTypes.Operator;
-            _LinqTypes[">"] = LinqTokenTypes.Operator;
-            _LinqTypes["<="] = LinqTokenTypes.Operator;
-            _LinqTypes[">="] = LinqTokenTypes.Operator;
-            _LinqTypes["="] = LinqTokenTypes.Operator;
-            _LinqTypes["+="] = LinqTokenTypes.Operator;
-            _LinqTypes["-="] = LinqTokenTypes.Operator;
-            _LinqTypes["*="] = LinqTokenTypes.Operator;
-            _LinqTypes["/="] = LinqTokenTypes.Operator;
-            _LinqTypes["%="] = LinqTokenTypes.Operator;
-            _LinqTypes["&="] = LinqTokenTypes.Operator;
-            _LinqTypes["|="] = LinqTokenTypes.Operator;
-            _LinqTypes["^="] = LinqTokenTypes.Operator;
-            _LinqTypes["<<="] = LinqTokenTypes.Operator;
-            _LinqTypes[">>="] = LinqTokenTypes.Operator;
-            _LinqTypes["."] = LinqTokenTypes.Operator;
-            _LinqTypes["[]"] = LinqTokenTypes.Operator;
-            _LinqTypes["()"] = LinqTokenTypes.Operator;
-            _LinqTypes["?:"] = LinqTokenTypes.Operator;
-            _LinqTypes["=>"] = LinqTokenTypes.Operator;
-            _LinqTypes["??"] = LinqTokenTypes.Operator;
-            _LinqTypes["$"] = LinqTokenTypes.String;
-            _LinqTypes["@"] = LinqTokenTypes.String;
-            _LinqTypes["Unknown"] = LinqTokenTypes.Unknown;
-            _LinqTypes["using"] = LinqTokenTypes.Keyword;
-            _LinqTypes[":"] = LinqTokenTypes.Keyword;
-            _LinqTypes["namespace"] = LinqTokenTypes.Keyword;
-            _LinqTypes["extern alias"] = LinqTokenTypes.Keyword;
-            _LinqTypes["as"] = LinqTokenTypes.Keyword;
-            _LinqTypes["await"] = LinqTokenTypes.Keyword;
-            _LinqTypes["is"] = LinqTokenTypes.Keyword;
-            _LinqTypes["new"] = LinqTokenTypes.Keyword;
-            _LinqTypes["sizeof"] = LinqTokenTypes.Keyword;
-            _LinqTypes["typeof"] = LinqTokenTypes.Keyword;
-            _LinqTypes["stackalloc"] = LinqTokenTypes.Keyword;
-            _LinqTypes["checked"] = LinqTokenTypes.Keyword;
-            _LinqTypes["unchecked"] = LinqTokenTypes.Keyword;
-            _LinqTypes["public"] = LinqTokenTypes.Keyword;
-            _LinqTypes["private"] = LinqTokenTypes.Keyword;
-            _LinqTypes["internal"] = LinqTokenTypes.Keyword;
-            _LinqTypes["protected"] = LinqTokenTypes.Keyword;
-            _LinqTypes["params"] = LinqTokenTypes.Keyword;
-            _LinqTypes["ref"] = LinqTokenTypes.Keyword;
-            _LinqTypes["out"] = LinqTokenTypes.Keyword;
-            _LinqTypes["abstract"] = LinqTokenTypes.Keyword;
-            _LinqTypes["async"] = LinqTokenTypes.Keyword;
-            _LinqTypes["const"] = LinqTokenTypes.Keyword;
-            _LinqTypes["event"] = LinqTokenTypes.Keyword;
-            _LinqTypes["extern"] = LinqTokenTypes.Keyword;
-            _LinqTypes["new"] = LinqTokenTypes.Keyword;
-            _LinqTypes["override"] = LinqTokenTypes.Keyword;
-            _LinqTypes["partial"] = LinqTokenTypes.Keyword;
-            _LinqTypes["readonly"] = LinqTokenTypes.Keyword;
-            _LinqTypes["sealed"] = LinqTokenTypes.Keyword;
-            _LinqTypes["static"] = LinqTokenTypes.Keyword;
-            _LinqTypes["void"] = LinqTokenTypes.Keyword;
-            _LinqTypes["unsafe"] = LinqTokenTypes.Keyword;
-            _LinqTypes["virtual"] = LinqTokenTypes.Keyword;
-            _LinqTypes["volatile"] = LinqTokenTypes.Keyword;
-            _LinqTypes["if"] = LinqTokenTypes.Keyword;
-            _LinqTypes["else"] = LinqTokenTypes.Keyword;
-            _LinqTypes["switch"] = LinqTokenTypes.Keyword;
-            _LinqTypes["case"] = LinqTokenTypes.Keyword;
-            _LinqTypes["do"] = LinqTokenTypes.Keyword;
-            _LinqTypes["for"] = LinqTokenTypes.Keyword;
-            _LinqTypes["foreach"] = LinqTokenTypes.Keyword;
-            _LinqTypes["in"] = LinqTokenTypes.Keyword;
-            _LinqTypes["while"] = LinqTokenTypes.Keyword;
-            _LinqTypes["break"] = LinqTokenTypes.Keyword;
-            _LinqTypes["continue"] = LinqTokenTypes.Keyword;
-            _LinqTypes["default"] = LinqTokenTypes.Keyword;
-            _LinqTypes["goto"] = LinqTokenTypes.Keyword;
-            _LinqTypes["return"] = LinqTokenTypes.Keyword;
-            _LinqTypes["yield"] = LinqTokenTypes.Keyword;
-            _LinqTypes["throw"] = LinqTokenTypes.Keyword;
-            _LinqTypes["try"] = LinqTokenTypes.Keyword;
-            _LinqTypes["catch"] = LinqTokenTypes.Keyword;
-            _LinqTypes["finally"] = LinqTokenTypes.Keyword;
-            _LinqTypes["checked"] = LinqTokenTypes.Keyword;
-            _LinqTypes["unchecked"] = LinqTokenTypes.Keyword;
-            _LinqTypes["fixed"] = LinqTokenTypes.Keyword;
-            _LinqTypes["int"] = LinqTokenTypes.Keyword;
-            _LinqTypes["double"] = LinqTokenTypes.Keyword;
-            _LinqTypes["string"] = LinqTokenTypes.Keyword;
-            _LinqTypes["var"] = LinqTokenTypes.Keyword;
-            _LinqTypes["lock"] = LinqTokenTypes.Keyword;
-            _LinqTypes[" "] = LinqTokenTypes.WhiteSpace;
-            _LinqTypes[","] = LinqTokenTypes.Punctuation;
-            _LinqTypes["{"] = LinqTokenTypes.Separator;
-            _LinqTypes["}"] = LinqTokenTypes.Separator;
-            _LinqTypes["   "] = LinqTokenTypes.Literal;
+            _LinqTypes[LinqTokenTypes.whitespace.ToString()] = LinqTokenTypes.whitespace;
+            _LinqTypes[LinqTokenTypes.number.ToString()] = LinqTokenTypes.number;
+            _LinqTypes[LinqTokenTypes.identifier.ToString()] = LinqTokenTypes.identifier;
+            _LinqTypes[LinqTokenTypes.comment.ToString()] = LinqTokenTypes.comment;
+            _LinqTypes[LinqTokenTypes.@operator.ToString()] = LinqTokenTypes.@operator;
+            _LinqTypes[LinqTokenTypes.unknown.ToString()] = LinqTokenTypes.unknown;
+            _LinqTypes[LinqTokenTypes.keyword.ToString()] = LinqTokenTypes.keyword;
+            _LinqTypes[LinqTokenTypes.punctuation.ToString()] = LinqTokenTypes.punctuation;
+            _LinqTypes[LinqTokenTypes.separator.ToString()] = LinqTokenTypes.separator;
+            _LinqTypes[LinqTokenTypes.literal.ToString()] = LinqTokenTypes.literal;
         }
 
         public event EventHandler<SnapshotSpanEventArgs> TagsChanged
@@ -168,198 +44,25 @@ namespace LinqLanguageEditor2022.Tokens
             {
                 ITextSnapshotLine containingLine = curSpan.Start.GetContainingLine();
                 int curLoc = containingLine.Start.Position;
-                string[] tokens = containingLine.GetText().ToLower().Split(' ');
-
-                foreach (string LinqToken in tokens)
+                //string[] tokens = containingLine.GetText().ToLower().Split(' ');
+                //string lineText = containingLine.GetText().ToLower().Trim(' ', '\t', '\r', '\n');
+                string lineText = containingLine.GetText().ToLower();
+                var tokens = SyntaxFactory.ParseTokens(lineText);
+                foreach (var token in tokens)
                 {
-                    string linqToken = LinqToken.Trim(' ', '\t', '\r', '\n');
-                    if (!_LinqTypes.ContainsKey(linqToken) && linqToken != "")
+                    string currentToken = ClassificationHelpers.GetClassification(token);
+                    if (token.Kind() != SyntaxKind.EndOfFileToken)
                     {
-                        if (linqToken.StartsWith("debug") || linqToken.StartsWith("console"))
-                        {
-                            List<string> lineTokens = BreakCodeLineIntoTokens(linqToken, analyzer);
-
-                            if (LinqToken.Length > 0)
-                            {
-                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
-                                if (tokenSpan.IntersectsWith(curSpan))
-                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Identifier));
-                            }
-                        }
-                        else if (linqToken.Contains("result") || linqToken.Contains("number"))
-                        {
-                            if (LinqToken.Length > 0)
-                            {
-                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
-                                if (tokenSpan.IntersectsWith(curSpan))
-                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Variable));
-                            }
-                        }
-                        else if (linqToken.Contains(".writeLine"))
-                        {
-                            if (LinqToken.Length > 0)
-                            {
-                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
-                                if (tokenSpan.IntersectsWith(curSpan))
-                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.QueryFilter));
-                            }
-                        }
-                        else if (linqToken.Contains("int") && linqToken.Contains("[]"))
-                        {
-                            string[] tempArray = { "int", "[]" };
-                            foreach (string LinqTemp in tempArray)
-                            {
-                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
-                                if (tokenSpan.IntersectsWith(curSpan))
-                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(_LinqTypes[LinqTemp]));
-                            }
-
-                        }
-                        else if (linqToken.Contains("string") && linqToken.Contains("[]"))
-                        {
-                            string[] tempArray = { "string", "[]" };
-                            foreach (string LinqTemp in tempArray)
-                            {
-                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
-                                if (tokenSpan.IntersectsWith(curSpan))
-                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(_LinqTypes[LinqTemp]));
-                            }
-                        }
-                        else if (linqToken.Contains("result") || linqToken.Contains("number"))
-                        {
-                            if (LinqToken.Length > 0)
-                            {
-                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
-                                if (tokenSpan.IntersectsWith(curSpan))
-                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Variable));
-                            }
-                        }
-                        else if (linqToken.Contains(",") && linqToken.EndsWith(",") && linqToken.Length > 1)
-                        {
-                            string[] tempArray = linqToken.Split(',');
-                            if (int.TryParse(tempArray[0], out _))
-                            {
-                                foreach (string LinqTemp in tempArray)
-                                {
-                                    if (LinqTemp == ",")
-                                    {
-                                        var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
-                                        if (tokenSpan.IntersectsWith(curSpan))
-                                            yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Punctuation));
-                                    }
-                                    else if (int.TryParse(LinqTemp, out _))
-                                    {
-                                        if (linqToken.Length > 0)
-                                        {
-                                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
-                                            if (tokenSpan.IntersectsWith(curSpan))
-                                                yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Number));
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (linqToken.Length > 0)
-                                        {
-                                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
-                                            if (tokenSpan.IntersectsWith(curSpan))
-                                                yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Identifier));
-                                        }
-                                    }
-                                }
-                            }
-                            else if (linqToken.Contains(".aggregate") || linqToken.Contains(".where") || linqToken.Contains(".all") || linqToken.Contains(".any") || linqToken.Contains(".startswith") || linqToken.Contains(".distinct") || linqToken.Contains(".writeLine"))
-                            {
-                                if (LinqToken.Length > 0)
-                                {
-                                    var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
-                                    if (tokenSpan.IntersectsWith(curSpan))
-                                        yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.QueryFilter));
-                                }
-                            }
-                        }
-                        else if (linqToken.Contains(".aggregate") || linqToken.Contains(".where") || linqToken.Contains(".all") || linqToken.Contains(".any") || linqToken.Contains(".startswith") || linqToken.Contains(".distinct") || linqToken.Contains(".writeLine"))
-                        {
-                            if (LinqToken.Length > 0)
-                            {
-                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
-                                if (tokenSpan.IntersectsWith(curSpan))
-                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.QueryFilter));
-                            }
-                        }
-                        else if (int.TryParse(linqToken, out _))
-                        {
-                            if (LinqToken.Length > 0)
-                            {
-                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
-                                if (tokenSpan.IntersectsWith(curSpan))
-                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Number));
-                            }
-                        }
-                        else
-                        {
-                            if (linqToken.Length > 0)
-                            {
-                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
-                                if (tokenSpan.IntersectsWith(curSpan))
-                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Identifier));
-                            }
-                        }
-                    }
-                    else if (linqToken.StartsWith("debug") || linqToken.StartsWith("console"))
-                    {
-                        List<string> lineTokens = BreakCodeLineIntoTokens(linqToken, analyzer);
-
-                        if (LinqToken.Length > 0)
-                        {
-                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
-                            if (tokenSpan.IntersectsWith(curSpan))
-                                yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Identifier));
-                        }
-                    }
-                    else if (linqToken.Contains("result") || linqToken.Contains("number"))
-                    {
-                        if (LinqToken.Length > 0)
-                        {
-                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
-                            if (tokenSpan.IntersectsWith(curSpan))
-                                yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.Variable));
-                        }
-                    }
-                    else if (linqToken.Contains(".writeLine"))
-                    {
-                        if (LinqToken.Length > 0)
-                        {
-                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
-                            if (tokenSpan.IntersectsWith(curSpan))
-                                yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(LinqTokenTypes.QueryFilter));
-                        }
-                    }
-                    else if (_LinqTypes.ContainsKey(linqToken))
-                    {
-                        var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, LinqToken.Length));
+                        //var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(token.FullSpan.Start, token.ValueText.Length));
+                        var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, token.ValueText.Length));
                         if (tokenSpan.IntersectsWith(curSpan))
-                            yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag(_LinqTypes[linqToken]));
+                        {
+                            yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag((LinqTokenTypes)Enum.Parse(typeof(LinqTokenTypes), currentToken.ToLower())));
+                        }
                     }
-                    //add an extra char location because of the space
-                    curLoc += LinqToken.Length + 1;
+                    curLoc += token.ValueText.Length + 1;
                 }
             }
-        }
-        static List<string> BreakCodeLineIntoTokens(string codeLine, LinqLexicalAnalysis analyzer)
-        {
-            List<string> tokens = new() { };
-            // analyzer.Parse(text);
-            while (codeLine != null)
-            {
-                codeLine = codeLine.Trim(' ', '\t');
-                tokens.Add(analyzer.GetNextLexicalAtom(ref codeLine));
-                if (codeLine == "")
-                {
-                    return tokens;
-                }
-            }
-            return tokens;
-
         }
 
     }

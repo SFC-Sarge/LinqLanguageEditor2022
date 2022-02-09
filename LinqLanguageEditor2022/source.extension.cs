@@ -12,7 +12,7 @@ namespace LinqLanguageEditor2022
         public const string Name = "LinqLanguageEditor2022";
         public const string Description = @"Using Linq Editor inside of Visual Studio ToolWindow to run and test linq queries.";
         public const string Language = "en-US";
-        public const string Version = "1.10";
+        public const string Version = "1.16";
         public const string Author = "Danny McNaught";
         public const string Tags = "";
     }
