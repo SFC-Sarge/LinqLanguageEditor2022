@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace LinqLanguageEditor2022.ToolWindows
 {
-    public class MyToolWindow : BaseToolWindow<MyToolWindow>
+    public class LinqToolWindow : BaseToolWindow<LinqToolWindow>
     {
         public override string GetTitle(int toolWindowId) => "My Linq Query Tool Window";
 
@@ -17,8 +17,8 @@ namespace LinqLanguageEditor2022.ToolWindows
         public override async Task<FrameworkElement> CreateAsync(int toolWindowId, CancellationToken cancellationToken)
         {
             Project project = await VS.Solutions.GetActiveProjectAsync();
-            ToolWindowMessenger toolWindowMessenger = await Package.GetServiceAsync<ToolWindowMessenger, ToolWindowMessenger>();
-            return new MyToolWindowControl(project, toolWindowMessenger);
+            LinqToolWindowMessenger toolWindowMessenger = await Package.GetServiceAsync<LinqToolWindowMessenger, LinqToolWindowMessenger>();
+            return new LinqToolWindowControl(project, toolWindowMessenger);
         }
 
         [Guid("a3ac07c0-309a-4679-bf3b-a2de12944d66")]
@@ -27,7 +27,7 @@ namespace LinqLanguageEditor2022.ToolWindows
             public Pane()
             {
                 BitmapImageMoniker = KnownMonikers.ToolWindow;
-                ToolBar = new CommandID(PackageGuids.LinqLanguageEditor2022, PackageIds.TWindowToolbar);
+                ToolBar = new CommandID(PackageGuids.LinqLanguageEditor2022, PackageIds.LinqTWindowToolbar);
             }
         }
     }

@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace LinqLanguageEditor2022.Classification
 {
-    public static class ClassificationHelpers
+    public static class LinqClassificationHelpers
     {
         private const string FromKeyword = "from";
         private const string ValueKeyword = "value";

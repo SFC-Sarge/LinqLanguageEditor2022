@@ -16,10 +16,10 @@ using Project = Community.VisualStudio.Toolkit.Project;
 
 namespace LinqLanguageEditor2022.ToolWindows
 {
-    public partial class MyToolWindowControl : UserControl
+    public partial class LinqToolWindowControl : UserControl
     {
         OutputWindowPane _pane = null;
-        public ToolWindowMessenger ToolWindowMessenger = null;
+        public LinqToolWindowMessenger ToolWindowMessenger = null;
         public Project _activeProject;
         public string _activeFile;
         public string _myNamespace = null;
@@ -27,20 +27,20 @@ namespace LinqLanguageEditor2022.ToolWindows
         public string dirLPRun7 = null;
         public string fileLPRun7 = null;
 
-        public MyToolWindowControl(Project activeProject, ToolWindowMessenger toolWindowMessenger)
+        public LinqToolWindowControl(Project activeProject, LinqToolWindowMessenger toolWindowMessenger)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
             InitializeComponent();
             if (toolWindowMessenger == null)
             {
-                toolWindowMessenger = new ToolWindowMessenger();
+                toolWindowMessenger = new LinqToolWindowMessenger();
             }
             ToolWindowMessenger = toolWindowMessenger;
             toolWindowMessenger.MessageReceived += OnMessageReceived;
             VS.Events.SolutionEvents.OnAfterCloseSolution += OnAfterCloseSolution;
 
-            dirLPRun7 = Path.GetDirectoryName(typeof(MyToolWindow).Assembly.Location);
+            dirLPRun7 = Path.GetDirectoryName(typeof(LinqToolWindow).Assembly.Location);
             fileLPRun7 = Path.Combine(dirLPRun7, Constants.solutionToolWindowsFolderName, Constants.lPRun7Executable);
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
@@ -200,12 +200,12 @@ namespace LinqLanguageEditor2022.ToolWindows
 
                         await _pane.ClearAsync();
                         LinqPadResults.Children.Clear();
-                        if (AdvancedOptions.Instance.UseLinqPadDumpWindow == true)
+                        if (LinqAdvancedOptions.Instance.UseLinqPadDumpWindow == true)
                         {
                             //await _pane.WriteLineAsync($"{currentSelection} \r\n\r\n{Constants.currentSelectionQuery} = {queryResult}");
                             await _pane.WriteLineAsync($"{currentSelection} \r\n\r\n{Constants.currentSelectionQuery} = {queryResult}");
                         }
-                        if (AdvancedOptions.Instance.EnableToolWindowResults == true)
+                        if (LinqAdvancedOptions.Instance.EnableToolWindowResults == true)
                         {
                             //TextBlock selectedQueryResult = new TextBlock { Text = $"{currentSelection} \r\n\r\n{Constants.currentSelectionQuery} = {queryResult}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                             selectedQueryResult = new() { Text = $"{Constants.currentSelectionQuery} = {queryResult}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
@@ -218,7 +218,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         File.WriteAllText(tempQueryPath, $"{currentSelection}".Trim());
 
                         //await OpenDocumentWithSpecificEditorAsync(tempQueryPath, myEditor, myEditorView);
-                        if (AdvancedOptions.Instance.OpenInVSPreviewTab == true)
+                        if (LinqAdvancedOptions.Instance.OpenInVSPreviewTab == true)
                         {
                             await VS.Documents.OpenInPreviewTabAsync(tempQueryPath);
                         }

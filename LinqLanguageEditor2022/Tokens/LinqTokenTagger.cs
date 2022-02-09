@@ -50,7 +50,7 @@ namespace LinqLanguageEditor2022.Tokens
                 var tokens = SyntaxFactory.ParseTokens(lineText);
                 foreach (var token in tokens)
                 {
-                    string currentToken = ClassificationHelpers.GetClassification(token);
+                    string currentToken = LinqClassificationHelpers.GetClassification(token);
                     if (token.Kind() != SyntaxKind.EndOfFileToken)
                     {
                         //var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(token.FullSpan.Start, token.ValueText.Length));

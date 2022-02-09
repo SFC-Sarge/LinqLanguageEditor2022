@@ -6,7 +6,7 @@ using System.ComponentModel.Composition;
 
 namespace LinqLanguageEditor2022.Classification
 {
-    internal static class ClassificationType
+    internal static class LinqClassificationType
     {
         #region Type definition
 

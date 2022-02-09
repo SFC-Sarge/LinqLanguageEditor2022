@@ -1,6 +1,6 @@
 ﻿namespace LinqLanguageEditor2022
 {
-    public class ToolWindowMessenger
+    public class LinqToolWindowMessenger
     {
         public void Send(string message)
         {

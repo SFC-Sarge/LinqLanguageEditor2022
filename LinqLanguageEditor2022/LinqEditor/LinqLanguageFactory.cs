@@ -13,7 +13,7 @@ namespace LinqLanguageEditor2022.LinqEditor
 {
 
     [ComVisible(true)]
-    [Guid(PackageGuids.EditorFactoryString)]
+    [Guid(PackageGuids.LinqEditorFactoryString)]
     internal sealed class LinqLanguageFactory : LanguageBase
     {
         [Export]

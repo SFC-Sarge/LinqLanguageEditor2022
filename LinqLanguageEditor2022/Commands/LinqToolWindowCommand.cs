@@ -2,12 +2,12 @@
 
 namespace LinqLanguageEditor2022.Commands
 {
-    [Command(PackageIds.MyCommand)]
-    internal sealed class MyToolWindowCommand : BaseCommand<MyToolWindowCommand>
+    [Command(PackageIds.LinqCommand)]
+    internal sealed class LinqToolWindowCommand : BaseCommand<LinqToolWindowCommand>
     {
         protected override Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
-            return MyToolWindow.ShowAsync();
+            return LinqToolWindow.ShowAsync();
         }
     }
 }

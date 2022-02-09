@@ -13,8 +13,8 @@ namespace LinqLanguageEditor2022
     /// </summary>
     internal sealed partial class PackageGuids
     {
-        public const string EditorFactoryString = "c09b2281-c414-4773-961f-f5b613c49ef3";
-        public static Guid EditorFactory = new Guid(EditorFactoryString);
+        public const string LinqEditorFactoryString = "c09b2281-c414-4773-961f-f5b613c49ef3";
+        public static Guid LinqEditorFactory = new Guid(LinqEditorFactoryString);
 
         public const string LinqLanguageEditor2022String = "472acd30-b221-4944-90f2-d763bcfbc8ab";
         public static Guid LinqLanguageEditor2022 = new Guid(LinqLanguageEditor2022String);
@@ -25,12 +25,12 @@ namespace LinqLanguageEditor2022
     /// </summary>
     internal sealed partial class PackageIds
     {
-        public const int MyCommand = 0x0100;
-        public const int TWindowToolbar = 0x1000;
-        public const int TWindowToolbarGroup = 0x1050;
+        public const int LinqCommand = 0x0100;
+        public const int LinqTWindowToolbar = 0x1000;
+        public const int LinqTWindowToolbarGroup = 0x1050;
         public const int DisplayLinqPadStatementsResults = 0x0111;
         public const int DisplayLinqPadMethodResults = 0x0112;
-        public const int EditorLinqPad = 0x0114;
-        public const int EditorGroup = 0x0001;
+        public const int LinqEditorLinqPad = 0x0114;
+        public const int LinqEditorGroup = 0x0001;
     }
 }

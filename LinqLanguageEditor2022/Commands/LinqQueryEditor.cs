@@ -1,7 +1,7 @@
 ﻿
 namespace LinqLanguageEditor2022.Commands
 {
-    [Command(PackageIds.EditorLinqPad)]
+    [Command(PackageIds.LinqEditorLinqPad)]
     internal sealed class LinqQueryEditor : BaseCommand<LinqQueryEditor>
     {
         private const string _runEditorLinqQuery = "Run Editor Linq Query.";
@@ -12,7 +12,7 @@ namespace LinqLanguageEditor2022.Commands
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                ToolWindowMessenger messenger = await Package.GetServiceAsync<ToolWindowMessenger, ToolWindowMessenger>();
+                LinqToolWindowMessenger messenger = await Package.GetServiceAsync<LinqToolWindowMessenger, LinqToolWindowMessenger>();
                 messenger.Send(_runEditorLinqQuery);
             }).FireAndForget();
         }

@@ -1,15 +1,9 @@
 ﻿using System.ComponentModel;
-using System.Runtime.InteropServices;
 
 namespace LinqLanguageEditor2022.Options
 {
-    internal partial class OptionsProvider
-    {
-        [ComVisible(true)]
-        public class AdvancedOptions : BaseOptionPage<Options.AdvancedOptions> { }
-    }
 
-    public class AdvancedOptions : BaseOptionModel<AdvancedOptions>
+    public class LinqAdvancedOptions : BaseOptionModel<LinqAdvancedOptions>
     {
         [Category("Results")]
         [DisplayName("Open Linq Query and result in Visual Studio Preview Tab")]

@@ -5,8 +5,8 @@
         <DisplayName>LinqLanguageEditor2022</DisplayName>
         <Description xml:space="preserve">Using Linq Editor inside of Visual Studio ToolWindow to run and test linq queries.</Description>
         <MoreInfo>https://github.com/SFC-Sarge/LinqLanguageEditor2022</MoreInfo>
-        <Icon>Resources\Icon.png</Icon>
-        <PreviewImage>Resources\Icon.png</PreviewImage>
+        <Icon>Resources\LinqIcon.png</Icon>
+        <PreviewImage>Resources\LinqIcon.png</PreviewImage>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
