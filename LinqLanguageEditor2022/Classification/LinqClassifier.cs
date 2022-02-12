@@ -1,14 +1,4 @@
-﻿//***************************************************************************
-//
-//    Copyright (c) Microsoft Corporation. All rights reserved.
-//    This code is licensed under the Visual Studio SDK license terms.
-//    THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
-//    ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY
-//    IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
-//    PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
-//
-//***************************************************************************
-
+﻿
 using LinqLanguageEditor2022.Tokens;
 
 namespace LinqLanguageEditor2022.Classification
@@ -32,6 +22,8 @@ namespace LinqLanguageEditor2022.Classification
         [Export]
         [Name(Constants.LinqLanguageName)]
         [BaseDefinition("code")]
+        [BaseDefinition("Intellisense")]
+        [BaseDefinition(Constants.LinqBaselanguageName)]
         internal static ContentTypeDefinition LinqContentType = null;
 
         [Export]
@@ -48,8 +40,7 @@ namespace LinqLanguageEditor2022.Classification
         public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag
         {
 
-            ITagAggregator<LinqTokenTag> linqTagAggregator =
-                                            aggregatorFactory.CreateTagAggregator<LinqTokenTag>(buffer);
+            ITagAggregator<LinqTokenTag> linqTagAggregator = aggregatorFactory.CreateTagAggregator<LinqTokenTag>(buffer);
 
             return new LinqClassifier(buffer, linqTagAggregator, ClassificationTypeRegistry) as ITagger<T>;
         }
@@ -64,9 +55,7 @@ namespace LinqLanguageEditor2022.Classification
         /// <summary>
         /// Construct the classifier and define search tokens
         /// </summary>
-        internal LinqClassifier(ITextBuffer buffer,
-                               ITagAggregator<LinqTokenTag> linqTagAggregator,
-                               IClassificationTypeRegistryService typeService)
+        internal LinqClassifier(ITextBuffer buffer, ITagAggregator<LinqTokenTag> linqTagAggregator, IClassificationTypeRegistryService typeService)
         {
             _buffer = buffer;
             _aggregator = linqTagAggregator;
@@ -98,9 +87,7 @@ namespace LinqLanguageEditor2022.Classification
             foreach (var tagSpan in _aggregator.GetTags(spans))
             {
                 var tagSpans = tagSpan.Span.GetSpans(spans[0].Snapshot);
-                yield return
-                    new TagSpan<ClassificationTag>(tagSpans[0],
-                                                   new ClassificationTag(_linqTypes[tagSpan.Tag.type]));
+                yield return new TagSpan<ClassificationTag>(tagSpans[0], new ClassificationTag(_linqTypes[tagSpan.Tag.type]));
             }
         }
     }

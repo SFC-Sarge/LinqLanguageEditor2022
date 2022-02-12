@@ -12,8 +12,8 @@ namespace LinqLanguageEditor2022
         public const string Name = "LinqLanguageEditor2022";
         public const string Description = @"Linq Language Editor for Visual Studio 2022";
         public const string Language = "en-US";
-        public const string Version = "1.6";
+        public const string Version = "1.9";
         public const string Author = "Danny McNaught";
-        public const string Tags = "";
+        public const string Tags = "LINQ, Editor, ToolWindow";
     }
 }

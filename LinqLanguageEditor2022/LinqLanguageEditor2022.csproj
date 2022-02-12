@@ -46,6 +46,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Classification\ClassificationType.cs" />
+    <Compile Include="Classification\LinqClassifier.cs" />
     <Compile Include="Classification\LinqComment.cs" />
     <Compile Include="Classification\LinqClassificationHelpers.cs" />
     <Compile Include="Classification\LinqIdentifier.cs" />
@@ -85,6 +86,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="README.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="ToolWindows\LINQPad.Runtime.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
