@@ -97,8 +97,6 @@ namespace LinqLanguageEditor2022.Tokens
             {
                 ITextSnapshotLine containingLine = curSpan.Start.GetContainingLine();
                 int curLoc = containingLine.Start.Position;
-                //string[] tokens = containingLine.GetText().ToLower().Split(' ');
-                //string lineText = containingLine.GetText().ToLower().Trim(' ', '\t', '\r', '\n');
                 string lineText = containingLine.GetText().ToLower();
                 var tokens = SyntaxFactory.ParseTokens(lineText);
                 foreach (var token in tokens)
@@ -106,18 +104,23 @@ namespace LinqLanguageEditor2022.Tokens
                     string currentToken = LinqClassificationHelpers.GetClassification(token);
                     if (token.Kind() != SyntaxKind.EndOfFileToken)
                     {
-                        //var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(token.FullSpan.Start, token.ValueText.Length));
-                        var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, token.ValueText.Length));
-                        if (tokenSpan.IntersectsWith(curSpan))
+                        if (curLoc <= curSpan.Length)
                         {
-                            //yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag((LinqTokenTypes)Enum.Parse(typeof(LinqTokenTypes), currentToken.ToLower())));
-                            yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag((LinqTokenTypes)Enum.Parse(typeof(LinqTokenTypes), currentToken.ToLower())));
+                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, token.ValueText.Length));
+                            if (tokenSpan.IntersectsWith(curSpan))
+                            {
+                                yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag((LinqTokenTypes)Enum.Parse(typeof(LinqTokenTypes), currentToken.ToLower())));
+                            }
                         }
+                        else
+                        {
+                            continue;
+                        }
+                        curLoc += token.ValueText.Length + 1;
                     }
-                    curLoc += token.ValueText.Length + 1;
                 }
             }
-        }
 
+        }
     }
 }
