@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="Classification\LinqComment.cs" />
     <Compile Include="Classification\LinqClassificationHelpers.cs" />
-    <Compile Include="Classification\LinqClassifierProvider.cs" />
     <Compile Include="Classification\LinqIdentifier.cs" />
     <Compile Include="Classification\LinqKeyword.cs" />
     <Compile Include="Classification\LinqLiteral.cs" />
@@ -68,8 +67,6 @@
     <Compile Include="Tokens\LinqDocument.cs" />
     <Compile Include="Tokens\LinqDocumentExtensions.cs" />
     <Compile Include="Tokens\LinqTokenTag.cs" />
-    <Compile Include="Tokens\LinqTokenTagger.cs" />
-    <Compile Include="Tokens\LinqTokenTagProvider.cs" />
     <Compile Include="Tokens\LinqTokenTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\LinqToolWindowCommand.cs" />
