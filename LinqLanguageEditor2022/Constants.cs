@@ -23,6 +23,7 @@
         public const string runSelectedLinqMethod = "Run Selected Linq Method.";
         public const string runEditorLinqQuery = "Run Editor Linq Query.";
         public const string lPRun7Executable = "LPRun7-x64.exe";
+        public const string LinqEditorToolWindowTitle = "Linq Query Tool Window";
         public const string solutionToolWindowsFolderName = "ToolWindows";
 
     }

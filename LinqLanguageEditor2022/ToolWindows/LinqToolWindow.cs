@@ -10,7 +10,7 @@ namespace LinqLanguageEditor2022.ToolWindows
 {
     public class LinqToolWindow : BaseToolWindow<LinqToolWindow>
     {
-        public override string GetTitle(int toolWindowId) => "My Linq Query Tool Window";
+        public override string GetTitle(int toolWindowId) => Constants.LinqEditorToolWindowTitle;
 
         public override Type PaneType => typeof(Pane);
 
