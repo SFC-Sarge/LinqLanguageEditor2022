@@ -16,8 +16,8 @@ namespace LinqLanguageEditor2022
         public const string LinqEditorFactoryString = "b09b2281-c414-4773-961f-f5b613c49ef3";
         public static Guid LinqEditorFactory = new Guid(LinqEditorFactoryString);
 
-        public const string LinqLanguageString = "572acd30-b221-4944-90f2-d763bcfbc8ab";
-        public static Guid LinqLanguageEditor2022 = new Guid(LinqLanguageString);
+        public const string LinqLanguageEditor2022String = "572acd30-b221-4944-90f2-d763bcfbc8ab";
+        public static Guid LinqLanguageEditor2022 = new Guid(LinqLanguageEditor2022String);
     }
 
     /// <summary>

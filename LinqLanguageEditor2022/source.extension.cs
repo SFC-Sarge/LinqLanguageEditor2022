@@ -10,9 +10,9 @@ namespace LinqLanguageEditor2022
     {
         public const string Id = "LinqLanguageEditor2022.4f8f00b3-092c-4ae1-8d8b-40071b95069d";
         public const string Name = "LinqLanguageEditor2022";
-        public const string Description = @"Empty VSIX Project.";
+        public const string Description = @"Linq Language Editor for Visual Studio 2022";
         public const string Language = "en-US";
-        public const string Version = "1.2";
+        public const string Version = "1.5";
         public const string Author = "Danny McNaught";
         public const string Tags = "";
     }

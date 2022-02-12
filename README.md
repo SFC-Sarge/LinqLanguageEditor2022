@@ -1,4 +1,4 @@
-# LinqLanguge
+# LinqLanguageEditor2022
 
 <!--Start-Of-TOC-->
    - [My Linq Query Tool Window](#My-Linq-Query-Tool-Window)

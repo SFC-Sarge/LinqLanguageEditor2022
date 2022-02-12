@@ -6,10 +6,10 @@
   <Include href="KnownImageIds.vsct"/>
   <Include href="VSGlobals.vsct"/>
 
-  <Commands package="LinqLanguage">
+  <Commands package="LinqLanguageEditor2022">
     <!--This section defines the elements the user can interact with, like a menu command or a button or combo box in a toolbar. -->
     <Menus>
-      <Menu guid="LinqLanguage" id="LinqTWindowToolbar" type="ToolWindowToolbar">
+      <Menu guid="LinqLanguageEditor2022" id="LinqTWindowToolbar" type="ToolWindowToolbar">
         <CommandFlag>DefaultDocked</CommandFlag>
         <Strings>
           <ButtonText>Tool Window Toolbar</ButtonText>
@@ -18,17 +18,17 @@
     </Menus>
 
     <Groups>
-      <Group guid="LinqLanguage" id="LinqEditorGroup" priority="9000">
+      <Group guid="LinqLanguageEditor2022" id="LinqEditorGroup" priority="9000">
         <Parent guid="guidSHLMainMenu" id ="IDM_VS_CTXT_CODEWIN"/>
       </Group>
-      <Group guid="LinqLanguage" id="LinqTWindowToolbarGroup" priority="0x0000">
-        <Parent guid="LinqLanguage" id="LinqTWindowToolbar" />
+      <Group guid="LinqLanguageEditor2022" id="LinqTWindowToolbarGroup" priority="0x0000">
+        <Parent guid="LinqLanguageEditor2022" id="LinqTWindowToolbar" />
       </Group>
     </Groups>
 
     <Buttons>
 
-      <Button guid="LinqLanguage" id="LinqCommand" priority="0x0100" type="Button">
+      <Button guid="LinqLanguageEditor2022" id="LinqCommand" priority="0x0100" type="Button">
         <Parent guid="VSMainMenu" id="View.DevWindowsGroup.OtherWindows.Group1"/>
         <Icon guid="ImageCatalogGuid" id="ToolWindow" />
         <CommandFlag>IconIsMoniker</CommandFlag>
@@ -37,8 +37,8 @@
           <LocCanonicalName>.View.MyToolWindow</LocCanonicalName>
         </Strings>
       </Button>
-      <Button guid="LinqLanguage" id="DisplayLinqPadStatementsResults" priority="0x0001" type="Button">
-        <Parent guid="LinqLanguage" id="LinqTWindowToolbarGroup"/>
+      <Button guid="LinqLanguageEditor2022" id="DisplayLinqPadStatementsResults" priority="0x0001" type="Button">
+        <Parent guid="LinqLanguageEditor2022" id="LinqTWindowToolbarGroup"/>
         <Icon guid="ImageCatalogGuid" id="Linq"/>
         <CommandFlag>IconIsMoniker</CommandFlag>
         <!--<CommandFlag>IconAndText</CommandFlag>-->
@@ -46,8 +46,8 @@
           <ButtonText>Run Selected Query Statement!</ButtonText>
         </Strings>
       </Button>
-      <Button guid="LinqLanguage" id="DisplayLinqPadMethodResults" priority="0x0002" type="Button">
-        <Parent guid="LinqLanguage" id="LinqTWindowToolbarGroup"/>
+      <Button guid="LinqLanguageEditor2022" id="DisplayLinqPadMethodResults" priority="0x0002" type="Button">
+        <Parent guid="LinqLanguageEditor2022" id="LinqTWindowToolbarGroup"/>
         <Icon guid="ImageCatalogGuid" id="LinkValidator"/>
         <CommandFlag>IconIsMoniker</CommandFlag>
         <!--<CommandFlag>IconAndText</CommandFlag>-->
@@ -55,8 +55,8 @@
           <ButtonText>Run Selected Query Method!</ButtonText>
         </Strings>
       </Button>
-      <Button guid="LinqLanguage" id="LinqEditorLinqPad" priority="0x0003" type="Button">
-        <Parent guid="LinqLanguage" id="LinqTWindowToolbarGroup"/>
+      <Button guid="LinqLanguageEditor2022" id="LinqEditorLinqPad" priority="0x0003" type="Button">
+        <Parent guid="LinqLanguageEditor2022" id="LinqTWindowToolbarGroup"/>
         <Icon guid="ImageCatalogGuid" id="Editor"/>
         <CommandFlag>IconIsMoniker</CommandFlag>
         <!--<CommandFlag>IconAndText</CommandFlag>-->
@@ -69,7 +69,7 @@
 
   <Symbols>
     <GuidSymbol name="LinqEditorFactory" value="{B09B2281-C414-4773-961F-F5B613C49EF3}" />
-    <GuidSymbol name="LinqLanguage" value="{572ACD30-B221-4944-90F2-D763BCFBC8AB}">
+    <GuidSymbol name="LinqLanguageEditor2022" value="{572ACD30-B221-4944-90F2-D763BCFBC8AB}">
       <IDSymbol name="LinqCommand" value="0x0100" />
       <IDSymbol name="LinqTWindowToolbar" value="0x1000" />
       <IDSymbol name="LinqTWindowToolbarGroup" value="0x1050" />
