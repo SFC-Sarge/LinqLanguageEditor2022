@@ -11,8 +11,8 @@ namespace LinqLanguageEditor2022.Classification
     /// Defines the editor format for the LinqSeparator classification type. Text is colored Red
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]
-    [ClassificationType(ClassificationTypeNames = "Separator")]
-    [Name("Separator")]
+    [ClassificationType(ClassificationTypeNames = "linqSeparator")]
+    [Name("linqSeparator")]
     //this should be visible to the end user
     [UserVisible(true)]
     //set the priority to be after the default classifiers
@@ -24,7 +24,7 @@ namespace LinqLanguageEditor2022.Classification
         /// </summary>
         public LinqSeparator()
         {
-            DisplayName = "Separator"; //human readable version of the name
+            DisplayName = "linqSeparator"; //human readable version of the name
             ForegroundColor = Colors.LightCyan;
 
         }

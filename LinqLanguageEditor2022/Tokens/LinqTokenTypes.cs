@@ -1,4 +1,9 @@
 ﻿
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
 namespace LinqLanguageEditor2022.Tokens
 {
     public enum LinqTokenTypes
@@ -14,5 +19,6 @@ namespace LinqLanguageEditor2022.Tokens
         whitespace,
         punctuation,
         separator,
+
     }
 }

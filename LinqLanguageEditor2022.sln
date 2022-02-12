@@ -5,6 +5,56 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqLanguageEditor2022", "LinqLanguageEditor2022\LinqLanguageEditor2022.csproj", "{DB8E8034-CAB0-4846-A752-BD9013930DF4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4DD475F5-9439-463D-9169-2A8BE777D965}"
+	ProjectSection(SolutionItems) = preProject
+		adding-an-lsp-extension.md = adding-an-lsp-extension.md
+		Attributed programming model overview (MEF).md = Attributed programming model overview (MEF).md
+		..\VSIXLinqPadForVS\C# Keywords.md = ..\VSIXLinqPadForVS\C# Keywords.md
+		Colorizer Class.md = Colorizer Class.md
+		Create an extension with an editor item template.md = Create an extension with an editor item template.md
+		Create custom editors and designers.md = Create custom editors and designers.md
+		..\VSIXLinqPadForVS\CSharp Operators.md = ..\VSIXLinqPadForVS\CSharp Operators.md
+		Editor imports.md = Editor imports.md
+		ExportAttribute Class.md = ExportAttribute Class.md
+		ExportAttribute Constructors.md = ExportAttribute Constructors.md
+		Extend the editor and language services.md = Extend the editor and language services.md
+		Get started with language service and editor extensions.md = Get started with language service and editor extensions.md
+		How to Extend Visual Studio 2022 with Custom Editor and include IVsColorizer.md = How to Extend Visual Studio 2022 with Custom Editor and include IVsColorizer.md
+		ImportAttribute Class.md = ImportAttribute Class.md
+		ImportAttribute Constructors.md = ImportAttribute Constructors.md
+		Inside the editor.md = Inside the editor.md
+		IVsEditorFactory Interface.md = IVsEditorFactory Interface.md
+		Language service and editor extension points.md = Language service and editor extension points.md
+		Legacy Language Service Parser and Scanner.md = Legacy Language Service Parser and Scanner.md
+		LICENSE = LICENSE
+		Managed Extensibility Framework (MEF).md = Managed Extensibility Framework (MEF).md
+		Managed Extensibility Framework in the editor.md = Managed Extensibility Framework in the editor.md
+		markdown-cheat-sheet.md = markdown-cheat-sheet.md
+		ProvideEditorExtensionAttribute Class.md = ProvideEditorExtensionAttribute Class.md
+		README.md = README.md
+		Regular Expressions.md = Regular Expressions.md
+		test.linq = test.linq
+		TokenInfo.md = TokenInfo.md
+		Walkthrough Display light bulb suggestions.md = Walkthrough Display light bulb suggestions.md
+		Walkthrough Display matching braces.md = Walkthrough Display matching braces.md
+		Walkthrough Display QuickInfo tooltips.md = Walkthrough Display QuickInfo tooltips.md
+		Walkthrough Display statement completion.md = Walkthrough Display statement completion.md
+		Walkthrough Highlight text.md = Walkthrough Highlight text.md
+		Walkthrough Implement code snippets.md = Walkthrough Implement code snippets.md
+		Walkthrough Link a content type to a file name extension.md = Walkthrough Link a content type to a file name extension.md
+		Walkthrough Outlining.md = Walkthrough Outlining.md
+		Walkthrough Use a shortcut key with an editor extension.md = Walkthrough Use a shortcut key with an editor extension.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "media", "media", "{25F65B1A-F0EF-4A3D-9616-CC6BF9F7189B}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\DannyMcNaught\OneDrive - Computer Question\Documents\media\31880e84106e0cc841b6e0422ca46131.png = C:\Users\DannyMcNaught\OneDrive - Computer Question\Documents\media\31880e84106e0cc841b6e0422ca46131.png
+		C:\Users\DannyMcNaught\OneDrive - Computer Question\Documents\media\62f8ccded5d1d0d5b5279bd386ccac37.png = C:\Users\DannyMcNaught\OneDrive - Computer Question\Documents\media\62f8ccded5d1d0d5b5279bd386ccac37.png
+		..\VSIXLinqPadForVS\media\7bb60303d0eddd645440cddd9afafb78.png = ..\VSIXLinqPadForVS\media\7bb60303d0eddd645440cddd9afafb78.png
+		C:\Users\DannyMcNaught\OneDrive - Computer Question\Documents\media\c124b315274f77c03410bf4703606152.png = C:\Users\DannyMcNaught\OneDrive - Computer Question\Documents\media\c124b315274f77c03410bf4703606152.png
+		C:\Users\DannyMcNaught\OneDrive - Computer Question\Documents\media\ddb0b8eff4f290fed90a759f3c72bd88.png = C:\Users\DannyMcNaught\OneDrive - Computer Question\Documents\media\ddb0b8eff4f290fed90a759f3c72bd88.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -43,11 +43,11 @@ namespace LinqLanguageEditor2022
     {
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            LinqLanguageFactory Linqlanguage = new(this);
-            RegisterEditorFactory(Linqlanguage);
+            LinqLanguageFactory LinqLanguageEditor2022 = new(this);
+            RegisterEditorFactory(LinqLanguageEditor2022);
 
             AddService(typeof(LinqToolWindowMessenger), (_, _, _) => Task.FromResult<object>(new LinqToolWindowMessenger()));
-            ((IServiceContainer)this).AddService(typeof(LinqLanguageFactory), Linqlanguage, true);
+            ((IServiceContainer)this).AddService(typeof(LinqLanguageFactory), LinqLanguageEditor2022, true);
 
             await this.RegisterCommandsAsync();
 

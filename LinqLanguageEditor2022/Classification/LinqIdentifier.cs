@@ -11,8 +11,8 @@ namespace LinqLanguageEditor2022.Classification
     /// Defines the editor format for the LinqIdentifier classification type. Text is colored Aquamarine
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]
-    [ClassificationType(ClassificationTypeNames = "Identifier")]
-    [Name("Identifier")]
+    [ClassificationType(ClassificationTypeNames = "linqIdentifier")]
+    [Name("linqIdentifier")]
     //this should be visible to the end user
     [UserVisible(true)]
     //set the priority to be after the default classifiers
@@ -24,7 +24,7 @@ namespace LinqLanguageEditor2022.Classification
         /// </summary>
         public LinqIdentifier()
         {
-            DisplayName = "Identifier"; //human readable version of the name
+            DisplayName = "linqIdentifier"; //human readable version of the name
             ForegroundColor = Colors.Silver;
 
         }

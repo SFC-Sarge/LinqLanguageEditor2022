@@ -11,8 +11,8 @@ namespace LinqLanguageEditor2022.Classification
     /// Defines the editor format for the LinqNumber classification type. Text is colored LimeGreen
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]
-    [ClassificationType(ClassificationTypeNames = "Number")]
-    [Name("Number")]
+    [ClassificationType(ClassificationTypeNames = "linqNumber")]
+    [Name("linqNumber")]
     //this should be visible to the end user
     [UserVisible(true)]
     //set the priority to be after the default classifiers
@@ -24,7 +24,7 @@ namespace LinqLanguageEditor2022.Classification
         /// </summary>
         public LinqNumber()
         {
-            DisplayName = "Number"; //human readable version of the name
+            DisplayName = "linqNumber"; //human readable version of the name
             ForegroundColor = Colors.LimeGreen;
         }
     }

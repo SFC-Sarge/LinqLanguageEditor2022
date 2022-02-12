@@ -11,8 +11,8 @@ namespace LinqLanguageEditor2022.Classification
     /// Defines the editor format for the LinqLiteral classification type. Text is colored Red
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]
-    [ClassificationType(ClassificationTypeNames = "Literal")]
-    [Name("Literal")]
+    [ClassificationType(ClassificationTypeNames = "linqLiteral")]
+    [Name("linqLiteral")]
     //this should be visible to the end user
     [UserVisible(true)]
     //set the priority to be after the default classifiers
@@ -24,7 +24,7 @@ namespace LinqLanguageEditor2022.Classification
         /// </summary>
         public LinqLiteral()
         {
-            DisplayName = "Literal"; //human readable version of the name
+            DisplayName = "linqLiteral"; //human readable version of the name
             ForegroundColor = Colors.Brown;
 
         }

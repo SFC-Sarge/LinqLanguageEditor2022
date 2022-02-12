@@ -8,11 +8,11 @@ namespace LinqLanguageEditor2022
 {
     internal sealed partial class Vsix
     {
-        public const string Id = "LinqLanguageEditor2022.acbb8393-6756-4c43-acca-e353cc952b47";
+        public const string Id = "LinqLanguageEditor2022.4f8f00b3-092c-4ae1-8d8b-40071b95069d";
         public const string Name = "LinqLanguageEditor2022";
-        public const string Description = @"Using Linq Editor inside of Visual Studio ToolWindow to run and test linq queries.";
+        public const string Description = @"Empty VSIX Project.";
         public const string Language = "en-US";
-        public const string Version = "1.16";
+        public const string Version = "1.2";
         public const string Author = "Danny McNaught";
         public const string Tags = "";
     }

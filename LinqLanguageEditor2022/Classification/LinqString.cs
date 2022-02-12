@@ -11,8 +11,8 @@ namespace LinqLanguageEditor2022.Classification
     /// Defines the editor format for the LinqString classification type. Text is colored brown
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]
-    [ClassificationType(ClassificationTypeNames = "String")]
-    [Name("String")]
+    [ClassificationType(ClassificationTypeNames = "linqString")]
+    [Name("linqString")]
     //this should be visible to the end user
     [UserVisible(true)]
     //set the priority to be after the default classifiers
@@ -24,7 +24,7 @@ namespace LinqLanguageEditor2022.Classification
         /// </summary>
         public LinqString()
         {
-            DisplayName = "String"; //human readable version of the name
+            DisplayName = "linqString"; //human readable version of the name
             ForegroundColor = Colors.Brown;
         }
     }
