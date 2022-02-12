@@ -33,7 +33,7 @@
         <Icon guid="ImageCatalogGuid" id="ToolWindow" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
-          <ButtonText>My Query Tool Window</ButtonText>
+          <ButtonText>Linq Query Tool Window</ButtonText>
           <LocCanonicalName>.View.MyToolWindow</LocCanonicalName>
         </Strings>
       </Button>
@@ -68,8 +68,8 @@
   </Commands>
 
   <Symbols>
-    <GuidSymbol name="LinqEditorFactory" value="{B09B2281-C414-4773-961F-F5B613C49EF3}" />
-    <GuidSymbol name="LinqLanguageEditor2022" value="{572ACD30-B221-4944-90F2-D763BCFBC8AB}">
+    <GuidSymbol name="LinqEditorFactory" value="{0CA07535-1A01-485D-9E65-59B7384A593C}" />
+    <GuidSymbol name="LinqLanguageEditor2022" value="{41AF2C63-3A01-41DC-B52F-FCA23FE50F01}">
       <IDSymbol name="LinqCommand" value="0x0100" />
       <IDSymbol name="LinqTWindowToolbar" value="0x1000" />
       <IDSymbol name="LinqTWindowToolbarGroup" value="0x1050" />

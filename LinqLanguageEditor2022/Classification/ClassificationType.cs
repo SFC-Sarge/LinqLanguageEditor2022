@@ -21,27 +21,6 @@ namespace LinqLanguageEditor2022.Classification
         #region Type definition
 
         /// <summary>
-        /// Defines the "linqExclamation" classification type.
-        /// </summary>
-        [Export(typeof(ClassificationTypeDefinition))]
-        [Name("linq!")]
-        internal static ClassificationTypeDefinition linqExclamation = null;
-
-        /// <summary>
-        /// Defines the "linqQuestion" classification type.
-        /// </summary>
-        [Export(typeof(ClassificationTypeDefinition))]
-        [Name("linq?")]
-        internal static ClassificationTypeDefinition linqQuestion = null;
-
-        /// <summary>
-        /// Defines the "linqPeriod" classification type.
-        /// </summary>
-        [Export(typeof(ClassificationTypeDefinition))]
-        [Name("linq.")]
-        internal static ClassificationTypeDefinition linqPeriod = null;
-
-        /// <summary>
         /// Defines the "LinqComment" classification type.
         /// </summary>
         [Export(typeof(ClassificationTypeDefinition))]

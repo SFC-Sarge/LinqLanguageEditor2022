@@ -8,7 +8,7 @@ namespace LinqLanguageEditor2022
 {
     internal sealed partial class Vsix
     {
-        public const string Id = "LinqLanguageEditor2022.4f8f00b3-092c-4ae1-8d8b-40071b95069d";
+        public const string Id = "LinqLanguageEditor2022.BF208545-2FC0-4EAD-8A40-127D737B9793";
         public const string Name = "LinqLanguageEditor2022";
         public const string Description = @"Linq Language Editor for Visual Studio 2022";
         public const string Language = "en-US";

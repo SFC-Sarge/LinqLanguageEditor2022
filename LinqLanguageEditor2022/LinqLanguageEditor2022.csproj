@@ -45,6 +45,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Classification\ClassificationType.cs" />
     <Compile Include="Classification\LinqComment.cs" />
     <Compile Include="Classification\LinqClassificationHelpers.cs" />
     <Compile Include="Classification\LinqIdentifier.cs" />

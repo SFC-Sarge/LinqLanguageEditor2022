@@ -16,8 +16,8 @@ namespace LinqLanguageEditor2022.LinqEditor
     {
         [Export]
         [Name(Constants.LinqLanguageName)]
-        [BaseDefinition("code")]
-        [BaseDefinition("Intellisense")]
+        //[BaseDefinition("code")]
+        //[BaseDefinition("Intellisense")]
         [BaseDefinition(Constants.LinqBaselanguageName)]
         internal static ContentTypeDefinition LinqContentTypeDefinition { get; set; }
 
@@ -27,8 +27,8 @@ namespace LinqLanguageEditor2022.LinqEditor
         [Export]
         [FileExtension(Constants.LinqExt)]
         [ContentType(Constants.LinqLanguageName)]
-        [BaseDefinition("code")]
-        [BaseDefinition("Intellisense")]
+        //[BaseDefinition("code")]
+        //[BaseDefinition("Intellisense")]
         [BaseDefinition(Constants.LinqBaselanguageName)]
         internal static FileExtensionToContentTypeDefinition LinqFileExtensionDefinition { get; set; }
 

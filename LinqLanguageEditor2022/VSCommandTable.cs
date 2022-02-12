@@ -13,10 +13,10 @@ namespace LinqLanguageEditor2022
     /// </summary>
     internal sealed partial class PackageGuids
     {
-        public const string LinqEditorFactoryString = "b09b2281-c414-4773-961f-f5b613c49ef3";
+        public const string LinqEditorFactoryString = "0ca07535-1a01-485d-9e65-59b7384a593c";
         public static Guid LinqEditorFactory = new Guid(LinqEditorFactoryString);
 
-        public const string LinqLanguageEditor2022String = "572acd30-b221-4944-90f2-d763bcfbc8ab";
+        public const string LinqLanguageEditor2022String = "41af2c63-3a01-41dc-b52f-fca23fe50f01";
         public static Guid LinqLanguageEditor2022 = new Guid(LinqLanguageEditor2022String);
     }
 

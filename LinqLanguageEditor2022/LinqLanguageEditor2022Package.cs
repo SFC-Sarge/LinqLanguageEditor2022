@@ -35,8 +35,8 @@ namespace LinqLanguageEditor2022
     [ProvideLanguageEditorOptionPage(typeof(Options.LinqOptionsProvider.LinqAdvancedOptions), Constants.LinqLanguageName, "", "Advanced", null, 0)]
     [ProvideLanguageExtension(typeof(LinqLanguageFactory), Constants.LinqExt)]
 
-    [ProvideEditorFactory(typeof(LinqLanguageFactory), 739, CommonPhysicalViewAttributes = (int)__VSPHYSICALVIEWATTRIBUTES.PVA_SupportsPreview, TrustLevel = __VSEDITORTRUSTLEVEL.ETL_AlwaysTrusted)]
-    [ProvideEditorExtension(typeof(LinqLanguageFactory), Constants.LinqExt, 65536, NameResourceID = 739)]
+    [ProvideEditorFactory(typeof(LinqLanguageFactory), 740, CommonPhysicalViewAttributes = (int)__VSPHYSICALVIEWATTRIBUTES.PVA_SupportsPreview, TrustLevel = __VSEDITORTRUSTLEVEL.ETL_AlwaysTrusted)]
+    [ProvideEditorExtension(typeof(LinqLanguageFactory), Constants.LinqExt, 65536, NameResourceID = 740)]
     [ProvideEditorLogicalView(typeof(LinqLanguageFactory), VSConstants.LOGVIEWID.TextView_string, IsTrusted = true)]
 
     public sealed class LinqLanguageEditor2022Package : ToolkitPackage

@@ -21,7 +21,7 @@ namespace LinqLanguageEditor2022.ToolWindows
             return new LinqToolWindowControl(project, toolWindowMessenger);
         }
 
-        [Guid("b3ac07c0-309a-4679-bf3b-a2de12944d66")]
+        [Guid("A938BB26-03F8-4861-B920-6792A7D4F07C")]
         internal class Pane : ToolWindowPane
         {
             public Pane()
