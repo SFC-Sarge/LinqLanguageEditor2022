@@ -13,7 +13,7 @@ namespace LinqLanguageEditor2022.Classification
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]
     [ClassificationType(ClassificationTypeNames = "comment")]
-    [Name("comment")]
+    [Name("LinqComment")]
     //this should be visible to the end user
     [UserVisible(true)]
     //set the priority to be after the default classifiers

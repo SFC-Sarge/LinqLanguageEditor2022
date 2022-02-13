@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="LinqLanguageEditor2022.BF208545-2FC0-4EAD-8A40-127D737B9793" Version="1.15" Language="en-US" Publisher="Danny McNaught" />
+        <Identity Id="LinqLanguageEditor2022.BF208545-2FC0-4EAD-8A40-127D737B9793" Version="1.20" Language="en-US" Publisher="Danny McNaught" />
         <DisplayName>LinqLanguageEditor2022</DisplayName>
         <Description xml:space="preserve">Linq Language Editor for Visual Studio 2022</Description>
         <MoreInfo>https://github.com/SFC-Sarge/LinqLanguageEditor2022</MoreInfo>

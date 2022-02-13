@@ -12,7 +12,7 @@ namespace LinqLanguageEditor2022.Classification
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]
     [ClassificationType(ClassificationTypeNames = "string")]
-    [Name("string")]
+    [Name("LinqString")]
     //this should be visible to the end user
     [UserVisible(true)]
     //set the priority to be after the default classifiers
