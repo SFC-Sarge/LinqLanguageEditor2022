@@ -11,12 +11,12 @@ namespace LinqLanguageEditor2022.Classification
     /// Defines the editor format for the LinqPunctuation classification type. Text is colored Red
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]
-    [ClassificationType(ClassificationTypeNames = "linqPunctuation")]
-    [Name("linqPunctuation")]
+    [ClassificationType(ClassificationTypeNames = "punctuation")]
+    [Name("punctuation")]
     //this should be visible to the end user
     [UserVisible(true)]
     //set the priority to be after the default classifiers
-    [Order(Before = Priority.Default)]
+    [Order(After = Priority.Default, Before = Priority.High)]
     internal sealed class LinqPunctuation : ClassificationFormatDefinition
     {
         /// <summary>
@@ -24,7 +24,7 @@ namespace LinqLanguageEditor2022.Classification
         /// </summary>
         public LinqPunctuation()
         {
-            DisplayName = "linqPunctuation"; //human readable version of the name
+            DisplayName = "punctuation"; //human readable version of the name
             ForegroundColor = Colors.DarkViolet;
 
         }

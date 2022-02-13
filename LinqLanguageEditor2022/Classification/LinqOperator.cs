@@ -11,12 +11,12 @@ namespace LinqLanguageEditor2022.Classification
     /// Defines the editor format for the LinqOperator classification type. Text is colored Gray
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]
-    [ClassificationType(ClassificationTypeNames = "linqOperator")]
-    [Name("linqOperator")]
+    [ClassificationType(ClassificationTypeNames = "operator")]
+    [Name("operator")]
     //this should be visible to the end user
     [UserVisible(true)]
     //set the priority to be after the default classifiers
-    [Order(Before = Priority.Default)]
+    [Order(After = Priority.Default, Before = Priority.High)]
     internal sealed class LinqOperator : ClassificationFormatDefinition
     {
         /// <summary>
@@ -24,7 +24,7 @@ namespace LinqLanguageEditor2022.Classification
         /// </summary>
         public LinqOperator()
         {
-            DisplayName = "linqOperator"; //human readable version of the name
+            DisplayName = "operator"; //human readable version of the name
             ForegroundColor = Colors.LimeGreen;
         }
     }

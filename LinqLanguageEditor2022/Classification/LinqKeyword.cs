@@ -11,12 +11,12 @@ namespace LinqLanguageEditor2022.Classification
     /// Defines the editor format for the LinqKeyword classification type. Text is colored DarkBlue
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]
-    [ClassificationType(ClassificationTypeNames = "linqKeyword")]
-    [Name("linqKeyword")]
+    [ClassificationType(ClassificationTypeNames = "keyword")]
+    [Name("keyword")]
     //this should be visible to the end user
     [UserVisible(true)]
     //set the priority to be after the default classifiers
-    [Order(Before = Priority.Default)]
+    [Order(After = Priority.Default, Before = Priority.High)]
     internal sealed class LinqKeyword : ClassificationFormatDefinition
     {
         /// <summary>
@@ -24,7 +24,7 @@ namespace LinqLanguageEditor2022.Classification
         /// </summary>
         public LinqKeyword()
         {
-            DisplayName = "linqKeyword"; //human readable version of the name
+            DisplayName = "keyword"; //human readable version of the name
             ForegroundColor = Colors.DarkBlue;
         }
     }

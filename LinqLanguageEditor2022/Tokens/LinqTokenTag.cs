@@ -104,23 +104,26 @@ namespace LinqLanguageEditor2022.Tokens
                     string currentToken = LinqClassificationHelpers.GetClassification(token);
                     if (token.Kind() != SyntaxKind.EndOfFileToken)
                     {
-                        if (curLoc <= curSpan.Length)
+                        if (_linqTypes.ContainsKey(currentToken))
                         {
-                            var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, token.ValueText.Length));
-                            if (tokenSpan.IntersectsWith(curSpan))
+                            if (curLoc < curSpan.Length)
                             {
-                                yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag((LinqTokenTypes)Enum.Parse(typeof(LinqTokenTypes), currentToken.ToLower())));
+                                var tokenSpan = new SnapshotSpan(curSpan.Snapshot, new Span(curLoc, token.ValueText.Length));
+                                if (tokenSpan.IntersectsWith(curSpan))
+                                {
+                                    yield return new TagSpan<LinqTokenTag>(tokenSpan, new LinqTokenTag((LinqTokenTypes)Enum.Parse(typeof(LinqTokenTypes), currentToken.ToLower())));
+                                }
+                            }
+                            else
+                            {
+                                //curLoc = curSpan.Length;
+                                continue;
                             }
                         }
-                        else
-                        {
-                            continue;
-                        }
-                        curLoc += token.ValueText.Length + 1;
+                        //curLoc += token.ValueText.Length + 1;
                     }
                 }
             }
-
         }
     }
 }

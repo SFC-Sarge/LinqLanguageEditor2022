@@ -24,18 +24,24 @@ namespace LinqLanguageEditor2022.Classification
         [BaseDefinition("code")]
         [BaseDefinition("Intellisense")]
         [BaseDefinition(Constants.LinqBaselanguageName)]
-        internal static ContentTypeDefinition LinqContentType = null;
+        internal static ContentTypeDefinition LinqContentType { get; set; }
 
         [Export]
         [FileExtension(Constants.LinqExt)]
         [Name(Constants.LinqLanguageName)]
-        internal static FileExtensionToContentTypeDefinition LinqFileType = null;
+        internal static FileExtensionToContentTypeDefinition LinqFileType { get; set; }
 
         [Import]
-        internal IClassificationTypeRegistryService ClassificationTypeRegistry = null;
+        internal IClassificationTypeRegistryService ClassificationTypeRegistry { get; set; }
 
         [Import]
-        internal IBufferTagAggregatorFactoryService aggregatorFactory = null;
+        internal IBufferTagAggregatorFactoryService aggregatorFactory { get; set; }
+
+        [Import]
+        internal IEditorFormatMapService FormatMapService { get; set; }
+
+        [Import]
+        internal IViewTagAggregatorFactoryService ViewTagAggregatorFactoryService { get; set; }
 
         public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag
         {

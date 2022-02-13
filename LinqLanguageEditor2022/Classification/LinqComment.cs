@@ -12,12 +12,12 @@ namespace LinqLanguageEditor2022.Classification
     /// Defines the editor format for the LinqComment classification type. Text is colored Green
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]
-    [ClassificationType(ClassificationTypeNames = "linqComment")]
-    [Name("linqComment")]
+    [ClassificationType(ClassificationTypeNames = "comment")]
+    [Name("comment")]
     //this should be visible to the end user
     [UserVisible(true)]
     //set the priority to be after the default classifiers
-    [Order(Before = Priority.Default)]
+    [Order(After = Priority.Default, Before = Priority.High)]
     internal sealed class LinqComment : ClassificationFormatDefinition
     {
         /// <summary>
@@ -25,7 +25,7 @@ namespace LinqLanguageEditor2022.Classification
         /// </summary>
         public LinqComment()
         {
-            DisplayName = "linqComment"; //human readable version of the name
+            DisplayName = "comment"; //human readable version of the name
             ForegroundColor = Colors.Green;
         }
     }

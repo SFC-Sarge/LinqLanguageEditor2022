@@ -63,7 +63,12 @@
     <Compile Include="Commands\LinqQueryEditor.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="LinqEditor\LinqEditorFeatures.cs" />
+    <Compile Include="LinqEditor\LinqEditorLightBulb.cs" />
     <Compile Include="LinqEditor\LinqLanguageFactory.cs" />
+    <Compile Include="LinqEditor\LinqLowerCaseSuggestedAction.cs" />
+    <Compile Include="LinqEditor\LinqOutliningTagger.cs" />
+    <Compile Include="LinqEditor\LinqOutliningTaggerProvider.cs" />
+    <Compile Include="LinqEditor\LinqUpperCaseSuggestedAction.cs" />
     <Compile Include="Options\LinqAdvancedOptions.cs" />
     <Compile Include="Options\LinqOptionsProvider.cs" />
     <Compile Include="Tokens\LinqDocument.cs" />

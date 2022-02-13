@@ -11,12 +11,12 @@ namespace LinqLanguageEditor2022.Classification
     /// Defines the editor format for the LinqUnknown classification type. Text is colored Red
     /// </summary>
     [Export(typeof(EditorFormatDefinition))]
-    [ClassificationType(ClassificationTypeNames = "linqUnknown")]
-    [Name("linqUnknown")]
+    [ClassificationType(ClassificationTypeNames = "unknown")]
+    [Name("unknown")]
     //this should be visible to the end user
     [UserVisible(true)]
     //set the priority to be after the default classifiers
-    [Order(Before = Priority.Default)]
+    [Order(After = Priority.Default, Before = Priority.High)]
     internal sealed class LinqUnknown : ClassificationFormatDefinition
     {
         /// <summary>
@@ -24,7 +24,7 @@ namespace LinqLanguageEditor2022.Classification
         /// </summary>
         public LinqUnknown()
         {
-            DisplayName = "linqUnknown"; //human readable version of the name
+            DisplayName = "unknown"; //human readable version of the name
             ForegroundColor = Colors.Red;
         }
     }
