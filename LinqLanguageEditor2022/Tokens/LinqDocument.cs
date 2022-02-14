@@ -111,5 +111,7 @@ namespace LinqLanguageEditor2022.Tokens
         }
 
         public event Action<LinqDocument> Processed;
+
+        public event Action<LinqDocument> Closed;
     }
 }

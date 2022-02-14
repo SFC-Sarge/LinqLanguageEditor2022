@@ -1,14 +1,20 @@
-﻿using LinqLanguageEditor2022.Options;
+﻿using LinqLanguageEditor2022.Extensions;
+using LinqLanguageEditor2022.Options;
 
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TextManager.Interop;
 
+using MSXML;
+
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
+using System.Xml;
+using System.Xml.Linq;
 
 using OutputWindowPane = Community.VisualStudio.Toolkit.OutputWindowPane;
 using Path = System.IO.Path;
@@ -218,6 +224,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         File.WriteAllText(tempQueryPath, $"{currentSelection}".Trim());
 
                         //await OpenDocumentWithSpecificEditorAsync(tempQueryPath, myEditor, myEditorView);
+                        Project project = await VS.Solutions.GetActiveProjectAsync();
                         if (LinqAdvancedOptions.Instance.OpenInVSPreviewTab == true)
                         {
                             await VS.Documents.OpenInPreviewTabAsync(tempQueryPath);
@@ -226,6 +233,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         {
                             await VS.Documents.OpenAsync(tempQueryPath);
                         }
+                        await project.AddExistingFilesAsync(tempQueryPath);
                     }
                     catch (Exception ex)
                     {
