@@ -88,16 +88,17 @@ namespace LinqLanguageEditor2022.ToolWindows
 
                             try
                             {
-                                if (!xdoc.Descendants("ItemGroup").Descendants("Compile").Where(rec => rec.Attribute("Include").Value == currentFileFullPath).IsNullOrEmpty())
-                                {
-                                    return;
-                                }
-                                if (!xdoc.Descendants("ItemGroup").Descendants("None").Where(rec => rec.Attribute("Include").Value == currentFileFullPath).IsNullOrEmpty())
-                                {
-                                    xdoc.Descendants("ItemGroup").Descendants("None").Where(rec => rec.Attribute("Include").Value == currentFileFullPath).Remove();
-                                    xdoc.Save(project.FullPath);
+                                //if (!xdoc.Descendants("ItemGroup").Descendants("Compile").Where(rec => rec.Attribute("Include").Value == currentFileFullPath).IsNullOrEmpty())
+                                //{
+                                //    return;
+                                //}
+                                //if (!xdoc.Descendants("ItemGroup").Descendants("None").Where(rec => rec.Attribute("Include").Value == currentFileFullPath).IsNullOrEmpty())
+                                //{
+                                //    xdoc.Descendants("ItemGroup").Descendants("None").Where(rec => rec.Attribute("Include").Value == currentFileFullPath).Remove();
+                                //    xdoc.Save(project.FullPath);
 
-                                }
+                                //}
+
                                 if (!xdoc.Descendants("ItemGroup").Descendants("Compile").IsNullOrEmpty())
                                 {
                                     var newCompileItem = xdoc.Descendants("ItemGroup").Descendants("Compile").First(x => x.HasAttributes);
@@ -113,6 +114,12 @@ namespace LinqLanguageEditor2022.ToolWindows
                                     xdoc.Save(project.FullPath);
 
                                 }
+                                if (!xdoc.Descendants("ItemGroup").Descendants("None").Where(rec => rec.Attribute("Include").Value == currentFileFullPath).IsNullOrEmpty())
+                                {
+                                    xdoc.Descendants("ItemGroup").Descendants("None").Where(rec => rec.Attribute("Include").Value == currentFileFullPath).Remove();
+                                    xdoc.Save(project.FullPath);
+
+                                }
                                 xdoc.Save(project.FullPath);
                             }
                             catch (Exception ex)
@@ -123,6 +130,19 @@ namespace LinqLanguageEditor2022.ToolWindows
                             {
                                 xdoc.Save(project.FullPath);
                             }
+                            try
+                            {
+                                //xdoc.Descendants("ItemGroup").FirstOrDefault(rec => rec.IsEmpty).Remove();
+                                //xdoc.Descendants("ItemGroup").FirstOrDefault(rec => !rec.HasAttributes).Remove();
+                            }
+                            catch (Exception ex)
+                            {
+                            }
+                            finally
+                            {
+                                xdoc.Save(project.FullPath);
+                            }
+
                             await project.SaveAsync();
                         }
                     }).FireAndForget();
@@ -151,7 +171,22 @@ namespace LinqLanguageEditor2022.ToolWindows
                                     ThreadHelper.ThrowIfNotOnUIThread();
                                     return rec.Attribute("Include").Value.EndsWith(win.Caption);
                                 }).Remove();
+
                                 xdoc.Save(project.FullPath);
+                            }
+                            catch (Exception ex)
+                            {
+                            }
+                            finally
+                            {
+                                xdoc.Save(project.FullPath);
+                            }
+                            try
+                            {
+                                //xdoc.Descendants("ItemGroup").FirstOrDefault(rec => rec.IsEmpty).Remove();
+                                //var current = xdoc.Descendants("ItemGroup").FirstOrDefault(rec => rec.HasAttributes);
+                                var current = xdoc.Descendants("ItemGroup").FirstOrDefault(rec => rec.IsEmpty);
+                                current.Remove();
                             }
                             catch (Exception ex)
                             {
