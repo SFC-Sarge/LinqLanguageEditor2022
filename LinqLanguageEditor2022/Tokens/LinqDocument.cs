@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.Text;
+﻿using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Threading;
 
 using System.Linq;
@@ -113,5 +115,6 @@ namespace LinqLanguageEditor2022.Tokens
         public event Action<LinqDocument> Processed;
 
         public event Action<LinqDocument> Closed;
+
     }
 }

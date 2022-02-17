@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.Text;
+﻿using LinqLanguageEditor2022.LinqEditor;
+
+using Microsoft.VisualStudio.Text;
 
 using System.Linq;
 

@@ -22,6 +22,8 @@
             <StackPanel Orientation="Vertical">
                 <StackPanel Margin="20 10 0 0" Name="LinqPadResults" Orientation="Vertical" HorizontalAlignment="Left" MaxWidth="400" />
                 <StackPanel Margin="20 10 0 0" Name="LinqPadEditor" Orientation="Vertical" HorizontalAlignment="Left" MaxWidth="400" />
+                <TextBlock Margin="20 10 0 0" HorizontalAlignment="Center" Text="RDTExplorerWindow"></TextBlock>
+                <ListBox Margin="20 10 0 0"  x:Name="LinqlistBox" Height="100"  MaxWidth="400"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

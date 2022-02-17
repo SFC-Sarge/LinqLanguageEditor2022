@@ -225,6 +225,8 @@ namespace LinqLanguageEditor2022.ToolWindows
 
                         //await OpenDocumentWithSpecificEditorAsync(tempQueryPath, myEditor, myEditorView);
                         Project project = await VS.Solutions.GetActiveProjectAsync();
+                        await project.AddExistingFilesAsync(tempQueryPath);
+                        ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"AddExistingFilesAsync: {tempQueryPath}");
                         if (LinqAdvancedOptions.Instance.OpenInVSPreviewTab == true)
                         {
                             await VS.Documents.OpenInPreviewTabAsync(tempQueryPath);
@@ -233,7 +235,8 @@ namespace LinqLanguageEditor2022.ToolWindows
                         {
                             await VS.Documents.OpenAsync(tempQueryPath);
                         }
-                        await project.AddExistingFilesAsync(tempQueryPath);
+                        var activeItem = await VS.Solutions.GetActiveItemAsync();
+                        ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"GetActiveItemAsync: {activeItem.Name}");
                     }
                     catch (Exception ex)
                     {

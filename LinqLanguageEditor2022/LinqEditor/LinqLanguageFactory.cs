@@ -1,4 +1,6 @@
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Package;
+using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
@@ -12,7 +14,7 @@ namespace LinqLanguageEditor2022.LinqEditor
 
     [ComVisible(true)]
     [Guid(PackageGuids.LinqEditorFactoryString)]
-    internal sealed class LinqLanguageFactory : LanguageBase
+    internal sealed class LinqLanguageFactory : LanguageBase //
     {
         [Export]
         [Name(Constants.LinqLanguageName)]
@@ -39,7 +41,7 @@ namespace LinqLanguageEditor2022.LinqEditor
 
         public LinqLanguageFactory(object site) : base(site)
         {
-
+            ThreadHelper.ThrowIfNotOnUIThread();
         }
 
         public override string Name => Constants.LinqLanguageName;
