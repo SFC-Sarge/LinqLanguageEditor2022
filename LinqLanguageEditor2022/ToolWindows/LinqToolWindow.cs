@@ -55,8 +55,18 @@ namespace LinqLanguageEditor2022.ToolWindows
             {
                 ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
                 {
-                    var activeItem = await VS.Solutions.GetActiveItemAsync();
-                    ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnShow GetActiveItemAsync: {activeItem.Name}");
+                    try
+                    {
+                        var activeItem = await VS.Solutions.GetActiveItemAsync();
+                        if (activeItem != null)
+                        {
+                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnShow GetActiveItemAsync: {activeItem.Name}");
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                 }).FireAndForget();
 
                 return VSConstants.S_OK;
@@ -81,8 +91,17 @@ namespace LinqLanguageEditor2022.ToolWindows
             {
                 ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
                 {
-                    var activeItem = await VS.Solutions.GetActiveItemAsync();
-                    ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnClose GetActiveItemAsync: {activeItem.Name}");
+                    try
+                    {
+                        var activeItem = await VS.Solutions.GetActiveItemAsync();
+                        if (activeItem != null)
+                        {
+                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnClose GetActiveItemAsync: {activeItem.Name}");
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }).FireAndForget();
                 return VSConstants.S_OK;
             }
@@ -90,8 +109,18 @@ namespace LinqLanguageEditor2022.ToolWindows
             {
                 ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
                 {
-                    var activeItem = await VS.Solutions.GetActiveItemAsync();
-                    ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterFirstDocumentLock: {activeItem.Name}");
+                    try
+                    {
+                        var activeItem = await VS.Solutions.GetActiveItemAsync();
+                        if (activeItem != null)
+                        {
+                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterFirstDocumentLock: {activeItem.Name}");
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                 }).FireAndForget();
                 return VSConstants.S_OK;
             }
@@ -100,8 +129,18 @@ namespace LinqLanguageEditor2022.ToolWindows
             {
                 ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
                 {
-                    var activeItem = await VS.Solutions.GetActiveItemAsync();
-                    ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnBeforeLastDocumentUnlock: {activeItem.Name}");
+                    try
+                    {
+                        var activeItem = await VS.Solutions.GetActiveItemAsync();
+                        if (activeItem != null)
+                        {
+                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnBeforeLastDocumentUnlock: {activeItem.Name}");
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                 }).FireAndForget();
                 return VSConstants.S_OK;
             }
@@ -121,10 +160,31 @@ namespace LinqLanguageEditor2022.ToolWindows
                 ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
                 {
                     await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                    var activeItem = await VS.Solutions.GetActiveItemAsync();
-                    ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnBeforeDocumentWindowShow: {activeItem.Name}");
-                    var win = VsShellUtilities.GetWindowObject(pFrame);
-                    ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnBeforeDocumentWindowShow: {win.Caption}");
+                    try
+                    {
+                        var activeItem = await VS.Solutions.GetActiveItemAsync();
+                        if (activeItem != null)
+                        {
+                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnBeforeDocumentWindowShow: {activeItem.Name}");
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                    try
+                    {
+                        var win = VsShellUtilities.GetWindowObject(pFrame);
+                        if (win != null)
+                        {
+                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnBeforeDocumentWindowShow: {win.Caption}");
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                     //ThreadHelper.ThrowIfNotOnUIThread();
                     //var win = VsShellUtilities.GetWindowObject(pFrame);
                     //string currentFilePath = win.Document.Path;
@@ -211,10 +271,30 @@ namespace LinqLanguageEditor2022.ToolWindows
                 ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
                 {
                     await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                    var activeItem = await VS.Solutions.GetActiveItemAsync();
-                    ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterDocumentWindowHide: {activeItem.Name}");
-                    var win = VsShellUtilities.GetWindowObject(pFrame);
-                    ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterDocumentWindowHide: {win.Caption}");
+                    try
+                    {
+                        var activeItem = await VS.Solutions.GetActiveItemAsync();
+                        if (activeItem != null)
+                        {
+                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterDocumentWindowHide: {activeItem.Name}");
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                    try
+                    {
+                        var win = VsShellUtilities.GetWindowObject(pFrame);
+                        if (win != null)
+                        {
+                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterDocumentWindowHide: {win.Caption}");
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                     //ThreadHelper.ThrowIfNotOnUIThread();
                     //var win = VsShellUtilities.GetWindowObject(pFrame);
                     //if (pFrame != null && win.Caption.EndsWith(".linq"))
