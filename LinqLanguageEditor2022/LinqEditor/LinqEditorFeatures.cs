@@ -58,8 +58,7 @@ namespace LinqLanguageEditor2022.LinqEditor
     [TagType(typeof(TextMarkerTag))]
     [ProvideBraceCompletion(Constants.LinqLanguageName)]
     internal sealed class LinqBraceCompletion : BraceCompletionBase
-    {
-    }
+    { }
 
     [Export(typeof(IAsyncCompletionCommitManagerProvider))]
     [ContentType(Constants.LinqLanguageName)]

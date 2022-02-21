@@ -208,25 +208,20 @@ namespace LinqLanguageEditor2022.ToolWindows
                         LinqPadResults.Children.Clear();
                         if (LinqAdvancedOptions.Instance.UseLinqPadDumpWindow == true)
                         {
-                            //await _pane.WriteLineAsync($"{currentSelection} \r\n\r\n{Constants.currentSelectionQuery} = {queryResult}");
                             await _pane.WriteLineAsync($"{currentSelection} \r\n\r\n{Constants.currentSelectionQuery} = {queryResult}");
                         }
                         if (LinqAdvancedOptions.Instance.EnableToolWindowResults == true)
                         {
-                            //TextBlock selectedQueryResult = new TextBlock { Text = $"{currentSelection} \r\n\r\n{Constants.currentSelectionQuery} = {queryResult}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                             selectedQueryResult = new() { Text = $"{Constants.currentSelectionQuery} = {queryResult}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                             LinqPadResults.Children.Add(selectedQueryResult);
                             Line line = new() { Margin = new Thickness(0, 0, 0, 20) };
                             LinqPadResults.Children.Add(line);
                         }
                         tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
-                        //System.IO.File.WriteAllText(tempQueryPath, $"{currentSelection} \r\n\r\n{Constants.currentSelectionQuery} = {queryResult}".Trim());
                         File.WriteAllText(tempQueryPath, $"{currentSelection}".Trim());
 
-                        //await OpenDocumentWithSpecificEditorAsync(tempQueryPath, myEditor, myEditorView);
                         Project project = await VS.Solutions.GetActiveProjectAsync();
-                        await project.AddExistingFilesAsync(tempQueryPath);
-                        ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"AddExistingFilesAsync: {tempQueryPath}");
+                        //await project.AddExistingFilesAsync(tempQueryPath);
 
                         if (LinqAdvancedOptions.Instance.OpenInVSPreviewTab == true)
                         {
@@ -235,18 +230,6 @@ namespace LinqLanguageEditor2022.ToolWindows
                         else
                         {
                             await VS.Documents.OpenAsync(tempQueryPath);
-                        }
-                        try
-                        {
-                            var activeItem = await VS.Solutions.GetActiveItemAsync();
-                            if (activeItem != null)
-                            {
-                                ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"GetActiveItemAsync: {activeItem.Name}");
-                            }
-                        }
-                        catch (Exception)
-                        {
-
                         }
                     }
                     catch (Exception ex)

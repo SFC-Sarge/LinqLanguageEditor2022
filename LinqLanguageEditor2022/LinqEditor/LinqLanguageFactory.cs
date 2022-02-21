@@ -14,7 +14,7 @@ namespace LinqLanguageEditor2022.LinqEditor
 
     [ComVisible(true)]
     [Guid(PackageGuids.LinqEditorFactoryString)]
-    internal sealed class LinqLanguageFactory : LanguageBase //
+    internal sealed class LinqLanguageFactory : LanguageBase
     {
         [Export]
         [Name(Constants.LinqLanguageName)]
@@ -40,9 +40,7 @@ namespace LinqLanguageEditor2022.LinqEditor
         internal static ClassificationTypeDefinition LinqDefinition { get; set; }
 
         public LinqLanguageFactory(object site) : base(site)
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-        }
+        { }
 
         public override string Name => Constants.LinqLanguageName;
 

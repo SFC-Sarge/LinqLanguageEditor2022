@@ -10,7 +10,7 @@
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
-                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                //await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                 LinqToolWindowMessenger messenger = await Package.GetServiceAsync<LinqToolWindowMessenger, LinqToolWindowMessenger>();
                 messenger.Send(runSelectedLinqStatement);
             }).FireAndForget();

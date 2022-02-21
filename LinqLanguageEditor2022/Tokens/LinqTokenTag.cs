@@ -4,7 +4,10 @@ namespace LinqLanguageEditor2022.Tokens
     using LinqLanguageEditor2022.Classification;
 
     using Microsoft.CodeAnalysis.CSharp;
+    using Microsoft.VisualStudio.Core.Imaging;
+    using Microsoft.VisualStudio.Imaging;
     using Microsoft.VisualStudio.Text;
+    using Microsoft.VisualStudio.Text.Adornments;
     using Microsoft.VisualStudio.Text.Classification;
     using Microsoft.VisualStudio.Text.Editor;
     using Microsoft.VisualStudio.Text.Tagging;
@@ -13,17 +16,18 @@ namespace LinqLanguageEditor2022.Tokens
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.Composition;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     [Export(typeof(ITaggerProvider))]
     [ContentType(Constants.LinqLanguageName)]
+    [Name(Constants.LinqLanguageName)]
     [TagType(typeof(LinqTokenTag))]
     internal sealed class LinqTokenTagProvider : ITaggerProvider
     {
 
-        public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag
-        {
-            return new LinqTokenTagger(buffer) as ITagger<T>;
-        }
+        public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag =>
+            buffer.Properties.GetOrCreateSingletonProperty(() => new LinqTokenTagger(buffer)) as ITagger<T>;
     }
 
     public class LinqTokenTag : ITag
@@ -41,23 +45,25 @@ namespace LinqLanguageEditor2022.Tokens
 
         ITextBuffer _buffer;
         IDictionary<string, LinqTokenTypes> _linqTypes;
+        private static readonly ImageId _errorIcon = KnownMonikers.StatusWarning.ToImageId();
 
         internal LinqTokenTagger(ITextBuffer buffer)
         {
             _buffer = buffer;
-            _linqTypes = new Dictionary<string, LinqTokenTypes>();
-            _linqTypes["comment"] = LinqTokenTypes.comment;
-            _linqTypes["keyword"] = LinqTokenTypes.keyword;
-            _linqTypes["number"] = LinqTokenTypes.number;
-            _linqTypes["operator"] = LinqTokenTypes.@operator;
-            _linqTypes["string"] = LinqTokenTypes.@string;
-            _linqTypes["whitespace"] = LinqTokenTypes.whitespace;
-            _linqTypes["punctuation"] = LinqTokenTypes.punctuation;
-            _linqTypes["identifier"] = LinqTokenTypes.identifier;
-            _linqTypes["separator"] = LinqTokenTypes.separator;
-            _linqTypes["literal"] = LinqTokenTypes.literal;
-            _linqTypes["unknown"] = LinqTokenTypes.unknown;
-
+            _linqTypes = new Dictionary<string, LinqTokenTypes>
+            {
+                ["comment"] = LinqTokenTypes.comment,
+                ["keyword"] = LinqTokenTypes.keyword,
+                ["number"] = LinqTokenTypes.number,
+                ["operator"] = LinqTokenTypes.@operator,
+                ["string"] = LinqTokenTypes.@string,
+                ["whitespace"] = LinqTokenTypes.whitespace,
+                ["punctuation"] = LinqTokenTypes.punctuation,
+                ["identifier"] = LinqTokenTypes.identifier,
+                ["separator"] = LinqTokenTypes.separator,
+                ["literal"] = LinqTokenTypes.literal,
+                ["unknown"] = LinqTokenTypes.unknown
+            };
         }
 
         public event EventHandler<SnapshotSpanEventArgs> TagsChanged

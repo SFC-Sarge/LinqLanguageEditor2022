@@ -1,4 +1,8 @@
-﻿using Microsoft.VisualStudio;
+﻿using Community.VisualStudio.Toolkit;
+
+using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Imaging;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Threading;
@@ -12,8 +16,10 @@ namespace LinqLanguageEditor2022.Tokens
     public partial class LinqDocument : IDisposable
     {
         private string[] _lines;
-        private bool _isDisposed;
         private readonly ITextBuffer _buffer;
+        private bool _isDisposed;
+
+
 
         protected LinqDocument(string[] lines)
         {
@@ -26,19 +32,19 @@ namespace LinqLanguageEditor2022.Tokens
             _buffer = buffer;
             _buffer.Changed += BufferChanged;
             FileName = buffer.GetFileName();
+            ProcessAsync().FireAndForget();
 
-#pragma warning disable VSTHRD104 // Offer async methods
             ThreadHelper.JoinableTaskFactory.Run(async () =>
             {
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                 Project project = await VS.Solutions.GetActiveProjectAsync();
                 ProjectName = project?.Name;
 
             });
-#pragma warning restore VSTHRD104 // Offer async methods
         }
 
 
-        public bool IsProcessing { get; private set; }
+        public bool IsParsing { get; private set; }
 
         public string ProjectName { get; protected set; }
 
@@ -59,13 +65,13 @@ namespace LinqLanguageEditor2022.Tokens
 
         public static LinqDocument FromLines(params string[] lines)
         {
-            LinqDocument doc = new LinqDocument(lines);
+            LinqDocument doc = new(lines);
             return doc;
         }
 
         public async Task ProcessAsync()
         {
-            IsProcessing = true;
+            IsParsing = true;
             bool success = false;
 
             await TaskScheduler.Default;
@@ -81,11 +87,11 @@ namespace LinqLanguageEditor2022.Tokens
             }
             finally
             {
-                IsProcessing = false;
+                IsParsing = false;
 
                 if (success)
                 {
-                    Processed?.Invoke(this);
+                    Parsed?.Invoke(this);
                 }
             }
         }
@@ -112,9 +118,7 @@ namespace LinqLanguageEditor2022.Tokens
             _isDisposed = true;
         }
 
-        public event Action<LinqDocument> Processed;
-
-        public event Action<LinqDocument> Closed;
+        public event Action<LinqDocument> Parsed;
 
     }
 }

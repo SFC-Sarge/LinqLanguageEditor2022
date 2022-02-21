@@ -1,7 +1,10 @@
-﻿using LinqLanguageEditor2022.Extensions;
+﻿using Community.VisualStudio.Toolkit;
+
+using LinqLanguageEditor2022.Extensions;
 
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Imaging;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
 using System.Collections.Generic;
@@ -31,79 +34,23 @@ namespace LinqLanguageEditor2022.ToolWindows
         }
 
         [Guid("A938BB26-03F8-4861-B920-6792A7D4F07C")]
-        internal class Pane : ToolWindowPane, IVsWindowFrameNotify3, IVsRunningDocTableEvents
+        internal class Pane : ToolWindowPane, IVsRunningDocTableEvents
         {
+
             private uint rdtCookie;
+            private EnvDTE.Window win;
             protected override void Initialize()
             {
-                ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
-                {
-                    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                    // Create the RDT cookie.
-                    IVsRunningDocumentTable rdt = (IVsRunningDocumentTable)
-                    this.GetService(typeof(SVsRunningDocumentTable));
-                    rdt.AdviseRunningDocTableEvents(this, out rdtCookie);
-                }).FireAndForget();
+                ThreadHelper.ThrowIfNotOnUIThread();
+                IVsRunningDocumentTable rdt = (IVsRunningDocumentTable)
+                this.GetService(typeof(SVsRunningDocumentTable));
+                rdt.AdviseRunningDocTableEvents(this, out rdtCookie);
             }
+
             public Pane()
             {
                 BitmapImageMoniker = KnownMonikers.ToolWindow;
                 ToolBar = new CommandID(PackageGuids.LinqLanguageEditor2022, PackageIds.LinqTWindowToolbar);
-            }
-
-            public int OnShow(int fShow)
-            {
-                ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
-                {
-                    try
-                    {
-                        var activeItem = await VS.Solutions.GetActiveItemAsync();
-                        if (activeItem != null)
-                        {
-                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnShow GetActiveItemAsync: {activeItem.Name}");
-                        }
-                    }
-                    catch (Exception)
-                    {
-
-                    }
-                }).FireAndForget();
-
-                return VSConstants.S_OK;
-            }
-
-            public int OnMove(int x, int y, int w, int h)
-            {
-                return VSConstants.S_OK;
-            }
-
-            public int OnSize(int x, int y, int w, int h)
-            {
-                return VSConstants.S_OK;
-            }
-
-            public int OnDockableChange(int fDockable, int x, int y, int w, int h)
-            {
-                return VSConstants.S_OK;
-            }
-
-            public int OnClose(ref uint pgrfSaveOptions)
-            {
-                ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
-                {
-                    try
-                    {
-                        var activeItem = await VS.Solutions.GetActiveItemAsync();
-                        if (activeItem != null)
-                        {
-                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnClose GetActiveItemAsync: {activeItem.Name}");
-                        }
-                    }
-                    catch (Exception)
-                    {
-                    }
-                }).FireAndForget();
-                return VSConstants.S_OK;
             }
             public int OnAfterFirstDocumentLock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining)
             {
@@ -147,11 +94,43 @@ namespace LinqLanguageEditor2022.ToolWindows
 
             public int OnAfterSave(uint docCookie)
             {
+                ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+                {
+                    try
+                    {
+                        var activeItem = await VS.Solutions.GetActiveItemAsync();
+                        if (activeItem != null)
+                        {
+                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterSave: {activeItem.Name}");
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }).FireAndForget();
+
                 return VSConstants.S_OK;
             }
 
             public int OnAfterAttributeChange(uint docCookie, uint grfAttribs)
             {
+                ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+                {
+                    try
+                    {
+                        var activeItem = await VS.Solutions.GetActiveItemAsync();
+                        if (activeItem != null)
+                        {
+                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterAttributeChange: {activeItem.Name}");
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }).FireAndForget();
+
                 return VSConstants.S_OK;
             }
 
@@ -159,7 +138,7 @@ namespace LinqLanguageEditor2022.ToolWindows
             {
                 ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
                 {
-                    await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                     try
                     {
                         var activeItem = await VS.Solutions.GetActiveItemAsync();
@@ -174,103 +153,233 @@ namespace LinqLanguageEditor2022.ToolWindows
                     }
                     try
                     {
-                        var win = VsShellUtilities.GetWindowObject(pFrame);
+                        win = VsShellUtilities.GetWindowObject(pFrame);
                         if (win != null)
                         {
                             ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnBeforeDocumentWindowShow: {win.Caption}");
                         }
-
                     }
                     catch (Exception)
                     {
 
                     }
-                    //ThreadHelper.ThrowIfNotOnUIThread();
-                    //var win = VsShellUtilities.GetWindowObject(pFrame);
-                    //string currentFilePath = win.Document.Path;
-                    //string currentFileTitle = win.Document.Name;
-                    //string currentFileFullPath = System.IO.Path.Combine(currentFilePath, currentFileTitle);
-                    //if (pFrame != null && currentFileTitle.EndsWith(".linq"))
-                    //{
-                    //    ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
-                    //    {
-                    //        Project project = await VS.Solutions.GetActiveProjectAsync();
-                    //        if (project != null)
-                    //        {
-                    //            XDocument xdoc = XDocument.Load(project.FullPath);
-                    //            try
-                    //            {
-                    //                await project.AddExistingFilesAsync(currentFileFullPath);
-                    //                if (xdoc.Descendants("ItemGroup").Descendants("None").Where(rec => rec.Attribute("Include").Value == currentFileFullPath).IsNullOrEmpty())
-                    //                {
-                    //                    if (xdoc.Descendants("ItemGroup").Descendants("Compile").Where(rec => rec.Attribute("Include").Value == currentFileFullPath).IsNullOrEmpty())
-                    //                    {
-                    //                        //await project.AddExistingFilesAsync(currentFileFullPath);
-                    //                        //await project.SaveAsync();
-                    //                    }
-                    //                }
-                    //                else if (!xdoc.Descendants("ItemGroup").Descendants("None").Where(rec => rec.Attribute("Include").Value == currentFileFullPath).IsNullOrEmpty())
-                    //                {
-                    //                    //xdoc.Descendants("ItemGroup").Descendants("None").Where(rec => rec.Attribute("Include").Value == currentFileFullPath).Remove();
-                    //                    IEnumerable<XElement> xObj = xdoc.Descendants("ItemGroup").Descendants("None").Where(rec => rec.Attribute("Include").Value == currentFileFullPath);
+                    win = VsShellUtilities.GetWindowObject(pFrame);
+                    string currentFilePath = win.Document.Path;
+                    string currentFileTitle = win.Document.Name;
+                    string currentFileFullPath = System.IO.Path.Combine(currentFilePath, currentFileTitle);
+                    if (pFrame != null && currentFileTitle.EndsWith(".linq"))
+                    {
+                        ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+                        {
+                            Project project = await VS.Solutions.GetActiveProjectAsync();
+                            if (project != null)
+                            {
+                                XDocument xdoc = XDocument.Load(project.FullPath);
+                                //await project.AddExistingFilesAsync(currentFileFullPath);
+                                try
+                                {
+                                    xdoc = RemoveEmptyItemGroupNode(xdoc);
+                                    xdoc.Save(project.FullPath);
+                                    await project.SaveAsync();
+                                    xdoc = XDocument.Load(project.FullPath);
+                                }
+                                catch (Exception)
+                                {
 
-                    //                    foreach (var element in xObj)
-                    //                    {
-                    //                        element.Name = "Compile";
-                    //                    }
+                                }
+                                if (ItemGroupExists(xdoc, "ItemGroup", "Compile"))
+                                {
+                                    try
+                                    {
+                                        if (CompileItemExists(xdoc, currentFileTitle))
+                                        {
+                                            xdoc = UpdateItemGroupItem(xdoc, currentFileTitle, currentFileFullPath);
+                                        }
+                                        else if (ItemGroupExists(xdoc, "ItemGroup", "None"))
+                                        {
+                                            try
+                                            {
+                                                if (NoneCompileItemExists(xdoc, currentFileTitle))
+                                                {
+                                                    xdoc = UpdateItemGroupItem(xdoc, currentFileTitle, currentFileFullPath);
+                                                }
+                                                else
+                                                {
+                                                    xdoc = CreateNewCompileItem(xdoc, currentFileFullPath);
+                                                }
+                                                xdoc.Save(project.FullPath);
+                                                await project.SaveAsync();
+                                                xdoc = XDocument.Load(project.FullPath);
+                                            }
+                                            catch (Exception)
+                                            {
 
-                    //                    xdoc.Save(project.FullPath);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            xdoc = CreateNewCompileItem(xdoc, currentFileFullPath);
+                                        }
+                                        xdoc.Save(project.FullPath);
+                                        await project.SaveAsync();
+                                        xdoc = XDocument.Load(project.FullPath);
+                                    }
+                                    catch (Exception)
+                                    {
 
-                    //                }
-                    //                else if (!xdoc.Descendants("ItemGroup").Descendants("Compile").IsNullOrEmpty())
-                    //                {
-                    //                    var newCompileItem = xdoc.Descendants("ItemGroup").Descendants("Compile").First(x => x.HasAttributes);
-                    //                    newCompileItem.AddAfterSelf(new XElement("Compile", new XAttribute("Include", currentFileFullPath)));
-                    //                    xdoc.Save(project.FullPath);
-                    //                }
-                    //                else
-                    //                {
-                    //                    XElement itemGroup = new XElement("ItemGroup");
-                    //                    XElement compile = new XElement("Compile", new XAttribute("Include", currentFileFullPath));
-                    //                    itemGroup.Add(compile);
-                    //                    xdoc.Element("Project").Add(itemGroup);
-                    //                    xdoc.Save(project.FullPath);
-                    //                }
-                    //                xdoc.Save(project.FullPath);
+                                    }
+                                }
+                                else if (ItemGroupExists(xdoc, "ItemGroup", "None"))
+                                {
+                                    try
+                                    {
+                                        if (NoneCompileItemExists(xdoc, currentFileTitle))
+                                        {
+                                            xdoc = UpdateItemGroupItem(xdoc, currentFileTitle, currentFileFullPath);
+                                        }
+                                        else
+                                        {
+                                            xdoc = CreateNewCompileItem(xdoc, currentFileFullPath);
+                                        }
+                                        xdoc.Save(project.FullPath);
+                                        await project.SaveAsync();
+                                        xdoc = XDocument.Load(project.FullPath);
+                                    }
+                                    catch (Exception)
+                                    {
 
-                    //            }
-                    //            catch (Exception ex)
-                    //            {
-
-                    //            }
-                    //            finally
-                    //            {
-                    //                xdoc.Save(project.FullPath);
-                    //            }
-                    //            try
-                    //            {
-                    //                //xdoc.Descendants("ItemGroup").Where(rec => rec.Nodes().IsNullOrEmpty()).Remove();
-                    //            }
-                    //            catch (Exception ex)
-                    //            {
-                    //            }
-                    //            finally
-                    //            {
-                    //                xdoc.Save(project.FullPath);
-                    //            }
-                    //            await project.SaveAsync();
-                    //        }
-                    //    }).FireAndForget();
-                    //}
+                                    }
+                                }
+                                else
+                                {
+                                    xdoc = CreateNewItemGroup(xdoc, currentFileFullPath);
+                                    xdoc.Save(project.FullPath);
+                                    await project.SaveAsync();
+                                }
+                            }
+                        }).FireAndForget();
+                    }
                 }).FireAndForget();
                 return VSConstants.S_OK;
             }
+            public XDocument RemoveEmptyItemGroupNode(XDocument xdoc)
+            {
+                try
+                {
+                    xdoc.Descendants("ItemGroup").Where(rec => rec.Nodes().IsNullOrEmpty()).Remove();
+                    return xdoc;
+                }
+                catch (Exception)
+                {
+                }
+                return xdoc;
+            }
 
+            public bool ItemGroupExists(XDocument xdoc, string groupName, string compile)
+            {
+                try
+                {
+                    if (!xdoc.Descendants(groupName).Descendants(compile).IsNullOrEmpty())
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+            }
+
+            public bool NoneCompileItemExists(XDocument xdoc, string currentFileTitle)
+            {
+                try
+                {
+                    if (!xdoc.Descendants("ItemGroup").Descendants("None").Where(rec => rec.Attribute("Include").Value.EndsWith(currentFileTitle)).IsNullOrEmpty())
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            public bool CompileItemExists(XDocument xdoc, string currentFileTitle)
+            {
+                try
+                {
+                    if (!xdoc.Descendants("ItemGroup").Descendants("Compile").Where(rec => rec.Attribute("Include").Value.EndsWith(currentFileTitle)).IsNullOrEmpty())
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public XDocument CreateNewCompileItem(XDocument xdoc, string currentFileFullPath)
+            {
+                var newCompileItem = xdoc.Descendants("ItemGroup").Descendants("Compile").First(x => x.HasAttributes);
+                newCompileItem.AddAfterSelf(new XElement("Compile", new XAttribute("Include", currentFileFullPath)));
+                return xdoc;
+            }
+            public XDocument CreateNewItemGroup(XDocument xdoc, string currentFileFullPath)
+            {
+                XElement itemGroup = new XElement("ItemGroup");
+                XElement compile = new XElement("Compile", new XAttribute("Include", currentFileFullPath));
+                itemGroup.Add(compile);
+                xdoc.Element("Project").Add(itemGroup);
+                return xdoc;
+            }
+            public XDocument UpdateItemGroupItem(XDocument xdoc, string currentFileTitle, string currentFileFullPath)
+            {
+                if (!NoneCompileItemExists(xdoc, currentFileFullPath))
+                {
+                    currentFileFullPath = currentFileTitle;
+                }
+                try
+                {
+                    IEnumerable<XElement> xObj = xdoc.Descendants("ItemGroup").Descendants("None").Where(rec => rec.Attribute("Include").Value == currentFileFullPath);
+
+                    foreach (var element in xObj)
+                    {
+                        element.Name = "Compile";
+                    }
+                    return xdoc;
+                }
+                catch (Exception)
+                {
+                }
+                return xdoc;
+            }
+            public XDocument RemoveCompileItem(XDocument xdoc, string caption)
+            {
+                try
+                {
+                    xdoc.Descendants("ItemGroup").Descendants("Compile").Where(rec =>
+                    {
+                        ThreadHelper.ThrowIfNotOnUIThread();
+                        return rec.Attribute("Include").Value.EndsWith(caption);
+                    }).Remove();
+                    return xdoc;
+                }
+                catch (Exception)
+                {
+
+                }
+                return xdoc;
+            }
             public int OnAfterDocumentWindowHide(uint docCookie, IVsWindowFrame pFrame)
             {
                 ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
                 {
-                    await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                     try
                     {
                         var activeItem = await VS.Solutions.GetActiveItemAsync();
@@ -295,60 +404,50 @@ namespace LinqLanguageEditor2022.ToolWindows
                     {
 
                     }
-                    //ThreadHelper.ThrowIfNotOnUIThread();
-                    //var win = VsShellUtilities.GetWindowObject(pFrame);
-                    //if (pFrame != null && win.Caption.EndsWith(".linq"))
-                    //{
-                    //ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
-                    //{
-                    //    Project project = await VS.Solutions.GetActiveProjectAsync();
-                    //    if (project != null)
-                    //    {
-                    //        XDocument xdoc = XDocument.Load(project.FullPath);
-                    //        try
-                    //        {
-                    //            xdoc.Descendants("ItemGroup").Descendants("Compile").Where(rec => rec.Attribute("Include").Value.EndsWith(win.Caption)).Remove();
-                    //            xdoc.Save(project.FullPath);
-                    //        }
-                    //        catch (Exception ex)
-                    //        {
-                    //        }
-                    //        finally
-                    //        {
-                    //            xdoc.Save(project.FullPath);
-                    //        }
-                    //        try
-                    //        {
-                    //            xdoc.Descendants("ItemGroup").Where(rec => rec.Nodes().IsNullOrEmpty()).Remove();
-                    //        }
-                    //        catch (Exception ex)
-                    //        {
-                    //        }
-                    //        finally
-                    //        {
-                    //            xdoc.Save(project.FullPath);
-                    //        }
-                    //        await project.SaveAsync();
-                    //    }
-                    //}).FireAndForget();
-                    //}
+                    win = VsShellUtilities.GetWindowObject(pFrame);
+                    if (pFrame != null && win.Caption.EndsWith(".linq"))
+                    {
+                        ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+                        {
+                            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                            Project project = await VS.Solutions.GetActiveProjectAsync();
+                            if (project != null)
+                            {
+                                XDocument xdoc = XDocument.Load(project.FullPath);
+                                try
+                                {
+                                    xdoc = RemoveCompileItem(xdoc, win.Caption);
+                                    xdoc.Save(project.FullPath);
+                                }
+                                catch (Exception)
+                                {
+                                }
+                                try
+                                {
+                                    xdoc = RemoveEmptyItemGroupNode(xdoc);
+                                    xdoc.Save(project.FullPath);
+                                }
+                                catch (Exception)
+                                {
+                                }
+                                xdoc.Save(project.FullPath);
+                                await project.SaveAsync();
+                            }
+                        }).FireAndForget();
+                    }
                 }).FireAndForget();
-
                 return VSConstants.S_OK;
             }
             protected override void Dispose(bool disposing)
             {
-                ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
-                {
-                    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                    // Release the RDT cookie.
-                    IVsRunningDocumentTable rdt = (IVsRunningDocumentTable)
-                    this.GetService(typeof(SVsRunningDocumentTable));
-                    rdt.UnadviseRunningDocTableEvents(rdtCookie);
-                }).FireAndForget();
+                // Release the RDT cookie.
+                ThreadHelper.ThrowIfNotOnUIThread();
+                IVsRunningDocumentTable rdt = (IVsRunningDocumentTable)
+                this.GetService(typeof(SVsRunningDocumentTable));
+                rdt.UnadviseRunningDocTableEvents(rdtCookie);
+
                 base.Dispose(disposing);
             }
-
         }
 
     }
