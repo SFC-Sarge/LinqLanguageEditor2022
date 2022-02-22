@@ -96,6 +96,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="Templates\.linq.txt">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="ToolWindows\LINQPad.Runtime.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>

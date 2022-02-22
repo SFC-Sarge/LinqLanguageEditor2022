@@ -6,9 +6,14 @@ using Microsoft.VisualStudio.TextManager.Interop;
 
 using MSXML;
 
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,6 +37,10 @@ namespace LinqLanguageEditor2022.ToolWindows
         public string queryResult = null;
         public string dirLPRun7 = null;
         public string fileLPRun7 = null;
+        private readonly string _folder;
+        private readonly List<string> _templateFiles = new List<string>();
+        private const string _defaultExt = Constants.LinqExt;
+        private const string _templateDir = ".templates";
 
         public LinqToolWindowControl(Project activeProject, LinqToolWindowMessenger toolWindowMessenger)
         {
@@ -48,6 +57,10 @@ namespace LinqLanguageEditor2022.ToolWindows
 
             dirLPRun7 = Path.GetDirectoryName(typeof(LinqToolWindow).Assembly.Location);
             fileLPRun7 = Path.Combine(dirLPRun7, Constants.solutionToolWindowsFolderName, Constants.lPRun7Executable);
+            var assembly = Assembly.GetExecutingAssembly().Location;
+            _folder = Path.Combine(Path.GetDirectoryName(assembly), "Templates");
+            _templateFiles.AddRange(Directory.GetFiles(_folder, "*" + _defaultExt, SearchOption.AllDirectories));
+
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
                 await DoOutputWindowsAsync();
@@ -138,13 +151,14 @@ namespace LinqLanguageEditor2022.ToolWindows
                     {
                         await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                         currentSelection = docView.TextView.Selection.StreamSelectionSpan.GetText().Trim().Replace("  ", "").Trim();
-
+                        int position = 0;
                         switch (linqType)
                         {
                             case LinqType.Statement:
                                 tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
                                 queryString = $"{Constants.queryKindStatement}\r\n{currentSelection}\r\n{Constants.resultDump};".Trim();
                                 File.WriteAllText(tempQueryPath, $"{queryString}");
+
                                 break;
                             case LinqType.Method:
                                 tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
@@ -152,7 +166,6 @@ namespace LinqLanguageEditor2022.ToolWindows
                                 methodNameComplete = methodName.Substring(methodName.LastIndexOf(" ") + 1, methodName.LastIndexOf(")") - methodName.LastIndexOf(" "));
                                 methodCallLine = "{\r\n" + $"{methodNameComplete}" + ";\r\n}";
                                 queryString = $"{Constants.queryKindMethod}\r\nvoid Main()\r\n{methodCallLine}\r\n{currentSelection}".Trim();
-
                                 File.WriteAllText(tempQueryPath, $"{queryString}");
                                 break;
                             case LinqType.File:
@@ -165,6 +178,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                                     methodCallLine = "{\r\n" + $"{methodNameComplete}" + ";\r\n}";
                                     queryString = $"{Constants.queryKindMethod}\r\nvoid Main()\r\n{methodCallLine}\r\n{currentSelection}".Trim();
                                     File.WriteAllText(tempQueryPath, $"{queryString}");
+
                                 }
                                 else if (currentSelection.StartsWith("<Query Kind="))
                                 {
@@ -218,10 +232,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                             LinqPadResults.Children.Add(line);
                         }
                         tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
-                        File.WriteAllText(tempQueryPath, $"{currentSelection}".Trim());
-
-                        Project project = await VS.Solutions.GetActiveProjectAsync();
-                        //await project.AddExistingFilesAsync(tempQueryPath);
+                        position = await WriteFileAsync(_activeProject, tempQueryPath, currentSelection);
 
                         if (LinqAdvancedOptions.Instance.OpenInVSPreviewTab == true)
                         {
@@ -246,6 +257,91 @@ namespace LinqLanguageEditor2022.ToolWindows
                     await _pane.WriteLineAsync(Constants.noActiveDocument);
                 }
             }).FireAndForget();
+        }
+        private async Task<int> WriteFileAsync(Project project, string file, string currentSelection)
+        {
+            string template = await GetTemplateFilePathAsync(project, file, currentSelection);
+
+            if (!string.IsNullOrEmpty(template))
+            {
+                int index = template.IndexOf('$');
+
+                await WriteToDiskAsync(file, template);
+                return index;
+            }
+
+            await WriteToDiskAsync(file, string.Empty);
+
+            return 0;
+        }
+        private async Task WriteToDiskAsync(string file, string content)
+        {
+            using (StreamWriter writer = new(file, false, GetFileEncoding(file)))
+            {
+                await writer.WriteAsync(content);
+            }
+        }
+        private Encoding GetFileEncoding(string file)
+        {
+            string[] noBom = { ".cmd", ".bat", ".json" };
+            string ext = Path.GetExtension(file).ToLowerInvariant();
+
+            if (noBom.Contains(ext))
+            {
+                return new UTF8Encoding(false);
+            }
+
+            return new UTF8Encoding(true);
+        }
+
+        public async Task<string> GetTemplateFilePathAsync(Project project, string file, string currentSelection)
+        {
+            var templateFile = Constants.linqTemplate;
+
+            var template = await ReplaceTokensAsync(project, file, currentSelection, templateFile);
+            return NormalizeLineEndings(template);
+        }
+
+        private static async Task<string> ReplaceTokensAsync(Project project, string file, string currentSelection, string templateFile)
+        {
+            if (string.IsNullOrEmpty(templateFile))
+            {
+                return templateFile;
+            }
+            var rootNs = project.Name;
+            var ns = string.IsNullOrEmpty(rootNs) ? "MyNamespace" : rootNs;
+            string titleCase = String.Empty;
+
+            string className = Path.GetFileNameWithoutExtension(file);
+            if (className.EndsWith(".tmp"))
+            {
+                className = className.Substring(0, className.Length - 4);
+                titleCase = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(className.ToLower());
+            }
+            //using (var reader = new StreamReader(file))
+            //{
+            //    string content = await reader.ReadToEndAsync();
+            //    if (content.StartsWith("//<Query Kind="))
+            //    {
+            //        currentSelection = content;
+            //    }
+            //}
+            if (currentSelection.StartsWith("<Query Kind="))
+            {
+                currentSelection = $"//{currentSelection}";
+            }
+            return templateFile.Replace("{namespace}", ns)
+                          .Replace("{itemname}", titleCase)
+                          .Replace("{$}", currentSelection);
+        }
+        private string NormalizeLineEndings(string content)
+        {
+            if (string.IsNullOrEmpty(content))
+            {
+                return content;
+            }
+
+            return Regex.Replace(content, @"\r\n|\n\r|\n|\r", "\r\n");
         }
 
         private async Task DoOutputWindowsAsync()

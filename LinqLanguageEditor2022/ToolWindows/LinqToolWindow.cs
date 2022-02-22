@@ -7,8 +7,10 @@ using Microsoft.VisualStudio.Imaging;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -65,9 +67,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         }
                     }
                     catch (Exception)
-                    {
-
-                    }
+                    { }
                 }).FireAndForget();
                 return VSConstants.S_OK;
             }
@@ -85,9 +85,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         }
                     }
                     catch (Exception)
-                    {
-
-                    }
+                    { }
                 }).FireAndForget();
                 return VSConstants.S_OK;
             }
@@ -105,9 +103,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         }
                     }
                     catch (Exception)
-                    {
-
-                    }
+                    { }
                 }).FireAndForget();
 
                 return VSConstants.S_OK;
@@ -126,9 +122,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         }
                     }
                     catch (Exception)
-                    {
-
-                    }
+                    { }
                 }).FireAndForget();
 
                 return VSConstants.S_OK;
@@ -148,9 +142,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         }
                     }
                     catch (Exception)
-                    {
-
-                    }
+                    { }
                     try
                     {
                         win = VsShellUtilities.GetWindowObject(pFrame);
@@ -160,9 +152,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         }
                     }
                     catch (Exception)
-                    {
-
-                    }
+                    { }
                     win = VsShellUtilities.GetWindowObject(pFrame);
                     string currentFilePath = win.Document.Path;
                     string currentFileTitle = win.Document.Name;
@@ -171,11 +161,24 @@ namespace LinqLanguageEditor2022.ToolWindows
                     {
                         ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
                         {
+                            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                            //string content = String.Empty;
+                            //using (var reader = new StreamReader(win.Document.FullName))
+                            //{
+                            //    content = await reader.ReadToEndAsync();
+                            //    if (content.StartsWith("<Query Kind="))
+                            //    {
+                            //        content = $"//{content}";
+                            //    }
+                            //}
+                            //using (var writer = new StreamWriter(win.Document.FullName))
+                            //{
+                            //    await writer.WriteAsync(content);
+                            //}
                             Project project = await VS.Solutions.GetActiveProjectAsync();
                             if (project != null)
                             {
                                 XDocument xdoc = XDocument.Load(project.FullPath);
-                                //await project.AddExistingFilesAsync(currentFileFullPath);
                                 try
                                 {
                                     xdoc = RemoveEmptyItemGroupNode(xdoc);
@@ -184,9 +187,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                                     xdoc = XDocument.Load(project.FullPath);
                                 }
                                 catch (Exception)
-                                {
-
-                                }
+                                { }
                                 if (ItemGroupExists(xdoc, "ItemGroup", "Compile"))
                                 {
                                     try
@@ -212,9 +213,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                                                 xdoc = XDocument.Load(project.FullPath);
                                             }
                                             catch (Exception)
-                                            {
-
-                                            }
+                                            { }
                                         }
                                         else
                                         {
@@ -225,9 +224,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                                         xdoc = XDocument.Load(project.FullPath);
                                     }
                                     catch (Exception)
-                                    {
-
-                                    }
+                                    { }
                                 }
                                 else if (ItemGroupExists(xdoc, "ItemGroup", "None"))
                                 {
@@ -246,9 +243,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                                         xdoc = XDocument.Load(project.FullPath);
                                     }
                                     catch (Exception)
-                                    {
-
-                                    }
+                                    { }
                                 }
                                 else
                                 {
@@ -270,8 +265,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                     return xdoc;
                 }
                 catch (Exception)
-                {
-                }
+                { }
                 return xdoc;
             }
 
@@ -289,7 +283,6 @@ namespace LinqLanguageEditor2022.ToolWindows
                 {
                     return false;
                 }
-
             }
 
             public bool NoneCompileItemExists(XDocument xdoc, string currentFileTitle)
@@ -331,8 +324,8 @@ namespace LinqLanguageEditor2022.ToolWindows
             }
             public XDocument CreateNewItemGroup(XDocument xdoc, string currentFileFullPath)
             {
-                XElement itemGroup = new XElement("ItemGroup");
-                XElement compile = new XElement("Compile", new XAttribute("Include", currentFileFullPath));
+                XElement itemGroup = new("ItemGroup");
+                XElement compile = new("Compile", new XAttribute("Include", currentFileFullPath));
                 itemGroup.Add(compile);
                 xdoc.Element("Project").Add(itemGroup);
                 return xdoc;
@@ -354,8 +347,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                     return xdoc;
                 }
                 catch (Exception)
-                {
-                }
+                { }
                 return xdoc;
             }
             public XDocument RemoveCompileItem(XDocument xdoc, string caption)
@@ -370,9 +362,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                     return xdoc;
                 }
                 catch (Exception)
-                {
-
-                }
+                { }
                 return xdoc;
             }
             public int OnAfterDocumentWindowHide(uint docCookie, IVsWindowFrame pFrame)
@@ -389,9 +379,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         }
                     }
                     catch (Exception)
-                    {
-
-                    }
+                    { }
                     try
                     {
                         var win = VsShellUtilities.GetWindowObject(pFrame);
@@ -401,9 +389,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         }
                     }
                     catch (Exception)
-                    {
-
-                    }
+                    { }
                     win = VsShellUtilities.GetWindowObject(pFrame);
                     if (pFrame != null && win.Caption.EndsWith(".linq"))
                     {
@@ -420,8 +406,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                                     xdoc.Save(project.FullPath);
                                 }
                                 catch (Exception)
-                                {
-                                }
+                                { }
                                 try
                                 {
                                     xdoc = RemoveEmptyItemGroupNode(xdoc);
