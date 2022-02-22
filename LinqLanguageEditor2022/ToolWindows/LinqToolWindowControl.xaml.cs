@@ -37,10 +37,6 @@ namespace LinqLanguageEditor2022.ToolWindows
         public string queryResult = null;
         public string dirLPRun7 = null;
         public string fileLPRun7 = null;
-        //private readonly string _folder;
-        //private readonly List<string> _templateFiles = new List<string>();
-        //private const string _defaultExt = Constants.LinqExt;
-        //private const string _templateDir = ".templates";
         public LinqType CurrentLinqMode = 0;
         public LinqToolWindowControl(Project activeProject, LinqToolWindowMessenger toolWindowMessenger)
         {
@@ -57,9 +53,6 @@ namespace LinqLanguageEditor2022.ToolWindows
 
             dirLPRun7 = Path.GetDirectoryName(typeof(LinqToolWindow).Assembly.Location);
             fileLPRun7 = Path.Combine(dirLPRun7, Constants.solutionToolWindowsFolderName, Constants.lPRun7Executable);
-            //var assembly = Assembly.GetExecutingAssembly().Location;
-            //_folder = Path.Combine(Path.GetDirectoryName(assembly), "Templates");
-            //_templateFiles.AddRange(Directory.GetFiles(_folder, "*" + _defaultExt, SearchOption.AllDirectories));
 
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
@@ -225,11 +218,11 @@ namespace LinqLanguageEditor2022.ToolWindows
                         LinqPadResults.Children.Clear();
                         if (LinqAdvancedOptions.Instance.UseLinqPadDumpWindow == true)
                         {
-                            await _pane.WriteLineAsync($"{currentSelection} \r\n\r\n{Constants.currentSelectionQuery} = {queryResult}");
+                            await _pane.WriteLineAsync($"{currentSelection} \r\n\r\n{Constants.currentSelectionQuery} = \r\n\r\n{queryResult}");
                         }
                         if (LinqAdvancedOptions.Instance.EnableToolWindowResults == true)
                         {
-                            selectedQueryResult = new() { Text = $"{Constants.currentSelectionQuery} = {queryResult}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                            selectedQueryResult = new() { Text = $"{Constants.currentSelectionQuery} = \r\n\r\n{queryResult}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                             LinqPadResults.Children.Add(selectedQueryResult);
                             Line line = new() { Margin = new Thickness(0, 0, 0, 20) };
                             LinqPadResults.Children.Add(line);
@@ -263,7 +256,7 @@ namespace LinqLanguageEditor2022.ToolWindows
         }
         private async Task<int> WriteFileAsync(Project project, string file, string currentSelection)
         {
-            string template = GetTemplateFilePath(project, file, currentSelection);
+            string template = await GetTemplateFilePathAsync(project, file, currentSelection);
 
             if (!string.IsNullOrEmpty(template))
             {
@@ -297,7 +290,7 @@ namespace LinqLanguageEditor2022.ToolWindows
             return new UTF8Encoding(true);
         }
 
-        public string GetTemplateFilePath(Project project, string file, string currentSelection)
+        public async Task<string> GetTemplateFilePathAsync(Project project, string file, string currentSelection)
         {
             string templateFile = String.Empty;
             switch (CurrentLinqMode)
@@ -317,11 +310,11 @@ namespace LinqLanguageEditor2022.ToolWindows
                     break;
             }
 
-            var template = ReplaceTokens(project, file, currentSelection, templateFile);
+            var template = await ReplaceTokensAsync(project, file, currentSelection, templateFile);
             return NormalizeLineEndings(template);
         }
 
-        private string ReplaceTokens(Project project, string file, string currentSelection, string templateFile)
+        private async Task<string> ReplaceTokensAsync(Project project, string file, string currentSelection, string templateFile)
         {
             if (string.IsNullOrEmpty(templateFile))
             {
@@ -335,44 +328,63 @@ namespace LinqLanguageEditor2022.ToolWindows
                 className = className.Substring(0, className.Length - 4);
             }
             string titleCase = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(className.ToLower());
-            switch (CurrentLinqMode)
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
-                case LinqType.None:
-                    break;
-                case LinqType.Statement:
-                    return templateFile.Replace("{namespace}", ns)
-                                  .Replace("{itemname}", titleCase)
-                                  .Replace("{methodname}", $"{titleCase}_Method")
-                                  .Replace("{$}", currentSelection);
-                case LinqType.Method:
-                    currentSelection = currentSelection.Replace("\r\n{", "\r\n\t\t{")
-                        .Replace("\r\n//", "\r\n\t\t//")
-                        .Replace("\r\nvar result", "\r\n\t\tvar result")
-                        .Replace("\r\nConsole.WriteLine", "\r\n\t\tConsole.WriteLine")
-                        .Replace("\r\nDebug.WriteLine", "\r\n\t\tv")
-                        .Replace("\r\n}", "\r\n\t\t}");
-                    currentSelection = $"\t\t{currentSelection}";
-                    return templateFile.Replace("{namespace}", ns)
-                                  .Replace("{itemname}", titleCase)
-                                  .Replace("{$}", currentSelection);
-                case LinqType.File:
-                    //using (var reader = new StreamReader(file))
-                    //{
-                    //    string content = await reader.ReadToEndAsync();
-                    //    if (content.StartsWith("//<Query Kind="))
-                    //    {
-                    //        currentSelection = content;
-                    //    }
-                    //}
-                    if (currentSelection.StartsWith("<Query Kind="))
-                    {
-                        currentSelection = $"//{currentSelection}";
-                    }
-                    break;
-            }
-            return templateFile.Replace("{namespace}", ns)
-                          .Replace("{itemname}", titleCase)
-                          .Replace("{$}", currentSelection);
+                await _pane.ClearAsync();
+                //LinqPadResults.Children.Clear();
+                currentSelection = currentSelection.Replace("\r\n{", "\r\n\t\t{")
+                    .Replace("\r\n//", "\r\n\t\t\t//")
+                    .Replace("\r\nvar", "\r\n\t\t\tvar")
+                    .Replace("\r\nnew", "\r\n\t\t\tnew")
+                    .Replace("\r\nConsole.WriteLine", "\r\n\t\t\tConsole.WriteLine")
+                    .Replace("\r\n\t\tDebug.WriteLine", "\r\n\t\t\t\tDebug.WriteLine")
+                    .Replace("\r\nDebug.WriteLine", "\r\n\t\t\tDebug.WriteLine")
+                    .Replace("\r\nforeach", "\r\n\t\t\tforeach")
+                    .Replace("\r\nif", "\r\n\t\t\tif")
+                    .Replace("\r\nelse", "\r\n\t\t\telse")
+                    .Replace("\r\ndouble", "\r\n\t\t\tdouble")
+                    .Replace("\r\nint", "\r\n\t\t\tint")
+                    .Replace("\r\nstring", "\r\n\t\t\tstring")
+                    .Replace("\r\nreturn", "\r\n\t\t\treturn")
+                    .Replace("\r\nList", "\r\n\t\t\tList")
+                    .Replace("\r\n};", "\r\n\t\t\t};")
+                    .Replace("\r\ntry\r\n{", "\r\n\t\t\ttry\r\n\t\t\t")
+                    .Replace("\r\ncatch", "\r\n\t\t\ttryatch")
+                    .Replace("\r\n}", "\r\n\t\t}");
+                switch (CurrentLinqMode)
+                {
+                    case LinqType.None:
+                        break;
+                    case LinqType.Statement:
+                        templateFile = templateFile.Replace("{namespace}", ns)
+                                      .Replace("{itemname}", titleCase)
+                                      .Replace("{methodname}", $"{titleCase}_Method")
+                                      .Replace("{$}", currentSelection);
+                        break;
+                    case LinqType.Method:
+                        templateFile = templateFile.Replace("{namespace}", ns)
+                                      .Replace("{itemname}", titleCase)
+                                      .Replace("{$}", currentSelection);
+                        break;
+                    case LinqType.File:
+                        //using (var reader = new StreamReader(file))
+                        //{
+                        //    string content = await reader.ReadToEndAsync();
+                        //    if (content.StartsWith("//<Query Kind="))
+                        //    {
+                        //        currentSelection = content;
+                        //    }
+                        //}
+                        if (currentSelection.StartsWith("<Query Kind="))
+                        {
+                            currentSelection = $"//{currentSelection}";
+                        }
+                        break;
+                }
+            }).FireAndForget();
+            return templateFile;
+
         }
         private string NormalizeLineEndings(string content)
         {
