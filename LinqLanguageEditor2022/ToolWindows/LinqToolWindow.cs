@@ -18,8 +18,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 
-using static System.Net.Mime.MediaTypeNames;
-
 namespace LinqLanguageEditor2022.ToolWindows
 {
     public class LinqToolWindow : BaseToolWindow<LinqToolWindow>

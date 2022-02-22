@@ -37,11 +37,11 @@ namespace LinqLanguageEditor2022.ToolWindows
         public string queryResult = null;
         public string dirLPRun7 = null;
         public string fileLPRun7 = null;
-        private readonly string _folder;
-        private readonly List<string> _templateFiles = new List<string>();
-        private const string _defaultExt = Constants.LinqExt;
-        private const string _templateDir = ".templates";
-
+        //private readonly string _folder;
+        //private readonly List<string> _templateFiles = new List<string>();
+        //private const string _defaultExt = Constants.LinqExt;
+        //private const string _templateDir = ".templates";
+        public LinqType CurrentLinqMode = 0;
         public LinqToolWindowControl(Project activeProject, LinqToolWindowMessenger toolWindowMessenger)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
@@ -57,9 +57,9 @@ namespace LinqLanguageEditor2022.ToolWindows
 
             dirLPRun7 = Path.GetDirectoryName(typeof(LinqToolWindow).Assembly.Location);
             fileLPRun7 = Path.Combine(dirLPRun7, Constants.solutionToolWindowsFolderName, Constants.lPRun7Executable);
-            var assembly = Assembly.GetExecutingAssembly().Location;
-            _folder = Path.Combine(Path.GetDirectoryName(assembly), "Templates");
-            _templateFiles.AddRange(Directory.GetFiles(_folder, "*" + _defaultExt, SearchOption.AllDirectories));
+            //var assembly = Assembly.GetExecutingAssembly().Location;
+            //_folder = Path.Combine(Path.GetDirectoryName(assembly), "Templates");
+            //_templateFiles.AddRange(Directory.GetFiles(_folder, "*" + _defaultExt, SearchOption.AllDirectories));
 
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
@@ -155,12 +155,14 @@ namespace LinqLanguageEditor2022.ToolWindows
                         switch (linqType)
                         {
                             case LinqType.Statement:
+                                CurrentLinqMode = LinqType.Statement;
                                 tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
                                 queryString = $"{Constants.queryKindStatement}\r\n{currentSelection}\r\n{Constants.resultDump};".Trim();
                                 File.WriteAllText(tempQueryPath, $"{queryString}");
 
                                 break;
                             case LinqType.Method:
+                                CurrentLinqMode = LinqType.Method;
                                 tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
                                 methodName = currentSelection.Substring(0, currentSelection.IndexOf("\r"));
                                 methodNameComplete = methodName.Substring(methodName.LastIndexOf(" ") + 1, methodName.LastIndexOf(")") - methodName.LastIndexOf(" "));
@@ -169,7 +171,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                                 File.WriteAllText(tempQueryPath, $"{queryString}");
                                 break;
                             case LinqType.File:
-
+                                CurrentLinqMode = LinqType.File;
                                 tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
                                 if (!currentSelection.StartsWith("<Query Kind="))
                                 {
@@ -191,6 +193,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                                 }
                                 break;
                             case LinqType.None:
+                                CurrentLinqMode = LinqType.None;
                                 NothingSelectedResult = new() { Text = Constants.noActiveDocument, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                                 LinqPadResults.Children.Add(NothingSelectedResult);
                                 await _pane.WriteLineAsync(Constants.noActiveDocument);
@@ -260,7 +263,7 @@ namespace LinqLanguageEditor2022.ToolWindows
         }
         private async Task<int> WriteFileAsync(Project project, string file, string currentSelection)
         {
-            string template = await GetTemplateFilePathAsync(project, file, currentSelection);
+            string template = GetTemplateFilePath(project, file, currentSelection);
 
             if (!string.IsNullOrEmpty(template))
             {
@@ -294,41 +297,78 @@ namespace LinqLanguageEditor2022.ToolWindows
             return new UTF8Encoding(true);
         }
 
-        public async Task<string> GetTemplateFilePathAsync(Project project, string file, string currentSelection)
+        public string GetTemplateFilePath(Project project, string file, string currentSelection)
         {
-            var templateFile = Constants.linqTemplate;
+            string templateFile = String.Empty;
+            switch (CurrentLinqMode)
+            {
+                case LinqType.None:
 
-            var template = await ReplaceTokensAsync(project, file, currentSelection, templateFile);
+                    break;
+                case LinqType.Statement:
+                    templateFile = Constants.linqStatementTemplate;
+                    break;
+                case LinqType.Method:
+                    templateFile = Constants.linqMethodTemplate;
+
+                    break;
+                case LinqType.File:
+
+                    break;
+            }
+
+            var template = ReplaceTokens(project, file, currentSelection, templateFile);
             return NormalizeLineEndings(template);
         }
 
-        private static async Task<string> ReplaceTokensAsync(Project project, string file, string currentSelection, string templateFile)
+        private string ReplaceTokens(Project project, string file, string currentSelection, string templateFile)
         {
             if (string.IsNullOrEmpty(templateFile))
             {
                 return templateFile;
             }
             var rootNs = project.Name;
-            var ns = string.IsNullOrEmpty(rootNs) ? "MyNamespace" : rootNs;
-            string titleCase = String.Empty;
-
+            var ns = string.IsNullOrEmpty(rootNs) ? "MyLinq" : rootNs;
             string className = Path.GetFileNameWithoutExtension(file);
             if (className.EndsWith(".tmp"))
             {
                 className = className.Substring(0, className.Length - 4);
-                titleCase = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(className.ToLower());
             }
-            //using (var reader = new StreamReader(file))
-            //{
-            //    string content = await reader.ReadToEndAsync();
-            //    if (content.StartsWith("//<Query Kind="))
-            //    {
-            //        currentSelection = content;
-            //    }
-            //}
-            if (currentSelection.StartsWith("<Query Kind="))
+            string titleCase = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(className.ToLower());
+            switch (CurrentLinqMode)
             {
-                currentSelection = $"//{currentSelection}";
+                case LinqType.None:
+                    break;
+                case LinqType.Statement:
+                    return templateFile.Replace("{namespace}", ns)
+                                  .Replace("{itemname}", titleCase)
+                                  .Replace("{methodname}", $"{titleCase}_Method")
+                                  .Replace("{$}", currentSelection);
+                case LinqType.Method:
+                    currentSelection = currentSelection.Replace("\r\n{", "\r\n\t\t{")
+                        .Replace("\r\n//", "\r\n\t\t//")
+                        .Replace("\r\nvar result", "\r\n\t\tvar result")
+                        .Replace("\r\nConsole.WriteLine", "\r\n\t\tConsole.WriteLine")
+                        .Replace("\r\nDebug.WriteLine", "\r\n\t\tv")
+                        .Replace("\r\n}", "\r\n\t\t}");
+                    currentSelection = $"\t\t{currentSelection}";
+                    return templateFile.Replace("{namespace}", ns)
+                                  .Replace("{itemname}", titleCase)
+                                  .Replace("{$}", currentSelection);
+                case LinqType.File:
+                    //using (var reader = new StreamReader(file))
+                    //{
+                    //    string content = await reader.ReadToEndAsync();
+                    //    if (content.StartsWith("//<Query Kind="))
+                    //    {
+                    //        currentSelection = content;
+                    //    }
+                    //}
+                    if (currentSelection.StartsWith("<Query Kind="))
+                    {
+                        currentSelection = $"//{currentSelection}";
+                    }
+                    break;
             }
             return templateFile.Replace("{namespace}", ns)
                           .Replace("{itemname}", titleCase)
