@@ -6,8 +6,8 @@ global using System;
 
 global using Task = System.Threading.Tasks.Task;
 
+using LinqLanguageEditor2022.Commands;
 using LinqLanguageEditor2022.LinqEditor;
-
 using LinqLanguageEditor2022.ToolWindows;
 
 using Microsoft.VisualStudio;

@@ -102,6 +102,10 @@
     <Content Include="ToolWindows\LPRun7-x64.exe">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include=".editorconfig">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
       <Generator>VsixManifestGenerator</Generator>

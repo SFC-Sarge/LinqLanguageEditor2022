@@ -1,5 +1,7 @@
 ﻿using Community.VisualStudio.Toolkit;
 
+using LinqLanguageEditor2022.Commands;
+
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Imaging;
 using Microsoft.VisualStudio.Shell;
@@ -7,6 +9,8 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Threading;
 
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,8 +22,6 @@ namespace LinqLanguageEditor2022.Tokens
         private string[] _lines;
         private readonly ITextBuffer _buffer;
         private bool _isDisposed;
-
-
 
         protected LinqDocument(string[] lines)
         {
@@ -49,8 +51,6 @@ namespace LinqLanguageEditor2022.Tokens
         public string ProjectName { get; protected set; }
 
         public string FileName { get; protected set; }
-
-        //public List<LinqParseItem> Items { get; private set; } = new();
 
         public void UpdateLines(string[] lines)
         {
@@ -95,15 +95,6 @@ namespace LinqLanguageEditor2022.Tokens
                 }
             }
         }
-
-        //public LinqParseItem FindItemFromPosition(int position)
-        //{
-        //    LinqParseItem item = Items.LastOrDefault(t => t.Span.Contains(position));
-        //    LinqParseItem reference = item?.References.FirstOrDefault(v => v != null && v.Span.Contains(position - 1));
-
-        //    // Return the reference if it exist; otherwise the item
-        //    return reference ?? item;
-        //}
 
         public void Dispose()
         {
