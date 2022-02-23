@@ -139,8 +139,8 @@ The above query does not work returns nothing but the script and an empty result
 
 ## Query Statement Results in Toolwindow example
 
+![Query Statement Results](media/QueryStatementResults.png)
 
-![Query Statement Results in Toolwindow](https://user-images.githubusercontent.com/67446778/148123280-6c683763-ab63-441b-9239-edb729e2e9a2.png)
 
 
 
