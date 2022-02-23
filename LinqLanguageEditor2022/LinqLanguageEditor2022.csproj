@@ -70,6 +70,8 @@
     <Compile Include="LinqEditor\LinqOutliningTagger.cs" />
     <Compile Include="LinqEditor\LinqOutliningTaggerProvider.cs" />
     <Compile Include="LinqEditor\LinqUpperCaseSuggestedAction.cs" />
+    <Compile Include="Options\LinqIntelliSenseOptions.cs" />
+    <Compile Include="Options\LinqCodeStyleOptions.cs" />
     <Compile Include="Options\LinqAdvancedOptions.cs" />
     <Compile Include="Options\LinqOptionsProvider.cs" />
     <Compile Include="Tokens\LinqDocument.cs" />

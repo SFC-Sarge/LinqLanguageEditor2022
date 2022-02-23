@@ -6,5 +6,12 @@ namespace LinqLanguageEditor2022.Options
     {
         [ComVisible(true)]
         public class LinqAdvancedOptions : BaseOptionPage<Options.LinqAdvancedOptions> { }
+
+        [ComVisible(true)]
+        public class LinqCodeStyleOptions : BaseOptionPage<Options.LinqCodeStyleOptions> { }
+
+        [ComVisible(true)]
+        public class LinqIntelliSenseOptions : BaseOptionPage<Options.LinqIntelliSenseOptions> { }
+
     }
 }
