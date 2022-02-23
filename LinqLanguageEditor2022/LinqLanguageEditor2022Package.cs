@@ -33,7 +33,6 @@ namespace LinqLanguageEditor2022
 
     [ProvideLanguageService(typeof(LinqLanguageFactory), Constants.LinqLanguageName, 0, ShowHotURLs = false, DefaultToNonHotURLs = true, EnableLineNumbers = true, EnableAsyncCompletion = true, EnableCommenting = true, ShowCompletion = true, AutoOutlining = true, CodeSense = true)]
     [ProvideLanguageEditorOptionPage(typeof(Options.LinqOptionsProvider.LinqAdvancedOptions), Constants.LinqLanguageName, "", "Advanced", null, 0)]
-    [ProvideProfile(typeof(Options.LinqOptionsProvider.LinqAdvancedOptions), "", "Advanced", 0, 0, true)]
     [ProvideLanguageEditorOptionPage(typeof(Options.LinqOptionsProvider.LinqCodeStyleOptions), Constants.LinqLanguageName, "", "Code Style", null, 0)]
     [ProvideLanguageEditorOptionPage(typeof(Options.LinqOptionsProvider.LinqCodeStyleOptions), Constants.LinqLanguageName, "", @"Code Style\General", null, 0)]
     [ProvideLanguageEditorOptionPage(typeof(Options.LinqOptionsProvider.LinqCodeStyleOptions), Constants.LinqLanguageName, "", @"Code Style\Formatting", null, 0)]
