@@ -127,8 +127,7 @@ The above query does not work returns nothing but the script and an empty result
 
 ## Sample results from the following document view statement selection
 
-
-![Query Statement Selection](https://user-images.githubusercontent.com/67446778/148122952-1893a4d7-cf2f-452c-8e49-0dce8ad7aee3.png)
+![Sample Results From Selection](media/SampleResultsFromSelection.png)
 
 
 ## Run Selected Query Statement
@@ -139,9 +138,8 @@ The above query does not work returns nothing but the script and an empty result
 
 ## Query Statement Results in Toolwindow example
 
-![Query Statement Results](media/QueryStatementResults.png)
 
-
+![Query Statement Results](media/QueryStatementResults2.png)
 
 
 ## Query Statement Results in LinqPad Dump window example
