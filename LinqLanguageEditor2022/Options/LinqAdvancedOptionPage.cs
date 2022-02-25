@@ -4,7 +4,7 @@ using System.Windows;
 namespace LinqLanguageEditor2022.Options
 {
     [ComVisible(true)]
-    [Guid("FE4E4122-3DA7-4521-9D19-FB9A8531CF94")]
+    [Guid("05F5CC22-0DF4-4D38-9B25-F54AAF567201")]
     public class LinqAdvancedOptionPage : UIElementDialogPage
     {
         protected override UIElement Child
