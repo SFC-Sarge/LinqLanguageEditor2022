@@ -30,5 +30,17 @@ namespace LinqLanguageEditor2022.Options
             LinqCodeStyleOptions.Instance.OpenBraceOnNewLineForMethods = (bool)cbOpenBraceOnNewLineForMethods.IsChecked;
             LinqCodeStyleOptions.Instance.Save();
         }
+
+        private void cbOpenBraceOnNewLineForTypes_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqCodeStyleOptions.Instance.OpenBraceOnNewLineForTypes = (bool)cbOpenBraceOnNewLineForTypes.IsChecked;
+            LinqCodeStyleOptions.Instance.Save();
+        }
+
+        private void cbOpenBraceOnNewLineForMethods_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqCodeStyleOptions.Instance.OpenBraceOnNewLineForMethods = (bool)cbOpenBraceOnNewLineForMethods.IsChecked;
+            LinqCodeStyleOptions.Instance.Save();
+        }
     }
 }

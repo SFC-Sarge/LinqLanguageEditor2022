@@ -30,5 +30,17 @@ namespace LinqLanguageEditor2022.Options
             LinqCodeStyleOptions.Instance.LeaveStatementMemberDeclareOnSameLine = (bool)cbLeaveStatementMemberDeclareOnSameLine.IsChecked;
             LinqCodeStyleOptions.Instance.Save();
         }
+
+        private void cbLeaveBlockOnSingleLine_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqCodeStyleOptions.Instance.LeaveBlockOnSingleLine = (bool)cbLeaveBlockOnSingleLine.IsChecked;
+            LinqCodeStyleOptions.Instance.Save();
+        }
+
+        private void cbLeaveStatementMemberDeclareOnSameLine_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqCodeStyleOptions.Instance.LeaveStatementMemberDeclareOnSameLine = (bool)cbLeaveStatementMemberDeclareOnSameLine.IsChecked;
+            LinqCodeStyleOptions.Instance.Save();
+        }
     }
 }

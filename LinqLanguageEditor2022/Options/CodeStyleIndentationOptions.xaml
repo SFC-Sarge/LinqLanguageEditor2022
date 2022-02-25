@@ -7,11 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <CheckBox x:Name="cbIndentBlockContents" Content="Indent block contents" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" IsThreeState="False" Checked="cbIndentBlockContents_Checked"/>
-        <CheckBox x:Name="cbIndentOpenCloseBraces" Content="Indent open and close braces" HorizontalAlignment="Left" Margin="30,66,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbIndentOpenCloseBraces_Checked" />
-        <CheckBox x:Name="cbIndentCaseContents" Content="Indent case contents" HorizontalAlignment="Left" Margin="30,96,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbIndentCaseContents_Checked" />
-        <CheckBox x:Name="cbIndentCaseContentsInBlock" Content="Indent case contents (when block)" HorizontalAlignment="Left" Margin="30,126,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbIndentCaseContentsInBlock_Checked" />
-        <CheckBox x:Name="cbIndentCaseLabels" Content="Indent case labels" HorizontalAlignment="Left" Margin="30,156,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbIndentCaseLabels_Checked" />
+        <CheckBox x:Name="cbIndentBlockContents" Content="Indent block contents" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" IsThreeState="False" Checked="cbIndentBlockContents_Checked" Unchecked="cbIndentBlockContents_Unchecked"/>
+        <CheckBox x:Name="cbIndentOpenCloseBraces" Content="Indent open and close braces" HorizontalAlignment="Left" Margin="30,66,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbIndentOpenCloseBraces_Checked" Unchecked="cbIndentOpenCloseBraces_Unchecked" />
+        <CheckBox x:Name="cbIndentCaseContents" Content="Indent case contents" HorizontalAlignment="Left" Margin="30,96,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbIndentCaseContents_Checked" Unchecked="cbIndentCaseContents_Unchecked" />
+        <CheckBox x:Name="cbIndentCaseContentsInBlock" Content="Indent case contents (when block)" HorizontalAlignment="Left" Margin="30,126,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbIndentCaseContentsInBlock_Checked" Unchecked="cbIndentCaseContentsInBlock_Unchecked" />
+        <CheckBox x:Name="cbIndentCaseLabels" Content="Indent case labels" HorizontalAlignment="Left" Margin="30,156,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbIndentCaseLabels_Checked" Unchecked="cbIndentCaseLabels_Unchecked" />
 
     </Grid>
 </UserControl>

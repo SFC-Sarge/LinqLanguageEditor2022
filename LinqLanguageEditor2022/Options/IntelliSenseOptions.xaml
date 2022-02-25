@@ -7,9 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <CheckBox x:Name="cbShowCompletionListAfterCharTyped" Content="Show completion list after a character is typed" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" IsThreeState="False" Checked="cbShowCompletionListAfterCharTyped_Checked"/>
-        <CheckBox x:Name="cbShowCompletionListAfterCharDeleted" Content="Show completion list after a character is deleted" HorizontalAlignment="Left" Margin="43,66,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbShowCompletionListAfterCharDeleted_Checked" />
-        <CheckBox x:Name="cbAutoShowCompletionListInArgumentList" Content="Automatically show completion list in argument lists" HorizontalAlignment="Left" Margin="30,96,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbAutoShowCompletionListInArgumentList_Checked" />
+        <CheckBox x:Name="cbShowCompletionListAfterCharTyped" Content="Show completion list after a character is typed" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" IsThreeState="False" Checked="cbShowCompletionListAfterCharTyped_Checked" Unchecked="cbShowCompletionListAfterCharTyped_Unchecked"/>
+        <CheckBox x:Name="cbShowCompletionListAfterCharDeleted" Content="Show completion list after a character is deleted" HorizontalAlignment="Left" Margin="43,66,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbShowCompletionListAfterCharDeleted_Checked" Unchecked="cbShowCompletionListAfterCharDeleted_Unchecked" />
+        <CheckBox x:Name="cbAutoShowCompletionListInArgumentList" Content="Automatically show completion list in argument lists" HorizontalAlignment="Left" Margin="30,96,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbAutoShowCompletionListInArgumentList_Checked" Unchecked="cbAutoShowCompletionListInArgumentList_Unchecked" />
 
     </Grid>
 </UserControl>

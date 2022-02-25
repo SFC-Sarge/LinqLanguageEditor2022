@@ -37,5 +37,23 @@ namespace LinqLanguageEditor2022.Options
             LinqIntelliSenseOptions.Instance.ShowCompletionListAfterCharTyped = (bool)cbShowCompletionListAfterCharTyped.IsChecked;
             LinqIntelliSenseOptions.Instance.Save();
         }
+
+        private void cbShowCompletionListAfterCharTyped_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqIntelliSenseOptions.Instance.ShowCompletionListAfterCharTyped = (bool)cbShowCompletionListAfterCharTyped.IsChecked;
+            LinqIntelliSenseOptions.Instance.Save();
+        }
+
+        private void cbShowCompletionListAfterCharDeleted_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqIntelliSenseOptions.Instance.ShowCompletionListAfterCharTyped = (bool)cbShowCompletionListAfterCharTyped.IsChecked;
+            LinqIntelliSenseOptions.Instance.Save();
+        }
+
+        private void cbAutoShowCompletionListInArgumentList_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqIntelliSenseOptions.Instance.ShowCompletionListAfterCharTyped = (bool)cbShowCompletionListAfterCharTyped.IsChecked;
+            LinqIntelliSenseOptions.Instance.Save();
+        }
     }
 }

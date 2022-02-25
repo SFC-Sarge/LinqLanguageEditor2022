@@ -44,5 +44,33 @@ namespace LinqLanguageEditor2022.Options
             LinqCodeStyleOptions.Instance.AutoFormatOnReturn = (bool)cbAutoFormatOnReturn.IsChecked;
             LinqCodeStyleOptions.Instance.Save();
         }
+
+        private void cbAutoFormatWhenTyping_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqCodeStyleOptions.Instance.AutoFormatWhenTyping = (bool)cbAutoFormatWhenTyping.IsChecked;
+            LinqCodeStyleOptions.Instance.Save();
+
+        }
+
+        private void cbAutoFormatStatementOn_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqCodeStyleOptions.Instance.AutoFormatStatementOn = (bool)cbAutoFormatStatementOn.IsChecked;
+            LinqCodeStyleOptions.Instance.Save();
+
+        }
+
+        private void cbAutoFormatBlockOn_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqCodeStyleOptions.Instance.AutoFormatBlockOn = (bool)cbAutoFormatBlockOn.IsChecked;
+            LinqCodeStyleOptions.Instance.Save();
+
+        }
+
+        private void cbAutoFormatOnReturn_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqCodeStyleOptions.Instance.AutoFormatOnReturn = (bool)cbAutoFormatOnReturn.IsChecked;
+            LinqCodeStyleOptions.Instance.Save();
+
+        }
     }
 }

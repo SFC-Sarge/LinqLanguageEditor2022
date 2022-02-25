@@ -7,9 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <CheckBox x:Name="cbOpenInVSPreviewTab" Content="Open Linq Query and result in Visual Studio Preview Tab" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" IsThreeState="False" Checked="cbOpenInVSPreviewTab_Checked"/>
-        <CheckBox x:Name="cbUseLinqPadDumpWindow" Content="Enable LinqPad Dump Windows for Linq Query and results" HorizontalAlignment="Left" Margin="30,66,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbUseLinqPadDumpWindow_Checked" />
-        <CheckBox x:Name="cbEnableToolWindowResults" Content="Enable Tool Window for Linq Query and results" HorizontalAlignment="Left" Margin="30,96,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbEnableToolWindowResults_Checked" />
+        <CheckBox x:Name="cbOpenInVSPreviewTab" Content="Open Linq Query and result in Visual Studio Preview Tab" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" IsThreeState="False" Checked="cbOpenInVSPreviewTab_Checked" Unchecked="cbOpenInVSPreviewTab_Unchecked"/>
+        <CheckBox x:Name="cbUseLinqPadDumpWindow" Content="Enable LinqPad Dump Windows for Linq Query and results" HorizontalAlignment="Left" Margin="30,66,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbUseLinqPadDumpWindow_Checked" Unchecked="cbUseLinqPadDumpWindow_Unchecked" />
+        <CheckBox x:Name="cbEnableToolWindowResults" Content="Enable Tool Window for Linq Query and results" HorizontalAlignment="Left" Margin="30,96,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbEnableToolWindowResults_Checked" Unchecked="cbEnableToolWindowResults_Unchecked" />
 
     </Grid>
 </UserControl>

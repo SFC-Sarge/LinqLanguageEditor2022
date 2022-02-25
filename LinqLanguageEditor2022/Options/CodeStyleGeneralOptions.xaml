@@ -7,9 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <CheckBox x:Name="cbAutoFormatWhenTyping" Content="Automatically format when typing" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" IsThreeState="False" Checked="cbAutoFormatWhenTyping_Checked"/>
-        <CheckBox x:Name="cbAutoFormatStatementOn" Content="Automatically format statement on ;" HorizontalAlignment="Left" Margin="30,66,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbAutoFormatStatementOn_Checked" />
-        <CheckBox x:Name="cbAutoFormatBlockOn" Content="Automatically format statement on }" HorizontalAlignment="Left" Margin="30,96,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbAutoFormatBlockOn_Checked" />
-        <CheckBox x:Name="cbAutoFormatOnReturn" Content="Automatically format on return" HorizontalAlignment="Left" Margin="30,126,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbAutoFormatOnReturn_Checked" />
+        <CheckBox x:Name="cbAutoFormatWhenTyping" Content="Automatically format when typing" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" IsThreeState="False" Checked="cbAutoFormatWhenTyping_Checked" Unchecked="cbAutoFormatWhenTyping_Unchecked"/>
+        <CheckBox x:Name="cbAutoFormatStatementOn" Content="Automatically format statement on ;" HorizontalAlignment="Left" Margin="30,66,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbAutoFormatStatementOn_Checked" Unchecked="cbAutoFormatStatementOn_Unchecked" />
+        <CheckBox x:Name="cbAutoFormatBlockOn" Content="Automatically format statement on }" HorizontalAlignment="Left" Margin="30,96,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbAutoFormatBlockOn_Checked" Unchecked="cbAutoFormatBlockOn_Unchecked" />
+        <CheckBox x:Name="cbAutoFormatOnReturn" Content="Automatically format on return" HorizontalAlignment="Left" Margin="30,126,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbAutoFormatOnReturn_Checked" Unchecked="cbAutoFormatOnReturn_Unchecked" />
     </Grid>
 </UserControl>

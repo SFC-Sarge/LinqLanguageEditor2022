@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <CheckBox x:Name="cbLeaveBlockOnSingleLine" Content="Leave block on single line" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" IsThreeState="False" Checked="cbLeaveBlockOnSingleLine_Checked"/>
-        <CheckBox x:Name="cbLeaveStatementMemberDeclareOnSameLine" Content="Leave statements and member declarations on the same line" HorizontalAlignment="Left" Margin="30,68,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbLeaveStatementMemberDeclareOnSameLine_Checked" />
+        <CheckBox x:Name="cbLeaveBlockOnSingleLine" Content="Leave block on single line" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" IsThreeState="False" Checked="cbLeaveBlockOnSingleLine_Checked" Unchecked="cbLeaveBlockOnSingleLine_Unchecked"/>
+        <CheckBox x:Name="cbLeaveStatementMemberDeclareOnSameLine" Content="Leave statements and member declarations on the same line" HorizontalAlignment="Left" Margin="30,68,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbLeaveStatementMemberDeclareOnSameLine_Checked" Unchecked="cbLeaveStatementMemberDeclareOnSameLine_Unchecked" />
 
     </Grid>
 </UserControl>

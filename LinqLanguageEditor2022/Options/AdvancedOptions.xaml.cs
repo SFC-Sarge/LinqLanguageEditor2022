@@ -38,5 +38,26 @@ namespace LinqLanguageEditor2022.Options
             LinqAdvancedOptions.Instance.EnableToolWindowResults = (bool)cbEnableToolWindowResults.IsChecked;
             LinqAdvancedOptions.Instance.Save();
         }
+
+        private void cbOpenInVSPreviewTab_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqAdvancedOptions.Instance.OpenInVSPreviewTab = (bool)cbOpenInVSPreviewTab.IsChecked;
+            LinqAdvancedOptions.Instance.Save();
+
+        }
+
+        private void cbUseLinqPadDumpWindow_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqAdvancedOptions.Instance.UseLinqPadDumpWindow = (bool)cbUseLinqPadDumpWindow.IsChecked;
+            LinqAdvancedOptions.Instance.Save();
+
+        }
+
+        private void cbEnableToolWindowResults_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqAdvancedOptions.Instance.EnableToolWindowResults = (bool)cbEnableToolWindowResults.IsChecked;
+            LinqAdvancedOptions.Instance.Save();
+
+        }
     }
 }

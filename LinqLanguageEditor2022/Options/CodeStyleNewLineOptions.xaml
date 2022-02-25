@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <CheckBox x:Name="cbOpenBraceOnNewLineForTypes" Content="Place open brace on new line for types" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" IsThreeState="False" Checked="cbOpenBraceOnNewLineForTypes_Checked"/>
-        <CheckBox x:Name="cbOpenBraceOnNewLineForMethods" Content="Place open brace on new line for methods and local functions" HorizontalAlignment="Left" Margin="30,68,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbOpenBraceOnNewLineForMethods_Checked" />
+        <CheckBox x:Name="cbOpenBraceOnNewLineForTypes" Content="Place open brace on new line for types" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" IsThreeState="False" Checked="cbOpenBraceOnNewLineForTypes_Checked" Unchecked="cbOpenBraceOnNewLineForTypes_Unchecked"/>
+        <CheckBox x:Name="cbOpenBraceOnNewLineForMethods" Content="Place open brace on new line for methods and local functions" HorizontalAlignment="Left" Margin="30,68,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbOpenBraceOnNewLineForMethods_Checked" Unchecked="cbOpenBraceOnNewLineForMethods_Unchecked" />
 
     </Grid>
 </UserControl>

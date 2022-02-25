@@ -55,5 +55,40 @@ namespace LinqLanguageEditor2022.Options
             LinqCodeStyleOptions.Instance.Save();
 
         }
+
+        private void cbIndentBlockContents_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqCodeStyleOptions.Instance.IndentBlockContents = (bool)cbIndentBlockContents.IsChecked;
+            LinqCodeStyleOptions.Instance.Save();
+
+        }
+
+        private void cbIndentOpenCloseBraces_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqCodeStyleOptions.Instance.IndentOpenCloseBraces = (bool)cbIndentOpenCloseBraces.IsChecked;
+            LinqCodeStyleOptions.Instance.Save();
+
+        }
+
+        private void cbIndentCaseContents_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqCodeStyleOptions.Instance.IndentCaseContents = (bool)cbIndentCaseContents.IsChecked;
+            LinqCodeStyleOptions.Instance.Save();
+
+        }
+
+        private void cbIndentCaseContentsInBlock_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqCodeStyleOptions.Instance.IndentCaseContentsInBlock = (bool)cbIndentCaseContentsInBlock.IsChecked;
+            LinqCodeStyleOptions.Instance.Save();
+
+        }
+
+        private void cbIndentCaseLabels_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            LinqCodeStyleOptions.Instance.IndentCaseLabels = (bool)cbIndentCaseLabels.IsChecked;
+            LinqCodeStyleOptions.Instance.Save();
+
+        }
     }
 }

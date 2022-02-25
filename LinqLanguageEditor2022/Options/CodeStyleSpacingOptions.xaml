@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <CheckBox x:Name="cbInsertSpaceBetweenMethodNameOpenParenthesis" Content="Insert space between method name and its opening parenthesis" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" IsThreeState="False" Checked="cbInsertSpaceBetweenMethodNameOpenParenthesis_Checked"/>
-        <CheckBox x:Name="cbInsertSpaceInParameterlistParentheses" Content="Insert space within parameter list parentheses" HorizontalAlignment="Left" Margin="30,68,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbInsertSpaceInParameterlistParentheses_Checked" />
+        <CheckBox x:Name="cbInsertSpaceBetweenMethodNameOpenParenthesis" Content="Insert space between method name and its opening parenthesis" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" IsThreeState="False" Checked="cbInsertSpaceBetweenMethodNameOpenParenthesis_Checked" Unchecked="cbInsertSpaceBetweenMethodNameOpenParenthesis_Unchecked"/>
+        <CheckBox x:Name="cbInsertSpaceInParameterlistParentheses" Content="Insert space within parameter list parentheses" HorizontalAlignment="Left" Margin="30,68,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbInsertSpaceInParameterlistParentheses_Checked" Unchecked="cbInsertSpaceInParameterlistParentheses_Unchecked" />
 
     </Grid>
 </UserControl>
