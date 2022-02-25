@@ -1,25 +1,18 @@
-﻿using LinqLanguageEditor2022.Extensions;
-using LinqLanguageEditor2022.Options;
-
-using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.TextManager.Interop;
-
-using MSXML;
-
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
-using System.Xml;
-using System.Xml.Linq;
+
+using LinqLanguageEditor2022.Options;
+
+using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.TextManager.Interop;
 
 using OutputWindowPane = Community.VisualStudio.Toolkit.OutputWindowPane;
 using Path = System.IO.Path;
@@ -197,7 +190,6 @@ namespace LinqLanguageEditor2022.ToolWindows
                                 await _pane.WriteLineAsync(Constants.noActiveDocument);
                                 return;
                         }
-
 
                         using System.Diagnostics.Process process = new();
                         process.StartInfo = new ProcessStartInfo()

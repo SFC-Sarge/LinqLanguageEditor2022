@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="LinqLanguageEditor2022.Options.AdvancedOptions"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LinqLanguageEditor2022.Options"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <CheckBox x:Name="cbOpenInVSPreviewTab" Content="Open Linq Query and result in Visual Studio Preview Tab" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" IsThreeState="False" Checked="cbOpenInVSPreviewTab_Checked"/>
+        <CheckBox x:Name="cbUseLinqPadDumpWindow" Content="Enable LinqPad Dump Windows for Linq Query and results" HorizontalAlignment="Left" Margin="30,66,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbUseLinqPadDumpWindow_Checked" />
+        <CheckBox x:Name="cbEnableToolWindowResults" Content="Enable Tool Window for Linq Query and results" HorizontalAlignment="Left" Margin="30,96,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbEnableToolWindowResults_Checked" />
+
+    </Grid>
+</UserControl>

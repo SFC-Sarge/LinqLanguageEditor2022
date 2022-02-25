@@ -10,8 +10,8 @@ using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-using LinqLanguageEditor2022.Commands;
 using LinqLanguageEditor2022.LinqEditor;
+using LinqLanguageEditor2022.Options;
 using LinqLanguageEditor2022.ToolWindows;
 
 using Microsoft.VisualStudio;
@@ -32,15 +32,13 @@ namespace LinqLanguageEditor2022
     [Guid(PackageGuids.LinqLanguageEditor2022String)]
 
     [ProvideLanguageService(typeof(LinqLanguageFactory), Constants.LinqLanguageName, 0, ShowHotURLs = false, DefaultToNonHotURLs = true, EnableLineNumbers = true, EnableAsyncCompletion = true, EnableCommenting = true, ShowCompletion = true, AutoOutlining = true, CodeSense = true)]
-    [ProvideLanguageEditorOptionPage(typeof(Options.LinqOptionsProvider.LinqAdvancedOptions), Constants.LinqLanguageName, "", "Advanced", null, 0)]
-    [ProvideLanguageEditorOptionPage(typeof(Options.LinqOptionsProvider.LinqCodeStyleOptions), Constants.LinqLanguageName, "", "Code Style", null, 0)]
-    [ProvideLanguageEditorOptionPage(typeof(Options.LinqOptionsProvider.LinqCodeStyleOptions), Constants.LinqLanguageName, "", @"Code Style\General", null, 0)]
-    [ProvideLanguageEditorOptionPage(typeof(Options.LinqOptionsProvider.LinqCodeStyleOptions), Constants.LinqLanguageName, "", @"Code Style\Formatting", null, 0)]
-    [ProvideLanguageEditorOptionPage(typeof(Options.LinqOptionsProvider.LinqCodeStyleOptions), Constants.LinqLanguageName, "", @"Code Style\Formatting\Indentation", null, 0)]
-    [ProvideLanguageEditorOptionPage(typeof(Options.LinqOptionsProvider.LinqCodeStyleOptions), Constants.LinqLanguageName, "", @"Code Style\Formatting\New lines", null, 0)]
-    [ProvideLanguageEditorOptionPage(typeof(Options.LinqOptionsProvider.LinqCodeStyleOptions), Constants.LinqLanguageName, "", @"Code Style\Formatting\Spacing", null, 0)]
-    [ProvideLanguageEditorOptionPage(typeof(Options.LinqOptionsProvider.LinqCodeStyleOptions), Constants.LinqLanguageName, "", @"Code Style\Formatting\Wrapping", null, 0)]
-    [ProvideLanguageEditorOptionPage(typeof(Options.LinqOptionsProvider.LinqIntelliSenseOptions), Constants.LinqLanguageName, "", "IntelliSense", null, 0)]
+    [ProvideLanguageEditorOptionPage(typeof(LinqAdvancedOptionPage), Constants.LinqLanguageName, "", "Advanced", null, 0)]
+    [ProvideLanguageEditorOptionPage(typeof(CodeStyleGeneralOptionPage), Constants.LinqLanguageName, "", @"Code Style\General", null, 0)]
+    [ProvideLanguageEditorOptionPage(typeof(CodeStyleIndentationOptionPage), Constants.LinqLanguageName, "", @"Code Style\Formatting\Indentation", null, 0)]
+    [ProvideLanguageEditorOptionPage(typeof(CodeStyleNewLineOptionPage), Constants.LinqLanguageName, "", @"Code Style\Formatting\New lines", null, 0)]
+    [ProvideLanguageEditorOptionPage(typeof(CodeStyleSpacingOptionPage), Constants.LinqLanguageName, "", @"Code Style\Formatting\Spacing", null, 0)]
+    [ProvideLanguageEditorOptionPage(typeof(CodeStyleWrappingOptionPage), Constants.LinqLanguageName, "", @"Code Style\Formatting\Wrapping", null, 0)]
+    [ProvideLanguageEditorOptionPage(typeof(IntelliSenseOptionPage), Constants.LinqLanguageName, "", "IntelliSense", null, 0)]
     [ProvideLanguageExtension(typeof(LinqLanguageFactory), Constants.LinqExt)]
 
     [ProvideEditorFactory(typeof(LinqLanguageFactory), 740, CommonPhysicalViewAttributes = (int)__VSPHYSICALVIEWATTRIBUTES.PVA_SupportsPreview, TrustLevel = __VSEDITORTRUSTLEVEL.ETL_AlwaysTrusted)]
