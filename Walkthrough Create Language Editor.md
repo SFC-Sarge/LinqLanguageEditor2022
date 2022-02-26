@@ -11,7 +11,7 @@ The Editor features are:
     - Toolbar button in ToolWindow
     - ToolWindow Messenger Support
 - Select LINQ Queries and create new temp file, display in temp view tab, and return query results in ToolWindow
-    - Using LPRun7-x64.exe and LINQPad.Runtime.dll to compile the LINQ query and return the results.
+    - Using [LPRun7-x64.exe and LINQPad.Runtime.dll](https://www.linqpad.net/Download.aspx) to compile the LINQ query and return the results.
     - Single line LINQ Query selection and result support.
     - LINQ Query Method selection and result support.
 - LINQ language file extension .linq
@@ -30,7 +30,7 @@ Using the [VsixCommunity Community.VisualStudio.Toolkit](https://github.com/Vsix
 ![VSIX Project w/Tool Window (Community) Project Template](ToolWindowTemplate.png)
 
 
-Name the extension project LinqLanguageEditor2022
+Name the new extension project LinqLanguageEditor2022
 
 
 
