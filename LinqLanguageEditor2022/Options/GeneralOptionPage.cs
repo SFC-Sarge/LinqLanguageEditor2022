@@ -1,26 +1,26 @@
 ﻿using System.Runtime.InteropServices;
 using System.Windows;
 
+using static LinqLanguageEditor2022.Options.LinqOptionsProvider;
+
 namespace LinqLanguageEditor2022.Options
 {
     [ComVisible(true)]
-    [Guid("4BF46AEA-E21C-4D34-B085-CA2CF0A2281F")]
+    [Guid("D8B47497-8AC9-4E2E-9D62-D8E8E7A47AA4")]
 
-    public class CodeStyleGeneralOptionPage : UIElementDialogPage
+    public class GeneralOptionPage : UIElementDialogPage
     {
         protected override UIElement Child
         {
             get
             {
-                CodeStyleGeneralOptions page = new CodeStyleGeneralOptions
+                GeneralOptions page = new GeneralOptions
                 {
-                    newLineOptionsPage = this
+                    generalOptionsPage = this
                 };
                 page.Initialize();
                 return page;
             }
         }
     }
-
-
 }

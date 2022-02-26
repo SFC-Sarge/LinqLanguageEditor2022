@@ -13,5 +13,9 @@ namespace LinqLanguageEditor2022.Options
         [ComVisible(true)]
         public class LinqIntelliSenseOptions : BaseOptionPage<Options.LinqIntelliSenseOptions> { }
 
+        [ComVisible(true)]
+        public class GeneralOptions : BaseOptionPage<General> { }
+
+
     }
 }

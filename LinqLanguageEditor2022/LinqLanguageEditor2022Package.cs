@@ -40,7 +40,8 @@ namespace LinqLanguageEditor2022
     [ProvideLanguageEditorOptionPage(typeof(CodeStyleWrappingOptionPage), Constants.LinqLanguageName, "", @"Code Style\Formatting\Wrapping", null, 0)]
     [ProvideLanguageEditorOptionPage(typeof(IntelliSenseOptionPage), Constants.LinqLanguageName, "", "IntelliSense", null, 0)]
     [ProvideLanguageExtension(typeof(LinqLanguageFactory), Constants.LinqExt)]
-
+    [ProvideOptionPage(typeof(GeneralOptionPage), "MyExtension", "General", 0, 0, true)]
+    [ProvideProfile(typeof(GeneralOptionPage), "MyExtension", "General", 0, 0, true)]
     [ProvideEditorFactory(typeof(LinqLanguageFactory), 740, CommonPhysicalViewAttributes = (int)__VSPHYSICALVIEWATTRIBUTES.PVA_SupportsPreview, TrustLevel = __VSEDITORTRUSTLEVEL.ETL_AlwaysTrusted)]
     [ProvideEditorExtension(typeof(LinqLanguageFactory), Constants.LinqExt, 65536, NameResourceID = 740)]
     [ProvideEditorLogicalView(typeof(LinqLanguageFactory), VSConstants.LOGVIEWID.TextView_string, IsTrusted = true)]

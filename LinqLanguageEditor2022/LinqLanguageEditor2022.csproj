@@ -103,6 +103,13 @@
     <Compile Include="Options\CodeStyleWrappingOptionPage.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Options\General.cs" />
+    <Compile Include="Options\GeneralOptionPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Options\GeneralOptions.xaml.cs">
+      <DependentUpon>GeneralOptions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Options\IntelliSenseOptionPage.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -190,6 +197,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Options\CodeStyleWrappingOptions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Options\GeneralOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
