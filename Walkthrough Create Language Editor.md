@@ -11,13 +11,13 @@ Walkthrough system requirements:
 Community.VisualStudio.Toolkit](https://github.com/VsixCommunity/Community.VisualStudio.Toolkit) installed
 
 This walkthrough example, when completed, will allow you to select a LINQ query
-line or Method in your C\# Project files, click a button in the `LINQ Query Tool
+line or Method in your CSharp Project files, click a button in the `LINQ Query Tool
 Window` and the selected LINQ query will be compiled and the results of the LINQ
-Query will be displayed in the Custom LINQ Editor opened in either a Preview Tab
+Query will be displayed in the Custom LINQ Editor Window, opened in either a Preview Tab
 or not. Using the following code, you have the option where to display the
 temporary LINQ Query. The advantage of using the
 `VS.Documents.OpenInPreviewTabAsync` method, is that it is automatically removes
-the previous LINQ Query each time you select and test a LINQ query. Keeping your
+the previous compile LINQ Query Windows tab each time you select and test a LINQ query. Keeping your
 Visual Studio document tab space cleaner.
 
 
@@ -33,10 +33,10 @@ else
 ```
 
 
-The Editor features are:
+This Language Editor's current features are:
 
--   C\# Code Syntax Colorzation Support (Note: Our use of .linq files are C\#
-	syntax and formatted files with .linq file extension.)
+-   CSharp Code Syntax Colorzation Support (Note: Our use of .linq files are created as CSharp files and use
+	syntax and formatted provide by the CSharp Compiler but have a .linq file extension.)
 
 -   IntelliSense Support
 
@@ -81,13 +81,13 @@ The Editor features are:
 
 -   Tools Options and Settings Support
 
-## [Create Visual Studio 2022 CSharp Extension](#Create-Visual-Studio-2022-CSharp-Extension)
+## [Creating a Visual Studio 2022 CSharp Extension Project](#Create-Visual-Studio-2022-CSharp-Extension)
 
 ### [Getting Started](#Getting-Started):
 
-In Visual Studio 2022 install if you don’t’ already have it. [VsixCommunity
+In Visual Studio 2022 install: (If you don’t’ already have it.) [VsixCommunity
 Community.VisualStudio.Toolkit](https://github.com/VsixCommunity/Community.VisualStudio.Toolkit)
-then create a new Visual Studio 2022 c\# Extension using the:
+then create a new Visual Studio 2022 CSharp Extension using the:
 `VSIX Project w/Tool Window (Community) Project Template`
 
 ![VSIX Project w/Tool Window (Community) Project
@@ -157,13 +157,13 @@ Now would be a good time if you do not already have it installed.  [Add New File
 
 ![Add New File Extension](media/AddNewFileExtension.png)
 
-Once the [Add New File (64-bit)](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.AddNewFile64) extension is install.
+Once the [Add New File (64-bit)](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.AddNewFile64) extension is installed.
 
 Right-click on the project and click: Add then: New Empty File...
 
 ![Add New Empty File](media/AddNewEmptyFile.png)
 
-Add a new C# file to the project names Constants.cs:
+Add a new CSharp file to the project, name it Constants.cs:
 
 ![Add Constants File](media/AddConstantsFile.png)
 
@@ -268,7 +268,7 @@ Add `ProvideToolWindowVisibility` attribute lines under the `ProvideToolWindow` 
 [ProvideToolWindowVisibility(typeof(LinqToolWindow.Pane), VSConstants.UICONTEXT.EmptySolution_string)]
 ```
 
-So the Package file attributes should look like this now:
+So now the Package file attributes should look like this:
 
 ```CSharp
 [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
@@ -305,7 +305,8 @@ To this:
 
 At this point the project should still build without issues.
 
-## [Create LINQ Editor Factory](#Create-LINQ-Editor-Factory)
+
+## [Create a LINQ Editor Factory](#Create-LINQ-Editor-Factory)
 
 In Solution Explorer right-click the project and click `Add` then `New Empty File...`
 
@@ -525,7 +526,7 @@ public sealed class LinqLanguageEditor2022Package : ToolkitPackage
 Solution should build without issues.
 
 
-## [Add Messenger Service to Package to handle ToolWindow Toolbar button Commands](#Add-Messenger-Service-to-Package-to-handle-commands)
+## [Add Messenger Service to Package, to handle ToolWindow Toolbar button Commands](#Add-Messenger-Service-to-Package-to-handle-commands)
 
 In Solution Explorer right-click the project and click `Add` then `New Empty File...`
 
@@ -736,7 +737,7 @@ To this:
 public override string GetTitle(int toolWindowId) => Constants.LinqEditorToolWindowTitle;
 ```
 
-## [Toolbar Buttons to ToolWindow Toolbar](#Toolbar-Buttons-to-ToolWindow-Toolbar)
+## [Add Toolbar Buttons to the ToolWindow Toolbar](#Toolbar-Buttons-to-ToolWindow-Toolbar)
 
 In the `VSCommandTable.vsct` file under the `<Symbols>` section Add below the `LinqTWindowToolbarGroup` line:
 
@@ -818,8 +819,6 @@ Save the `LinqToolWindowControl.xaml` file.
 
 
 
-
-
 ## [Download Full Source Code](#Download-Full-Source-Code)
 
 Get the full source solution for this walkthrough from:
@@ -836,6 +835,9 @@ Possible Changes:
 - Expland current project features.
 - Improve performance and threading.
 - Enhance the LINQ results display in the tool window.
+- Enhance Intellisense.
+- Enhance LightBulb features.
+- Enhance Code Formatting.
 
 ### [Contribute to the VSIX Cookbook Project](#Contribute-to-the-VSIX-Cookbook-Project)
 
