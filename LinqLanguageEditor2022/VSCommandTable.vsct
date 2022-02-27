@@ -28,29 +28,27 @@
 
     <Buttons>
 
-      <Button guid="LinqLanguageEditor2022" id="LinqCommand" priority="0x0100" type="Button">
+      <Button guid="LinqLanguageEditor2022" id="LinqToolWindowCommand" priority="0x0100" type="Button">
         <Parent guid="VSMainMenu" id="View.DevWindowsGroup.OtherWindows.Group1"/>
         <Icon guid="ImageCatalogGuid" id="ToolWindow" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
-          <ButtonText>Linq Query Tool Window</ButtonText>
-          <LocCanonicalName>.View.MyToolWindow</LocCanonicalName>
+          <ButtonText>LINQ Query Tool Window</ButtonText>
+          <LocCanonicalName>.View.LinqToolWindow</LocCanonicalName>
         </Strings>
       </Button>
       <Button guid="LinqLanguageEditor2022" id="DisplayLinqPadStatementsResults" priority="0x0001" type="Button">
         <Parent guid="LinqLanguageEditor2022" id="LinqTWindowToolbarGroup"/>
         <Icon guid="ImageCatalogGuid" id="Linq"/>
         <CommandFlag>IconIsMoniker</CommandFlag>
-        <!--<CommandFlag>IconAndText</CommandFlag>-->
         <Strings>
-          <ButtonText>Run Selected Query Statement!</ButtonText>
+          <ButtonText>Run Selected LINQ Query Statement!</ButtonText>
         </Strings>
       </Button>
       <Button guid="LinqLanguageEditor2022" id="DisplayLinqPadMethodResults" priority="0x0002" type="Button">
         <Parent guid="LinqLanguageEditor2022" id="LinqTWindowToolbarGroup"/>
         <Icon guid="ImageCatalogGuid" id="LinkValidator"/>
         <CommandFlag>IconIsMoniker</CommandFlag>
-        <!--<CommandFlag>IconAndText</CommandFlag>-->
         <Strings>
           <ButtonText>Run Selected Query Method!</ButtonText>
         </Strings>
@@ -59,9 +57,8 @@
         <Parent guid="LinqLanguageEditor2022" id="LinqTWindowToolbarGroup"/>
         <Icon guid="ImageCatalogGuid" id="Editor"/>
         <CommandFlag>IconIsMoniker</CommandFlag>
-        <!--<CommandFlag>IconAndText</CommandFlag>-->
         <Strings>
-          <ButtonText>Run Editor Linq Query!</ButtonText>
+          <ButtonText>Run LINQ Query File!</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -70,7 +67,7 @@
   <Symbols>
     <GuidSymbol name="LinqEditorFactory" value="{0CA07535-1A01-485D-9E65-59B7384A593C}" />
     <GuidSymbol name="LinqLanguageEditor2022" value="{41AF2C63-3A01-41DC-B52F-FCA23FE50F01}">
-      <IDSymbol name="LinqCommand" value="0x0100" />
+      <IDSymbol name="LinqToolWindowCommand" value="0x0100" />
       <IDSymbol name="LinqTWindowToolbar" value="0x1000" />
       <IDSymbol name="LinqTWindowToolbarGroup" value="0x1050" />
       <IDSymbol name="DisplayLinqPadStatementsResults" value="0x0111" />

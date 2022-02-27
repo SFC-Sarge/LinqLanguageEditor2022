@@ -3,7 +3,7 @@
     [Command(PackageIds.DisplayLinqPadMethodResults)]
     internal sealed class LinqPadMethod : BaseCommand<LinqPadMethod>
     {
-        private const string _runSelectedLinqMethod = "Run Selected Linq Method.";
+        private const string _runSelectedLinqMethod = Constants.RunSelectedLinqMethod;
 
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {

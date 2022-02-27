@@ -25,7 +25,7 @@ namespace LinqLanguageEditor2022
     /// </summary>
     internal sealed partial class PackageIds
     {
-        public const int LinqCommand = 0x0100;
+        public const int LinqToolWindowCommand = 0x0100;
         public const int LinqTWindowToolbar = 0x1000;
         public const int LinqTWindowToolbarGroup = 0x1050;
         public const int DisplayLinqPadStatementsResults = 0x0111;

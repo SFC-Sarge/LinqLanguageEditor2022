@@ -2,9 +2,9 @@
 namespace LinqLanguageEditor2022.Commands
 {
     [Command(PackageIds.LinqEditorLinqPad)]
-    internal sealed class LinqQueryEditor : BaseCommand<LinqQueryEditor>
+    internal sealed class LinqQueryFileEditor : BaseCommand<LinqQueryFileEditor>
     {
-        private const string _runEditorLinqQuery = "Run Editor Linq Query.";
+        private const string _runEditorLinqQuery = Constants.RunEditorLinqQuery;
 
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {

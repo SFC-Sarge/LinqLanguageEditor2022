@@ -60,7 +60,7 @@
     <Compile Include="Classification\LinqUnknown.cs" />
     <Compile Include="Commands\LinqPadMethod.cs" />
     <Compile Include="Commands\LinqPadStatements.cs" />
-    <Compile Include="Commands\LinqQueryEditor.cs" />
+    <Compile Include="Commands\LinqQueryFileEditor.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="LinqEditor\LinqEditorFeatures.cs" />
@@ -102,13 +102,6 @@
     </Compile>
     <Compile Include="Options\CodeStyleWrappingOptionPage.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Options\General.cs" />
-    <Compile Include="Options\GeneralOptionPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Options\GeneralOptions.xaml.cs">
-      <DependentUpon>GeneralOptions.xaml</DependentUpon>
     </Compile>
     <Compile Include="Options\IntelliSenseOptionPage.cs">
       <SubType>Component</SubType>
@@ -197,10 +190,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Options\CodeStyleWrappingOptions.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Options\GeneralOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -3,7 +3,7 @@
     [Command(PackageIds.DisplayLinqPadStatementsResults)]
     internal sealed class LinqPadStatements : BaseCommand<LinqPadStatements>
     {
-        private const string runSelectedLinqStatement = "Run Selected Linq Statement.";
+        private const string runSelectedLinqStatement = Constants.RunSelectedLinqStatement;
 
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {

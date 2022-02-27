@@ -1,22 +1,18 @@
-﻿using Community.VisualStudio.Toolkit;
-
-using LinqLanguageEditor2022.Extensions;
-
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Imaging;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
-
-using System.Collections;
+﻿
 using System.Collections.Generic;
 using System.ComponentModel.Design;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
+
+using LinqLanguageEditor2022.Extensions;
+
+using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Imaging;
+using Microsoft.VisualStudio.Shell.Interop;
 
 namespace LinqLanguageEditor2022.ToolWindows
 {
@@ -33,7 +29,7 @@ namespace LinqLanguageEditor2022.ToolWindows
             return new LinqToolWindowControl(project, toolWindowMessenger);
         }
 
-        [Guid("A938BB26-03F8-4861-B920-6792A7D4F07C")]
+        [Guid(Constants.PaneGuid)]
         internal class Pane : ToolWindowPane, IVsRunningDocTableEvents
         {
 
@@ -155,7 +151,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                     string currentFilePath = win.Document.Path;
                     string currentFileTitle = win.Document.Name;
                     string currentFileFullPath = System.IO.Path.Combine(currentFilePath, currentFileTitle);
-                    if (pFrame != null && currentFileTitle.EndsWith(".linq"))
+                    if (pFrame != null && currentFileTitle.EndsWith(Constants.LinqExt))
                     {
                         ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
                         {
@@ -389,7 +385,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                     catch (Exception)
                     { }
                     win = VsShellUtilities.GetWindowObject(pFrame);
-                    if (pFrame != null && win.Caption.EndsWith(".linq"))
+                    if (pFrame != null && win.Caption.EndsWith(Constants.LinqExt))
                     {
                         ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
                         {

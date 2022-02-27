@@ -45,7 +45,7 @@ namespace LinqLanguageEditor2022.ToolWindows
             VS.Events.SolutionEvents.OnAfterCloseSolution += OnAfterCloseSolution;
 
             dirLPRun7 = Path.GetDirectoryName(typeof(LinqToolWindow).Assembly.Location);
-            fileLPRun7 = Path.Combine(dirLPRun7, Constants.solutionToolWindowsFolderName, Constants.lPRun7Executable);
+            fileLPRun7 = Path.Combine(dirLPRun7, Constants.SolutionToolWindowsFolderName, Constants.LPRun7Executable);
 
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
@@ -67,13 +67,13 @@ namespace LinqLanguageEditor2022.ToolWindows
             {
                 switch (e)
                 {
-                    case Constants.runSelectedLinqStatement:
+                    case Constants.RunSelectedLinqStatement:
                         await RunEditorLinqQueryAsync(LinqType.Statement);
                         break;
-                    case Constants.runSelectedLinqMethod:
+                    case Constants.RunSelectedLinqMethod:
                         await RunEditorLinqQueryAsync(LinqType.Method);
                         break;
-                    case Constants.runEditorLinqQuery:
+                    case Constants.RunEditorLinqQuery:
                         await RunEditorLinqQueryAsync(LinqType.File);
                         break;
                     default:
@@ -116,15 +116,15 @@ namespace LinqLanguageEditor2022.ToolWindows
                 TextBlock exceptionResult = null;
                 if (docView?.TextView == null)
                 {
-                    NothingSelectedResult = new() { Text = Constants.noActiveDocument, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                    NothingSelectedResult = new() { Text = Constants.NoActiveDocument, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                     LinqPadResults.Children.Add(NothingSelectedResult);
-                    await _pane.WriteLineAsync(Constants.noActiveDocument);
+                    await _pane.WriteLineAsync(Constants.NoActiveDocument);
                     return;
                 }
                 if (docView.TextView.Selection != null && !docView.TextView.Selection.IsEmpty)
                 {
-                    await _pane.WriteLineAsync(Constants.runningSelectQuery);
-                    runningQueryResult = new() { Text = Constants.runningSelectQuery, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                    await _pane.WriteLineAsync(Constants.RunningSelectQuery);
+                    runningQueryResult = new() { Text = Constants.RunningSelectQuery, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                     LinqPadResults.Children.Add(runningQueryResult);
 
                     string currentSelection = null;
@@ -143,7 +143,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                             case LinqType.Statement:
                                 CurrentLinqMode = LinqType.Statement;
                                 tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
-                                queryString = $"{Constants.queryKindStatement}\r\n{currentSelection}\r\n{Constants.resultDump};".Trim();
+                                queryString = $"{Constants.QueryKindStatement}\r\n{currentSelection}\r\n{Constants.ResultDump};".Trim();
                                 File.WriteAllText(tempQueryPath, $"{queryString}");
 
                                 break;
@@ -153,41 +153,41 @@ namespace LinqLanguageEditor2022.ToolWindows
                                 methodName = currentSelection.Substring(0, currentSelection.IndexOf("\r"));
                                 methodNameComplete = methodName.Substring(methodName.LastIndexOf(" ") + 1, methodName.LastIndexOf(")") - methodName.LastIndexOf(" "));
                                 methodCallLine = "{\r\n" + $"{methodNameComplete}" + ";\r\n}";
-                                queryString = $"{Constants.queryKindMethod}\r\nvoid Main()\r\n{methodCallLine}\r\n{currentSelection}".Trim();
+                                queryString = $"{Constants.QueryKindMethod}\r\n{Constants.VoidMain}\r\n{methodCallLine}\r\n{currentSelection}".Trim();
                                 File.WriteAllText(tempQueryPath, $"{queryString}");
                                 break;
                             case LinqType.File:
                                 CurrentLinqMode = LinqType.File;
                                 tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
-                                if (!currentSelection.StartsWith("<Query Kind="))
+                                if (!currentSelection.StartsWith(Constants.QueryStartsWith))
                                 {
                                     methodName = currentSelection.Substring(0, currentSelection.IndexOf("\r"));
                                     methodNameComplete = methodName.Substring(methodName.LastIndexOf(" ") + 1, methodName.LastIndexOf(")") - methodName.LastIndexOf(" "));
                                     methodCallLine = "{\r\n" + $"{methodNameComplete}" + ";\r\n}";
-                                    queryString = $"{Constants.queryKindMethod}\r\nvoid Main()\r\n{methodCallLine}\r\n{currentSelection}".Trim();
+                                    queryString = $"{Constants.QueryKindMethod}\r\n{Constants.VoidMain}\r\n{methodCallLine}\r\n{currentSelection}".Trim();
                                     File.WriteAllText(tempQueryPath, $"{queryString}");
 
                                 }
-                                else if (currentSelection.StartsWith("<Query Kind="))
+                                else if (currentSelection.StartsWith(Constants.QueryStartsWith))
                                 {
                                     File.WriteAllText(tempQueryPath, $"{currentSelection}");
                                 }
                                 else
                                 {
-                                    queryString = $"{Constants.queryKindStatement}\r\n{currentSelection}\r\n{Constants.resultDump};";
+                                    queryString = $"{Constants.QueryKindStatement}\r\n{currentSelection}\r\n{Constants.ResultDump};";
                                     File.WriteAllText(tempQueryPath, $"{queryString}");
                                 }
                                 break;
                             case LinqType.None:
                                 CurrentLinqMode = LinqType.None;
-                                NothingSelectedResult = new() { Text = Constants.noActiveDocument, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                                NothingSelectedResult = new() { Text = Constants.NoActiveDocument, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                                 LinqPadResults.Children.Add(NothingSelectedResult);
-                                await _pane.WriteLineAsync(Constants.noActiveDocument);
+                                await _pane.WriteLineAsync(Constants.NoActiveDocument);
                                 return;
                             default:
-                                NothingSelectedResult = new() { Text = Constants.noActiveDocument, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                                NothingSelectedResult = new() { Text = Constants.NoActiveDocument, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                                 LinqPadResults.Children.Add(NothingSelectedResult);
-                                await _pane.WriteLineAsync(Constants.noActiveDocument);
+                                await _pane.WriteLineAsync(Constants.NoActiveDocument);
                                 return;
                         }
 
@@ -198,7 +198,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                             CreateNoWindow = true,
                             WindowStyle = ProcessWindowStyle.Hidden,
                             FileName = fileLPRun7,
-                            Arguments = $"{Constants.fileLPRun7Args} {tempQueryPath}",
+                            Arguments = $"{Constants.FileLPRun7Args} {tempQueryPath}",
                             RedirectStandardError = true,
                             RedirectStandardOutput = true
                         };
@@ -210,11 +210,11 @@ namespace LinqLanguageEditor2022.ToolWindows
                         LinqPadResults.Children.Clear();
                         if (LinqAdvancedOptions.Instance.UseLinqPadDumpWindow == true)
                         {
-                            await _pane.WriteLineAsync($"{currentSelection} \r\n\r\n{Constants.currentSelectionQuery} = \r\n\r\n{queryResult}");
+                            await _pane.WriteLineAsync($"{currentSelection} \r\n\r\n{Constants.CurrentSelectionQuery} = \r\n\r\n{queryResult}");
                         }
                         if (LinqAdvancedOptions.Instance.EnableToolWindowResults == true)
                         {
-                            selectedQueryResult = new() { Text = $"{Constants.currentSelectionQuery} = \r\n\r\n{queryResult}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                            selectedQueryResult = new() { Text = $"{Constants.CurrentSelectionQuery} = \r\n\r\n{queryResult}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                             LinqPadResults.Children.Add(selectedQueryResult);
                             Line line = new() { Margin = new Thickness(0, 0, 0, 20) };
                             LinqPadResults.Children.Add(line);
@@ -235,14 +235,14 @@ namespace LinqLanguageEditor2022.ToolWindows
                     {
                         exceptionResult = new() { Text = ex.Message, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                         LinqPadResults.Children.Add(exceptionResult);
-                        await _pane.WriteLineAsync($"{Constants.exceptionIn} {fileLPRun7} {Constants.exceptionCall} {exceptionResult.Text}");
+                        await _pane.WriteLineAsync($"{Constants.ExceptionIn} {fileLPRun7} {Constants.ExceptionCall} {exceptionResult.Text}");
                     }
                 }
                 else
                 {
-                    NothingSelectedResult = new() { Text = Constants.noActiveDocument, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                    NothingSelectedResult = new() { Text = Constants.NoActiveDocument, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                     LinqPadResults.Children.Add(NothingSelectedResult);
-                    await _pane.WriteLineAsync(Constants.noActiveDocument);
+                    await _pane.WriteLineAsync(Constants.NoActiveDocument);
                 }
             }).FireAndForget();
         }
@@ -291,10 +291,10 @@ namespace LinqLanguageEditor2022.ToolWindows
 
                     break;
                 case LinqType.Statement:
-                    templateFile = Constants.linqStatementTemplate;
+                    templateFile = Constants.LinqStatementTemplate;
                     break;
                 case LinqType.Method:
-                    templateFile = Constants.linqMethodTemplate;
+                    templateFile = Constants.LinqMethodTemplate;
 
                     break;
                 case LinqType.File:
@@ -315,7 +315,7 @@ namespace LinqLanguageEditor2022.ToolWindows
             var rootNs = project.Name;
             var ns = string.IsNullOrEmpty(rootNs) ? "MyLinq" : rootNs;
             string className = Path.GetFileNameWithoutExtension(file);
-            if (className.EndsWith(".tmp"))
+            if (className.EndsWith(Constants.LinqTmpExt))
             {
                 className = className.Substring(0, className.Length - 4);
             }
@@ -368,7 +368,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         //        currentSelection = content;
                         //    }
                         //}
-                        if (currentSelection.StartsWith("<Query Kind="))
+                        if (currentSelection.StartsWith(Constants.QueryStartsWith))
                         {
                             currentSelection = $"//{currentSelection}";
                         }
@@ -390,7 +390,7 @@ namespace LinqLanguageEditor2022.ToolWindows
 
         private async Task DoOutputWindowsAsync()
         {
-            _pane = await VS.Windows.CreateOutputWindowPaneAsync(Constants.linpPadDump);
+            _pane = await VS.Windows.CreateOutputWindowPaneAsync(Constants.LinpPadDump);
             return;
         }
 
