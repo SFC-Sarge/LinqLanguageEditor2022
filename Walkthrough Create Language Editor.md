@@ -174,29 +174,42 @@ internal class Constants
 {
 	public const string LinqLanguageName = "Linq";
 	public const string LinqExt = ".linq";
+	public const string LinqTmpExt = ".tmp";
 	public static string[] CommentChars = new[] { "///", "//" };
 	public const string LinqBaselanguageName = "CSharp";
-	public const string noActiveDocument = "No Active Document View or LINQ Query Selection!\r\nPlease Select LINQ Statement in Active Document,\r\nthen try again!";
-	public const string runningSelectQuery = "Running Selected LINQ Query.\r\nPlease Wait!";
-	public const string resultDump = "result.Dump()";
-	public const string noActiveDocumentMethod = "No Active Document View or LINQ Method Selection!\r\nPlease Select LINQ Method in Active Document,\r\nthen try again!";
-	public const string currentSelectionQueryMethod = "Current Selection Query Method Results";
-	public const string currentSelectionQuery = "Current Selection Query Results";
-	public const string runningSelectQueryMethod = "Running Selected LINQ Query Method.\r\nPlease Wait!";
-	public const string queryKindStatement = "<Query Kind='Statements' />";
-	public const string queryKindMethod = "<Query Kind='Program' />";
-	public const string exceptionIn = "Exception in ";
-	public const string exceptionCall = "Call. ";
-	public const string fileLPRun7Args = "-fx=6.0";
-	public const string linpPadDump = "LinqPad Dump";
-	public const string runSelectedLinqStatement = "Run Selected LINQ Statement.";
-	public const string runSelectedLinqMethod = "Run Selected LINQ Method.";
-	public const string runEditorLinqQuery = "Run Editor LINQ Query.";
-	public const string lPRun7Executable = "LPRun7-x64.exe";
+	public const string NoActiveDocument = "No Active Document View or LINQ Query Selection!\r\nPlease Select LINQ Query Statement in Active Document,\r\nthen try again!";
+	public const string RunningSelectQuery = "Running Selected LINQ Query.\r\nPlease Wait!";
+	public const string ResultDump = "result.Dump()";
+	public const string NoActiveDocumentMethod = "No Active Document View or LINQ Query Method Selection!\r\nPlease Select LINQ Query Method in Active Document,\r\nthen try again!";
+	public const string CurrentSelectionQueryMethod = "Current Selection Query Method Results";
+	public const string CurrentSelectionQuery = "Current Selection Query Results";
+	public const string RunningSelectQueryMethod = "Running Selected LINQ Query Method.\r\nPlease Wait!";
+	public const string QueryKindStatement = "<Query Kind='Statements' />";
+	public const string QueryKindMethod = "<Query Kind='Program' />";
+	public const string QueryStartsWith = "<Query Kind=";
+	public const string VoidMain = "void Main()";
+	public const string ExceptionIn = "Exception in ";
+	public const string ExceptionCall = "Call. ";
+	public const string FileLPRun7Args = "-fx=6.0";
+	public const string LinpPadDump = "LinqPad Dump";
+	public const string PaneGuid = "67f4110b-fefe-4a06-a6e8-5d33bd66a58f";
+	public const string RunSelectedLinqStatement = "Run Selected LINQ Query Statement.";
+	public const string RunSelectedLinqMethod = "Run Selected LINQ Query Method.";
+	public const string RunEditorLinqQuery = "Run LINQ Query File.";
+	public const string LPRun7Executable = "LPRun7-x64.exe";
 	public const string LinqEditorToolWindowTitle = "LINQ Query Tool Window";
-	public const string solutionToolWindowsFolderName = "ToolWindows";
-	public const string linqStatementTemplate = "using System;\r\nusing System.Collections.Generic;\r\nusing System.Diagnostics;\r\nusing System.Linq;\r\nusing System.Text;\r\nusing System.Threading.Tasks;\r\nnamespace {namespace}\r\n{\r\n\tpublic class {itemname}\r\n\t{\r\n\t\tpublic static void {methodname}()\r\n\t\t{\r\n\t\t\t{$}\r\n\t\t}\r\n\t}\r\n}";
-	public const string linqMethodTemplate = "using System;\r\nusing System.Collections.Generic;\r\nusing System.Diagnostics;\r\nusing System.Linq;\r\nusing System.Text;\r\nusing System.Threading.Tasks;\r\nnamespace {namespace}\r\n{\r\n\tpublic class {itemname}\r\n\t{\r\n\t\t{$}\r\n\t}\r\n}";
+	public const string SolutionToolWindowsFolderName = "ToolWindows";
+	public const string ProvideFileIcon = "KnownMonikers.RegistrationScript";
+	public const string ProvideMenuResource = "Menus.ctmenu";
+	public const string LinqAdvancedOptionPage = "Advanced";
+	public const string CodeStyleGeneralOptionPage = @"Code Style\General";
+	public const string CodeStyleIndentationOptionPage = @"Code Style\Formatting\Indentation";
+	public const string CodeStyleNewLineOptionPage = @"Code Style\Formatting\New lines";
+	public const string CodeStyleSpacingOptionPage = @"Code Style\Formatting\Spacing";
+	public const string CodeStyleWrappingOptionPage = @"Code Style\Formatting\Wrapping";
+	public const string IntelliSenseOptionPage = "IntelliSense";
+	public const string LinqStatementTemplate = "using System;\r\nusing System.Collections.Generic;\r\nusing System.Diagnostics;\r\nusing System.Linq;\r\nusing System.Text;\r\nusing System.Threading.Tasks;\r\nnamespace {namespace}\r\n{\r\n\tpublic class {itemname}\r\n\t{\r\n\t\tpublic static void {methodname}()\r\n\t\t{\r\n\t\t\t{$}\r\n\t\t}\r\n\t}\r\n}";
+	public const string LinqMethodTemplate = "using System;\r\nusing System.Collections.Generic;\r\nusing System.Diagnostics;\r\nusing System.Linq;\r\nusing System.Text;\r\nusing System.Threading.Tasks;\r\nnamespace {namespace}\r\n{\r\n\tpublic class {itemname}\r\n\t{\r\n\t\t{$}\r\n\t}\r\n}";
 }
 ```
 
@@ -272,10 +285,23 @@ So the Package file attributes should look like this now:
 Add a `ProvideFileIcon` attribute after the last ProvideToolWindowVisibility attribute:
 
 ```CSharp
-[ProvideFileIcon(Constants.LinqExt, "KnownMonikers.RegistrationScript")]
+[ProvideFileIcon(Constants.LinqExt, Constants.ProvideFileIcon)]
 ```
 
 We now have the File Icon set to our `Constants.LinqExt` (.linq) and an Icon image using the `KnownMonikers.RegistrationScript`
+
+Change the line from this:
+
+```CSharp
+[ProvideMenuResource("Menus.ctmenu", 1)]
+```
+
+To this:
+
+```CSharp
+[ProvideMenuResource(Constants.ProvideMenuResource, 1)]
+```
+
 
 At this point the project should still build without issues.
 
@@ -318,7 +344,7 @@ To this:
 
 Now rename the `MyCommand` name in two places iside of `VSCommandTable.vsct` file.
 
-Rename `MyCommand` to `LinqCommand`.
+Rename `MyCommand` to `LinqToolWindowCommand`.
 
 Rename `<ButtonText>My Tool Window</ButtonText>` to `<ButtonText>LINQ Query Tool Window</ButtonText>`
 
@@ -330,7 +356,7 @@ Now when we build we get our first build error:
 
 To fix this double click the error in the Error List window. It will open LinqToolWindowCommand.cs file.
 
-Rename `[Command(PackageIds.MyCommand)]` to `[Command(PackageIds.LinqCommand)]` and save the file.
+Rename `[Command(PackageIds.MyCommand)]` to `[Command(PackageIds.LinqToolWindowCommand)]` and save the file.
 
 Should build without issues now.
 
@@ -349,7 +375,7 @@ It should look like this now:
 <Symbols>
 	<GuidSymbol name="LinqEditorFactory" value="{0CA07535-1A01-485D-9E65-59B7384A593C}" />
 	<GuidSymbol name="LinqLanguageEditor2022" value="{fbcd0cc8-7332-4a38-ad18-4d271e337600}">
-		<IDSymbol name="LinqCommand" value="0x0100" />
+		<IDSymbol name="LinqToolWindowCommand" value="0x0100" />
 		<IDSymbol name="LinqTWindowToolbar" value="0x1000" />
 		<IDSymbol name="LinqTWindowToolbarGroup" value="0x1050" />
 	</GuidSymbol>
@@ -383,8 +409,8 @@ Should look like this now:
 [ProvideToolWindowVisibility(typeof(LinqToolWindow.Pane), VSConstants.UICONTEXT.SolutionHasMultipleProjects_string)]
 [ProvideToolWindowVisibility(typeof(LinqToolWindow.Pane), VSConstants.UICONTEXT.NoSolution_string)]
 [ProvideToolWindowVisibility(typeof(LinqToolWindow.Pane), VSConstants.UICONTEXT.EmptySolution_string)]
-[ProvideFileIcon(Constants.LinqExt, "KnownMonikers.RegistrationScript")]
-[ProvideMenuResource("Menus.ctmenu", 1)]
+[ProvideFileIcon(Constants.LinqExt, Constants.ProvideFileIcon)]
+[ProvideMenuResource(Constants.ProvideMenuResource, 1)]
 [Guid(PackageGuids.LinqLanguageEditor2022String)]
 
 [ProvideLanguageService(typeof(LinqLanguageFactory), Constants.LinqLanguageName, 0, ShowHotURLs = false, DefaultToNonHotURLs = true, EnableLineNumbers = true, EnableAsyncCompletion = true, EnableCommenting = true, ShowCompletion = true, AutoOutlining = true, CodeSense = true)]
@@ -542,6 +568,143 @@ Then Add these attributes:
 
 Save the `LinqLanguageEditor2022Package.cs`.
 
+In the Xaml change the UserControl Name from `Name="MyToolWindow"` to `Name="LinqToolWindow"`.
+
+Change the Xaml Class line from:
+
+```xml
+<UserControl x:Class="LinqLanguageEditor2022.MyToolWindowControl"
+```
+
+To this:
+
+```xml
+<UserControl x:Class="LinqLanguageEditor2022.LinqToolWindowControl"
+```
+
+Save the `LinqToolWindowControl.xaml` file.
+
+
+In the `LingToolWindowsControl.xaml.cs` file update the class name and Constructor names from:
+
+```CSharp
+public partial class MyToolWindowControl : UserControl
+{
+	public MyToolWindowControl()
+	{
+		InitializeComponent();
+	}
+
+	private void button1_Click(object sender, RoutedEventArgs e)
+	{
+		VS.MessageBox.Show("LinqLanguageEditor2022", "Button clicked");
+	}
+}
+```
+
+To this and also remove the button1_Click event handler since it was part of the template and we will not be using it.
+```CSharp
+public partial class LinqToolWindowControl : UserControl
+{
+	public LinqToolWindowControl()
+	{
+		InitializeComponent();
+	}
+}
+```
+
+Add one public variable to the `public partial class LinqToolWindowControl : UserControl`:
+
+```CSharp
+public partial class LinqToolWindowControl : UserControl
+{
+	public LinqToolWindowMessenger ToolWindowMessenger = null;
+```
+
+Update the Constructor to support the `LingToolWindowMessenger`:
+
+Change this:
+
+```CSharp
+public LinqToolWindowControl()
+{
+	InitializeComponent();
+}
+```
+
+To this:
+
+```CSharp
+public LinqToolWindowControl(LinqToolWindowMessenger toolWindowMessenger)
+{
+	ThreadHelper.ThrowIfNotOnUIThread();
+	InitializeComponent();
+	if (toolWindowMessenger == null)
+	{
+		toolWindowMessenger = new LinqToolWindowMessenger();
+	}
+	ToolWindowMessenger = toolWindowMessenger;
+	toolWindowMessenger.MessageReceived += OnMessageReceived;
+}
+```
+
+Add and empty `OnMessageReceived` Event Handler, we will update it later to support what to do with the messages received.
+
+```CSharp
+private void OnMessageReceived(object sender, string e)
+{
+}
+```
+
+You `LinqToolWindowsControl` class should look like this now:
+
+```CSharp
+public partial class LinqToolWindowControl : UserControl
+{
+	OutputWindowPane _pane = null;
+	public LinqToolWindowMessenger ToolWindowMessenger = null;
+	public LinqToolWindowControl(LinqToolWindowMessenger toolWindowMessenger)
+	{
+		ThreadHelper.ThrowIfNotOnUIThread();
+		InitializeComponent();
+		if (toolWindowMessenger == null)
+		{
+			toolWindowMessenger = new LinqToolWindowMessenger();
+		}
+		ToolWindowMessenger = toolWindowMessenger;
+		toolWindowMessenger.MessageReceived += OnMessageReceived;
+	}
+	private void OnMessageReceived(object sender, string e)
+	{
+	}
+}
+```
+
+
+Save the `LingToolWindowsControl.xaml.cs` file.
+
+You now need to fix a issue in `LingToolWindow.cs` file since it returns a task base on the MyToolWindowControl we just renamed.
+
+Open the `LingToolWindow.cs` file and change from this: (Note: Make the method async as well.)
+
+```CSharp
+public override Task<FrameworkElement> CreateAsync(int toolWindowId, CancellationToken cancellationToken)
+{
+	return Task.FromResult<FrameworkElement>(new MyToolWindowControl());
+}
+```
+
+To this:
+
+```CSharp
+public override async Task<FrameworkElement> CreateAsync(int toolWindowId, CancellationToken cancellationToken)
+{
+	LinqToolWindowMessenger toolWindowMessenger = await Package.GetServiceAsync<LinqToolWindowMessenger, LinqToolWindowMessenger>();
+	return new LinqToolWindowControl(toolWindowMessenger);
+}
+```
+
+
 Solution should build without issues.
 
 In the `LinqToolWindow.cs` file add the Toolbar to the ToolWindow Pane.
@@ -558,7 +721,6 @@ public Pane()
 {
 	BitmapImageMoniker = KnownMonikers.ToolWindow;
 	ToolBar = new CommandID(PackageGuids.LinqLanguageEditor2022, PackageIds.LinqTWindowToolbar);
-
 }
 ```
 
@@ -652,7 +814,7 @@ With This:
 </Grid>
 ```
 
-Save the `LinqToolWindowControl.xaml` file
+Save the `LinqToolWindowControl.xaml` file.
 
 
 
