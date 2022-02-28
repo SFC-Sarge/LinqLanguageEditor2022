@@ -383,6 +383,35 @@ It should look like this now:
 </Symbols>
 ```
 
+Now add the `ToolWindowToolbar` `<Menus>` to the `VSCommandTable.vsct` file, inside of the `<Commands package` section and above the `<Buttons>` section:
+
+```xml
+<Commands package="LinqLanguageEditor2022">
+	<!--This section defines the elements the user can interact with, like a menu command or a button or combo box in a toolbar. -->
+	<Menus>
+		<Menu guid="LinqLanguageEditor2022" id="LinqTWindowToolbar" type="ToolWindowToolbar">
+			<CommandFlag>DefaultDocked</CommandFlag>
+			<Strings>
+				<ButtonText>Tool Window Toolbar</ButtonText>
+			</Strings>
+		</Menu>
+	</Menus>
+```
+
+Now add the `LinqEditorGroup` and `LinqTWindowToolbar` groups to file just below the `</Menus>` element your just added:
+
+```xml
+<Groups>
+	<Group guid="LinqLanguageEditor2022" id="LinqEditorGroup" priority="9000">
+		<Parent guid="guidSHLMainMenu" id ="IDM_VS_CTXT_CODEWIN"/>
+	</Group>
+	<Group guid="LinqLanguageEditor2022" id="LinqTWindowToolbarGroup" priority="0x0000">
+		<Parent guid="LinqLanguageEditor2022" id="LinqTWindowToolbar" />
+	</Group>
+</Groups>
+```
+
+
 
 Solution should build without issues.
 
@@ -817,7 +846,136 @@ With This:
 
 Save the `LinqToolWindowControl.xaml` file.
 
+Now let debug the `LinqLanguageEditor2022` to the Visual Studio 2022 Experimental Instance. 
 
+> (Note: It should run and we should get our ToolWindow with Toolbar and Buttons. 
+The Buttons will not do anything yet!)
+
+
+With Debug set click the ![Run Button](media/RunButton.png)
+
+
+![Debug To Exp](media/DebugToExp.png)
+
+When the Visual Studio 2022 initial dialog opens, Click the `Continue without code ->` link:
+
+![Continue Without Code](media/ContinueWithoutCode.png)
+
+After Visual Studio 2022 fully loads then Click `View` then `Other Windows` and then `LINQ Query Tool Window`.
+
+![Load Tool Window](media/LoadToolWindow.png)
+
+The `LINQ Query Tool Window` should display:
+
+![Tool Window Display](media/ToolWindowDisplay.png)
+
+> (Note: The 3 Buttons will show at the top of the ToolWindow.)
+
+Close the Visual Stuiod 2022 Experimental Instance and stop debugging.
+
+## [Add Events Handlers for the ToolWindow, Toolbar, Buttons](#Add-Events-Handlers-ToolWindow-Toolbar-Buttons)
+
+The ToolWindow Toolbar Buttons Events are Handled as Commands in three Classes.
+
+- LinqPadStatements
+- LinqPadMethod
+- LinqQueryFileEditor
+
+Right-click on the Commands folder and click: Add then: New Empty File... `LinqPadStatements.cs`
+
+![Linq Pad Statements Add](media/LinqPadStatementsAdd.png)
+
+Replace the Public class LinqPadStatements.
+
+Replace This:
+```CSharp
+	public class LinqPadStatements
+	{
+
+	}
+```
+
+With This:
+
+```CSharp
+[Command(PackageIds.DisplayLinqPadStatementsResults)]
+internal sealed class LinqPadStatements : BaseCommand<LinqPadStatements>
+{
+	protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
+	{
+		await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+		ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+		{
+			LinqToolWindowMessenger messenger = await Package.GetServiceAsync<LinqToolWindowMessenger, LinqToolWindowMessenger>();
+			messenger.Send(Constants.RunSelectedLinqStatement);
+		}).FireAndForget();
+	}
+}
+```
+
+Right-click on the Commands folder and click: Add then: New Empty File... `LinqPadMethod.cs`
+
+![Lin Pad Methods Add](media/LinPad Methods Add.png)
+
+Replace the Public class LinqPadMethod.
+
+Replace This:
+```CSharp
+public class LinqPadMethod
+{
+
+}
+```
+
+With This:
+```CSharp
+[Command(PackageIds.DisplayLinqPadMethodResults)]
+internal sealed class LinqPadMethod : BaseCommand<LinqPadMethod>
+{
+	protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
+	{
+		await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+		ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+		{
+			//await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+			LinqToolWindowMessenger messenger = await Package.GetServiceAsync<LinqToolWindowMessenger, LinqToolWindowMessenger>();
+			messenger.Send(Constants.RunSelectedLinqMethod);
+		}).FireAndForget();
+	}
+}
+```
+
+Right-click on the Commands folder and click: Add then: New Empty File... `LinqQueryFileEditor.cs`
+
+![Linq Pad Query Editor](media/LinqPadQueryEditor.png)
+
+Replace the Public class LinqQueryFileEditor.
+
+Replace This:
+```CSharp
+public class LinqQueryFileEditor
+{
+
+}
+```
+
+With This:
+```CSharp
+[Command(PackageIds.LinqEditorLinqPad)]
+internal sealed class LinqQueryFileEditor : BaseCommand<LinqQueryFileEditor>
+{
+	protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
+	{
+		await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+		ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+		{
+			//await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+			LinqToolWindowMessenger messenger = await Package.GetServiceAsync<LinqToolWindowMessenger, LinqToolWindowMessenger>();
+			messenger.Send(Constants.RunEditorLinqQuery);
+		}).FireAndForget();
+	}
+}
+```
 
 ## [Download Full Source Code](#Download-Full-Source-Code)
 

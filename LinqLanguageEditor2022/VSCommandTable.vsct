@@ -16,7 +16,6 @@
         </Strings>
       </Menu>
     </Menus>
-
     <Groups>
       <Group guid="LinqLanguageEditor2022" id="LinqEditorGroup" priority="9000">
         <Parent guid="guidSHLMainMenu" id ="IDM_VS_CTXT_CODEWIN"/>
