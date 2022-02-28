@@ -57,7 +57,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         var activeItem = await VS.Solutions.GetActiveItemAsync();
                         if (activeItem != null)
                         {
-                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterFirstDocumentLock: {activeItem.Name}");
+                            //((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterFirstDocumentLock: {activeItem.Name}");
                         }
                     }
                     catch (Exception)
@@ -75,7 +75,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         var activeItem = await VS.Solutions.GetActiveItemAsync();
                         if (activeItem != null)
                         {
-                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnBeforeLastDocumentUnlock: {activeItem.Name}");
+                            //((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnBeforeLastDocumentUnlock: {activeItem.Name}");
                         }
                     }
                     catch (Exception)
@@ -93,7 +93,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         var activeItem = await VS.Solutions.GetActiveItemAsync();
                         if (activeItem != null)
                         {
-                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterSave: {activeItem.Name}");
+                            //((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterSave: {activeItem.Name}");
                         }
                     }
                     catch (Exception)
@@ -112,7 +112,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         var activeItem = await VS.Solutions.GetActiveItemAsync();
                         if (activeItem != null)
                         {
-                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterAttributeChange: {activeItem.Name}");
+                            //((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterAttributeChange: {activeItem.Name}");
                         }
                     }
                     catch (Exception)
@@ -132,7 +132,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         var activeItem = await VS.Solutions.GetActiveItemAsync();
                         if (activeItem != null)
                         {
-                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnBeforeDocumentWindowShow: {activeItem.Name}");
+                            // ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnBeforeDocumentWindowShow: {activeItem.Name}");
                         }
                     }
                     catch (Exception)
@@ -142,7 +142,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         win = VsShellUtilities.GetWindowObject(pFrame);
                         if (win != null)
                         {
-                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnBeforeDocumentWindowShow: {win.Caption}");
+                            // ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnBeforeDocumentWindowShow: {win.Caption}");
                         }
                     }
                     catch (Exception)
@@ -369,7 +369,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         var activeItem = await VS.Solutions.GetActiveItemAsync();
                         if (activeItem != null)
                         {
-                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterDocumentWindowHide: {activeItem.Name}");
+                            //(LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterDocumentWindowHide: {activeItem.Name}");
                         }
                     }
                     catch (Exception)
@@ -379,7 +379,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         var win = VsShellUtilities.GetWindowObject(pFrame);
                         if (win != null)
                         {
-                            ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterDocumentWindowHide: {win.Caption}");
+                            //((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterDocumentWindowHide: {win.Caption}");
                         }
                     }
                     catch (Exception)

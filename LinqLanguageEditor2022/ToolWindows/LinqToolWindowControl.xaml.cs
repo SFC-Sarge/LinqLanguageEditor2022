@@ -24,7 +24,7 @@ namespace LinqLanguageEditor2022.ToolWindows
 {
     public partial class LinqToolWindowControl : UserControl
     {
-        OutputWindowPane _pane = null;
+        //OutputWindowPane _pane = null;
         public LinqToolWindowMessenger ToolWindowMessenger = null;
         public Project _activeProject;
         public string _activeFile;
@@ -49,10 +49,10 @@ namespace LinqLanguageEditor2022.ToolWindows
             dirLPRun7 = Path.GetDirectoryName(typeof(LinqToolWindow).Assembly.Location);
             fileLPRun7 = Path.Combine(dirLPRun7, Constants.SolutionToolWindowsFolderName, Constants.LPRun7Executable);
 
-            ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
-            {
-                await DoOutputWindowsAsync();
-            }).FireAndForget();
+            //ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+            //{
+            //    await DoOutputWindowsAsync();
+            //}).FireAndForget();
         }
         [Flags]
         public enum LinqType
@@ -88,7 +88,7 @@ namespace LinqLanguageEditor2022.ToolWindows
             ThreadHelper.ThrowIfNotOnUIThread();
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
-                await _pane.ClearAsync();
+                //await _pane.ClearAsync();
                 LinqPadResults.Children.Clear();
             }).FireAndForget();
         }
@@ -106,7 +106,7 @@ namespace LinqLanguageEditor2022.ToolWindows
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
-                await _pane.ClearAsync();
+                //await _pane.ClearAsync();
                 LinqPadResults.Children.Clear();
                 DocumentView docView = await VS.Documents.GetActiveDocumentViewAsync();
                 _activeFile = docView?.Document?.FilePath;
@@ -120,12 +120,12 @@ namespace LinqLanguageEditor2022.ToolWindows
                 {
                     NothingSelectedResult = new() { Text = Constants.NoActiveDocument, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                     LinqPadResults.Children.Add(NothingSelectedResult);
-                    await _pane.WriteLineAsync(Constants.NoActiveDocument);
+                    //await _pane.WriteLineAsync(Constants.NoActiveDocument);
                     return;
                 }
                 if (docView.TextView.Selection != null && !docView.TextView.Selection.IsEmpty)
                 {
-                    await _pane.WriteLineAsync(Constants.RunningSelectQuery);
+                    //await _pane.WriteLineAsync(Constants.RunningSelectQuery);
                     runningQueryResult = new() { Text = Constants.RunningSelectQuery, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                     LinqPadResults.Children.Add(runningQueryResult);
 
@@ -184,12 +184,12 @@ namespace LinqLanguageEditor2022.ToolWindows
                                 CurrentLinqMode = LinqType.None;
                                 NothingSelectedResult = new() { Text = Constants.NoActiveDocument, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                                 LinqPadResults.Children.Add(NothingSelectedResult);
-                                await _pane.WriteLineAsync(Constants.NoActiveDocument);
+                                //await _pane.WriteLineAsync(Constants.NoActiveDocument);
                                 return;
                             default:
                                 NothingSelectedResult = new() { Text = Constants.NoActiveDocument, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                                 LinqPadResults.Children.Add(NothingSelectedResult);
-                                await _pane.WriteLineAsync(Constants.NoActiveDocument);
+                                //await _pane.WriteLineAsync(Constants.NoActiveDocument);
                                 return;
                         }
                         var systemLinqEnumerable = typeof(System.Linq.Enumerable).Assembly;
@@ -206,16 +206,14 @@ namespace LinqLanguageEditor2022.ToolWindows
                                 .AddReferences(systemLinqQueryable)
                                 .AddReferences(systemDiagnostics));
                         var result = await script.RunAsync();
-                        queryResult = $"LINQ Query Results: {result.GetVariable("result").Value}";
-                        await _pane.ClearAsync();
+                        queryResult = $"{result.GetVariable("result").Value}";
+                        //await _pane.ClearAsync();
                         LinqPadResults.Children.Clear();
-                        if (LinqAdvancedOptions.Instance.UseLinqPadDumpWindow == true)
-                        {
-                            await _pane.WriteLineAsync($"{currentSelection} \r\n\r\n{Constants.CurrentSelectionQuery} = \r\n\r\n{queryResult}");
-                        }
                         if (LinqAdvancedOptions.Instance.EnableToolWindowResults == true)
                         {
-                            selectedQueryResult = new() { Text = $"{Constants.CurrentSelectionQuery} = \r\n\r\n{queryResult}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                            selectedQueryResult = new() { Text = $"{currentSelection}\r\n\r\nresult = {queryResult}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                            //selectedQueryResult = new() { Text = $"{currentSelection} \r\n\r\n{Constants.CurrentSelectionQuery} = \r\n\r\n{queryResult}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                            //selectedQueryResult = new() { Text = $"{Constants.CurrentSelectionQuery} = \r\n\r\n{queryResult}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                             LinqPadResults.Children.Add(selectedQueryResult);
                             Line line = new() { Margin = new Thickness(0, 0, 0, 20) };
                             LinqPadResults.Children.Add(line);
@@ -236,14 +234,14 @@ namespace LinqLanguageEditor2022.ToolWindows
                     {
                         exceptionResult = new() { Text = ex.Message, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                         LinqPadResults.Children.Add(exceptionResult);
-                        await _pane.WriteLineAsync($"{Constants.ExceptionIn} {fileLPRun7} {Constants.ExceptionCall} {exceptionResult.Text}");
+                        //await _pane.WriteLineAsync($"{Constants.ExceptionIn} {fileLPRun7} {Constants.ExceptionCall} {exceptionResult.Text}");
                     }
                 }
                 else
                 {
                     NothingSelectedResult = new() { Text = Constants.NoActiveDocument, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                     LinqPadResults.Children.Add(NothingSelectedResult);
-                    await _pane.WriteLineAsync(Constants.NoActiveDocument);
+                    //await _pane.WriteLineAsync(Constants.NoActiveDocument);
                 }
             }).FireAndForget();
         }
@@ -324,7 +322,7 @@ namespace LinqLanguageEditor2022.ToolWindows
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
-                await _pane.ClearAsync();
+                //await _pane.ClearAsync();
                 //LinqPadResults.Children.Clear();
                 currentSelection = currentSelection.Replace("\r\n{", "\r\n\t\t{")
                     .Replace("\r\n//", "\r\n\t\t\t//")
@@ -389,12 +387,10 @@ namespace LinqLanguageEditor2022.ToolWindows
             return Regex.Replace(content, @"\r\n|\n\r|\n|\r", "\r\n");
         }
 
-        private async Task DoOutputWindowsAsync()
-        {
-            _pane = await VS.Windows.CreateOutputWindowPaneAsync(Constants.LinpPadDump);
-            return;
-        }
-
-
+        //private async Task DoOutputWindowsAsync()
+        //{
+        //    //_pane = await VS.Windows.CreateOutputWindowPaneAsync(Constants.LinpPadDump);
+        //    return;
+        //}
     }
 }

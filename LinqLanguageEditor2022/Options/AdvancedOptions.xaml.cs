@@ -15,8 +15,8 @@ namespace LinqLanguageEditor2022.Options
 
         public void Initialize()
         {
+            advanceOptionText.Text = Constants.AdvanceOptionText;
             cbOpenInVSPreviewTab.IsChecked = LinqAdvancedOptions.Instance.OpenInVSPreviewTab;
-            cbUseLinqPadDumpWindow.IsChecked = LinqAdvancedOptions.Instance.UseLinqPadDumpWindow;
             cbEnableToolWindowResults.IsChecked = LinqAdvancedOptions.Instance.EnableToolWindowResults;
             LinqAdvancedOptions.Instance.Save();
         }
@@ -24,12 +24,6 @@ namespace LinqLanguageEditor2022.Options
         private void cbOpenInVSPreviewTab_Checked(object sender, System.Windows.RoutedEventArgs e)
         {
             LinqAdvancedOptions.Instance.OpenInVSPreviewTab = (bool)cbOpenInVSPreviewTab.IsChecked;
-            LinqAdvancedOptions.Instance.Save();
-        }
-
-        private void cbUseLinqPadDumpWindow_Checked(object sender, System.Windows.RoutedEventArgs e)
-        {
-            LinqAdvancedOptions.Instance.UseLinqPadDumpWindow = (bool)cbUseLinqPadDumpWindow.IsChecked;
             LinqAdvancedOptions.Instance.Save();
         }
 
@@ -42,12 +36,6 @@ namespace LinqLanguageEditor2022.Options
         private void cbOpenInVSPreviewTab_Unchecked(object sender, System.Windows.RoutedEventArgs e)
         {
             LinqAdvancedOptions.Instance.OpenInVSPreviewTab = (bool)cbOpenInVSPreviewTab.IsChecked;
-            LinqAdvancedOptions.Instance.Save();
-        }
-
-        private void cbUseLinqPadDumpWindow_Unchecked(object sender, System.Windows.RoutedEventArgs e)
-        {
-            LinqAdvancedOptions.Instance.UseLinqPadDumpWindow = (bool)cbUseLinqPadDumpWindow.IsChecked;
             LinqAdvancedOptions.Instance.Save();
         }
 

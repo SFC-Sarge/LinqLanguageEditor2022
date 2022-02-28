@@ -21,10 +21,10 @@
         <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical">
                 <TextBlock Margin="10 10 0 0" HorizontalAlignment="Center" Text="Linq Query Results"></TextBlock>
-                <StackPanel Margin="10 10 0 0" Name="LinqPadResults" Orientation="Vertical" HorizontalAlignment="Left" MaxWidth="400" />
-                <TextBlock Margin="10 10 0 0" HorizontalAlignment="Center" Text="RDT Explorer Window"></TextBlock>
+                <StackPanel Margin="10 10 0 0" Name="LinqPadResults" Orientation="Vertical" HorizontalAlignment="Left" MaxWidth="500" />
+                <!--<TextBlock Margin="10 10 0 0" HorizontalAlignment="Center" Text="RDT Explorer Window"></TextBlock>
                 <StackPanel Margin="10 10 0 0" Name="LinqPadEditor" Orientation="Vertical" HorizontalAlignment="Left" MaxWidth="400" />
-                <ListBox Margin="0 0 0 0"  x:Name="LinqlistBox" Height="350"  MaxWidth="450"/>
+                <ListBox Margin="0 0 0 0"  x:Name="LinqlistBox" Height="350"  MaxWidth="450"/>-->
             </StackPanel>
         </ScrollViewer>
     </Grid>

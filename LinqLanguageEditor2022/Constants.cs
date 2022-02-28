@@ -32,6 +32,7 @@
         public const string ProvideFileIcon = "KnownMonikers.RegistrationScript";
         public const string ProvideMenuResource = "Menus.ctmenu";
         public const string LinqAdvancedOptionPage = "Advanced";
+        public const string AdvanceOptionText = "LINQ Language Editor Advanced Option Settings";
         public const string CodeStyleGeneralOptionPage = @"Code Style\General";
         public const string CodeStyleIndentationOptionPage = @"Code Style\Formatting\Indentation";
         public const string CodeStyleNewLineOptionPage = @"Code Style\Formatting\New lines";
