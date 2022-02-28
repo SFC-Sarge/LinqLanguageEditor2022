@@ -11,6 +11,8 @@ using System.Windows.Shapes;
 
 using LinqLanguageEditor2022.Options;
 
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TextManager.Interop;
 
@@ -190,22 +192,21 @@ namespace LinqLanguageEditor2022.ToolWindows
                                 await _pane.WriteLineAsync(Constants.NoActiveDocument);
                                 return;
                         }
+                        var systemLinqEnumerable = typeof(System.Linq.Enumerable).Assembly;
+                        var systemLinqQueryable = typeof(System.Linq.Queryable).Assembly;
+                        var systemDiagnostics = typeof(System.Diagnostics.Debug).Assembly;
 
-                        using System.Diagnostics.Process process = new();
-                        process.StartInfo = new ProcessStartInfo()
-                        {
-                            UseShellExecute = false,
-                            CreateNoWindow = true,
-                            WindowStyle = ProcessWindowStyle.Hidden,
-                            FileName = fileLPRun7,
-                            Arguments = $"{Constants.FileLPRun7Args} {tempQueryPath}",
-                            RedirectStandardError = true,
-                            RedirectStandardOutput = true
-                        };
-                        process.Start();
-                        queryResult = await process.StandardOutput.ReadToEndAsync();
-                        process.WaitForExit();
-
+                        Script script = CSharpScript.Create(currentSelection, ScriptOptions.Default
+                                .AddImports("System")
+                                .AddImports("System.Linq")
+                                .AddImports("System.Collections")
+                                .AddImports("System.Collections.Generic")
+                                .AddImports("System.Diagnostics")
+                                .AddReferences(systemLinqEnumerable)
+                                .AddReferences(systemLinqQueryable)
+                                .AddReferences(systemDiagnostics));
+                        var result = await script.RunAsync();
+                        queryResult = $"LINQ Query Results: {result.GetVariable("result").Value}";
                         await _pane.ClearAsync();
                         LinqPadResults.Children.Clear();
                         if (LinqAdvancedOptions.Instance.UseLinqPadDumpWindow == true)
