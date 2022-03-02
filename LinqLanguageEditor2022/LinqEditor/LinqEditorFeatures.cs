@@ -1,4 +1,6 @@
-﻿using LinqLanguageEditor2022.Tokens;
+﻿
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
 
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Language.Intellisense.AsyncCompletion;
@@ -7,30 +9,8 @@ using Microsoft.VisualStudio.Text.BraceCompletion;
 using Microsoft.VisualStudio.Text.Tagging;
 using Microsoft.VisualStudio.Utilities;
 
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-
 namespace LinqLanguageEditor2022.LinqEditor
 {
-    [Export(typeof(ITaggerProvider))]
-    [TagType(typeof(IClassificationTag))]
-    [ContentType(Constants.LinqLanguageName)]
-    public class LinqSyntaxHighligting : TokenClassificationTaggerBase
-    {
-        public override Dictionary<object, string> ClassificationMap { get; } = new()
-        {
-            { LinqTokenTypes.literal, PredefinedClassificationTypeNames.Literal },
-            { LinqTokenTypes.comment, PredefinedClassificationTypeNames.Comment },
-            { LinqTokenTypes.@operator, PredefinedClassificationTypeNames.Operator },
-            { LinqTokenTypes.@string, PredefinedClassificationTypeNames.String },
-            { LinqTokenTypes.identifier, PredefinedClassificationTypeNames.Identifier },
-            { LinqTokenTypes.keyword, PredefinedClassificationTypeNames.Keyword },
-            { LinqTokenTypes.number, PredefinedClassificationTypeNames.Number },
-            { LinqTokenTypes.whitespace, PredefinedClassificationTypeNames.WhiteSpace },
-            { LinqTokenTypes.punctuation, PredefinedClassificationTypeNames.Punctuation },
-        };
-    }
-
     [Export(typeof(ITaggerProvider))]
     [TagType(typeof(IStructureTag))]
     [ContentType(Constants.LinqLanguageName)]

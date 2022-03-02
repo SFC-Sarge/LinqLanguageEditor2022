@@ -6,7 +6,6 @@ Walkthrough system requirements:
 
 - [Visual Studio 2022](https://visualstudio.microsoft.com/vs/)
 - [.Net 6.x](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
-- [LINQPad 7](https://www.linqpad.net/Download.aspx) Free Edition or greater installed
 - [VsixCommunity
 Community.VisualStudio.Toolkit](https://github.com/VsixCommunity/Community.VisualStudio.Toolkit) installed
 
@@ -52,17 +51,6 @@ This Language Editor's current features are:
 	document in temporary view tab, and return query results in the `LINQ Query
 	Tool Window`.
 
-	-   This example uses LINQPad’s command line tools: [LPRun7-x64.exe and
-		LINQPad.Runtime.dll](https://www.linqpad.net/Download.aspx) to compile
-		the LINQ query and return the results.
-
-		-   Single line LINQ Query selection and query run result support.
-
-		-   LINQ Query Method selection and query run result support.
-
-		-   Native [LINQPad](https://www.linqpad.net/) file Open and query run
-			result support.
-
 -   LINQ language file extension `.linq`
 
 -   IVsRunningDocTableEvents document events support
@@ -91,7 +79,7 @@ then create a new Visual Studio 2022 CSharp Extension using the:
 `VSIX Project w/Tool Window (Community) Project Template`
 
 ![VSIX Project w/Tool Window (Community) Project
-Template](ToolWindowTemplate.png)
+Template](media/ToolWindowTemplate.png)
 
 Create New project in Visual Studio 2022
 
@@ -113,38 +101,11 @@ Solution Explore should look like this now:
 
 ![New Solution Explorer](media/NewSolutionExplorer.png)
 
-If you do not have LinqPad 7 installed then download [LINQPad 7](https://www.linqpad.net/Download.aspx).
-
-One you have LinqPad 7 installed, copy LPRun7.exe and LINQPad.Runtime.dll to your solutions project folder under LinqLanguageEditor2022\ToolWindows
-rename LinqLanguageEditor2022\ToolWindows\LPRun7.exe to LinqLanguageEditor2022\ToolWindows\LPRun7-x64.exe.
-This is done so that we know we are using the 64 bit version with Visual Studio 2022.
-
-Add LPRun7-x64.exe and  LINQPad.Runtime.dll to the project from Solution Explorer.
-
-![Add Existing L P File](media/AddExistingLPFile.png)
-
-
-Change dialog file types to All Files (*.*) then select both LinqLanguageEditor2022\ToolWindows\LPRun7.exe and LinqLanguageEditor2022\ToolWindows\LINQPad.Runtime.dll and click add.
-
-![Select File To Add](media/SelectFileToAdd.png)
-
-
-In Solution Explorer Right-Click on LPRun7-x64.exe and Select Properties:
-
-![L P Run7 Properties](media/LPRun7Properties.png)
-
-
-Change Property to Include in VSIX = True: (Note: Make sure Build Action is set to Content)
-
-![Includein V S I X](media/IncludeinVSIX.png)
-
-Repeat this step for LINQPad.Runtime.dll and Include in VSIX = True (Note: Make sure Build Action is set to Content).
-
-
 Add NuGet Packages:
 
 - Microsoft.CodeAnalysis
 - Microsoft.CodeAnalysis.CSharp
+- Microsoft.CodeAnalysys.CSharp.Scripting
 - Microsoft.CSharp
 
 ![Microsoft Code Analysis](media/MicrosoftCodeAnalysis.png)
@@ -196,7 +157,6 @@ internal class Constants
 	public const string RunSelectedLinqStatement = "Run Selected LINQ Query Statement.";
 	public const string RunSelectedLinqMethod = "Run Selected LINQ Query Method.";
 	public const string RunEditorLinqQuery = "Run LINQ Query File.";
-	public const string LPRun7Executable = "LPRun7-x64.exe";
 	public const string LinqEditorToolWindowTitle = "LINQ Query Tool Window";
 	public const string SolutionToolWindowsFolderName = "ToolWindows";
 	public const string ProvideFileIcon = "KnownMonikers.RegistrationScript";
