@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TextManager.Interop;
+
+using static LinqLanguageEditor2022.ToolWindows.LinqToolWindowControl;
 
 using Path = System.IO.Path;
 using Project = Community.VisualStudio.Toolkit.Project;
@@ -91,7 +94,311 @@ namespace LinqLanguageEditor2022.ToolWindows
             IVsTextView nativeView = VsShellUtilities.GetTextView(frame);
             return await nativeView.ToDocumentViewAsync();
         }
+        public async Task RunLinqQueriesAsync(string currentSelection, LinqType linqType)
+        {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
+            ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+            {
+                string modifiedSelection = string.Empty;
+                LinqPadResults.Children.Clear();
+                switch (linqType)
+                {
+                    case LinqType.Statement:
+                        modifiedSelection = currentSelection;
+                        break;
+                    case LinqType.Method:
+                        //TODO: Remove method name line and starting and ending method braces
+                        modifiedSelection = currentSelection;
+                        break;
+                    case LinqType.File:
+                        //TODO: Remove namespace name line, starting and ending namespace braces, class name line, starting and ending class braces, and method name line and starting and ending method braces
+                        modifiedSelection = currentSelection;
+                        break;
+                    case LinqType.None:
+                        //NothingSelectedResult = new() { Text = Constants.NoActiveDocument, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                        //LinqPadResults.Children.Add(NothingSelectedResult);
+                        return;
+                    default:
+                        //LinqPadResults.Children.Add(NothingSelectedResult);
+                        return;
+                }
+
+                TextBlock runningQueryResult = null;
+                TextBlock exceptionResult = null;
+                TextBlock queryResultMsg = null;
+                TextBlock queryResults = null;
+                TextBlock queryResultEquals = new() { Text = $"{Constants.LinqQueryEquals}", FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                TextBlock queryCodeHeader = new() { Text = $"{Constants.LinqQueryTextHeader}", FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+
+                Line line = new() { Margin = new Thickness(0, 0, 0, 20) };
+                runningQueryResult = new() { Text = $"{Constants.RunningSelectQuery}\r\n", FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                LinqPadResults.Children.Add(runningQueryResult);
+                try
+                {
+                    var systemLinqEnumerable = typeof(System.Linq.Enumerable).Assembly;
+                    var systemLinqQueryable = typeof(System.Linq.Queryable).Assembly;
+                    var systemDiagnostics = typeof(System.Diagnostics.Debug).Assembly;
+
+                    Script script = CSharpScript.Create(modifiedSelection, ScriptOptions.Default
+                            .AddImports("System")
+                            .AddImports("System.Linq")
+                            .AddImports("System.Collections")
+                            .AddImports("System.Collections.Generic")
+                            .AddImports("System.Diagnostics")
+                            .AddReferences(systemLinqEnumerable)
+                            .AddReferences(systemLinqQueryable)
+                            .AddReferences(systemDiagnostics));
+                    var result = await script.RunAsync();
+                    var allVariables = result.Variables;
+                    var variable = allVariables.Where(n => n.Name == Constants.LinqResultText);
+                    string tempResults = String.Empty;
+
+                    if (variable.First().Name == Constants.LinqResultText)
+                    {
+                        var returnValue = result.GetVariable(Constants.LinqResultText).Value;
+                        var myType = returnValue.GetType();
+                        queryResultMsg = new() { Text = $"{result.Script.Code}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                        LinqPadResults.Children.Add(queryCodeHeader);
+                        LinqPadResults.Children.Add(line);
+                        LinqPadResults.Children.Add(queryResultMsg);
+                        LinqPadResults.Children.Add(queryResultEquals);
+
+                        if (myType == typeof(int) || myType == typeof(string) || myType == typeof(bool) || myType == typeof(float) || myType == typeof(double))
+                        {
+                            tempResults = $"{result.GetVariable(Constants.LinqResultText).Value}";
+                        }
+                        else if (myType == typeof(string[]))
+                        {
+                            var stringArrays = (string[])result.GetVariable(variable.First().Name).Value;
+                            if (stringArrays.Length > 0)
+                            {
+                                foreach (var stringArray in stringArrays)
+                                {
+                                    tempResults += $"{stringArray}\r\n";
+                                }
+                            }
+                        }
+                        else if (myType == typeof(int[]))
+                        {
+                            var intArrays = (int[])result.GetVariable(variable.First().Name).Value;
+                            if (intArrays.Length > 0)
+                            {
+                                foreach (var intArray in intArrays)
+                                {
+                                    tempResults += $"{intArray}\r\n";
+                                }
+                            }
+                        }
+                        else if (myType == typeof(List<string>))
+                        {
+                            var listStrings = (List<string>)result.GetVariable(variable.First().Name).Value;
+                            if (listStrings.Count() > 0)
+                            {
+                                foreach (var listString in listStrings)
+                                {
+                                    tempResults += $"{listString}\r\n";
+                                }
+                            }
+                        }
+                        else if (myType == typeof(IEnumerable<double>) || (myType.FullName.Contains("OfTypeIterator") && myType.FullName.Contains("Double")))
+                        {
+                            IEnumerable<double> enumDoubles = (IEnumerable<double>)returnValue;
+                            if (enumDoubles.Count() > 0)
+                            {
+                                foreach (var enumDouble in enumDoubles)
+                                {
+                                    tempResults += $"{enumDouble}\r\n";
+                                }
+                            }
+                        }
+                        else if (myType == typeof(Int64))
+                        {
+                            var int64 = (Int64)returnValue;
+                            tempResults += $"{int64}";
+                        }
+                        else if (myType == typeof(IEnumerable<float>))
+                        {
+                            IEnumerable<float> enumFloats = (IEnumerable<float>)returnValue;
+                            if (enumFloats.Count() > 0)
+                            {
+                                foreach (var enumFloat in enumFloats)
+                                {
+                                    tempResults += $"{enumFloat}\r\n";
+                                }
+                            }
+                        }
+                        else if (myType.FullName.Contains("SelectArrayIterator") && myType.FullName.Contains("Decimal"))
+                        {
+                            IEnumerable<decimal> enumDecimals = (IEnumerable<decimal>)returnValue;
+                            if (enumDecimals.Count() > 0)
+                            {
+                                foreach (var enumDecimal in enumDecimals)
+                                {
+                                    tempResults += $"{enumDecimal}\r\n";
+                                }
+                            }
+                        }
+                        else if (myType.FullName.Contains("OrderedEnumerable") && myType.FullName.Contains("DateTime")
+                        || myType == typeof(IEnumerable<DateTime>))
+                        {
+                            IOrderedEnumerable<DateTime> orderedDates = (IOrderedEnumerable<DateTime>)returnValue;
+                            if (orderedDates.Count() > 0)
+                            {
+                                foreach (var orderedDate in orderedDates)
+                                {
+                                    tempResults += $"{orderedDate}\r\n";
+                                }
+                            }
+                        }
+                        else if (myType.FullName.Contains("OrderedEnumerable") && myType.FullName.Contains("Submission")
+                        || myType.FullName.Contains("GroupJoinIterator") && myType.FullName.Contains("Submission")
+                        || myType.FullName.Contains("SelectManyIterator") && myType.FullName.Contains("String")
+                        || myType.FullName.Contains("SelectIterator") && myType.FullName.Contains("String")
+                        || myType.FullName.Contains("SkipWhileIterator") && myType.FullName.Contains("String")
+                        || myType.FullName.Contains("OfTypeIterator") && myType.FullName.Contains("String")
+                        || myType.FullName.Contains("Concat2Iterator") && myType.FullName.Contains("String")
+                        || myType.FullName.Contains("RepeatIterator") && myType.FullName.Contains("String")
+                        || myType.FullName.Contains("SelectArrayIterator") && myType.FullName.Contains("Double")
+                        || myType.FullName.Contains("WhereArrayIterator") && myType.FullName.Contains("Submission"))
+                        {
+                            var orderedObjects = (IEnumerable<object>)returnValue;
+                            if (orderedObjects.Count() > 0)
+                            {
+                                foreach (var orderedString in orderedObjects)
+                                {
+                                    tempResults += $"{orderedObjects}\r\n";
+                                }
+                            }
+                        }
+                        else if (myType.FullName.Contains("OrderedEnumerable") && myType.FullName.Contains("Int32"))
+                        {
+                            IOrderedEnumerable<int> orderedInts = (IOrderedEnumerable<int>)returnValue;
+                            if (orderedInts.Count() > 0)
+                            {
+                                foreach (var orderedInt in orderedInts)
+                                {
+                                    tempResults += $"{orderedInt}\r\n";
+                                }
+                            }
+                        }
+                        else if (myType.FullName.Contains("OrderedEnumerable") && myType.FullName.Contains("String"))
+                        {
+                            IOrderedEnumerable<string> orderedStrings = (IOrderedEnumerable<string>)returnValue;
+                            if (orderedStrings.Count() > 0)
+                            {
+                                foreach (var orderedString in orderedStrings)
+                                {
+                                    tempResults += $"{orderedString}\r\n";
+                                }
+                            }
+                        }
+                        else if (myType.FullName.Contains("JoinIterator") && myType.FullName.Contains("String")
+                        || myType.FullName.Contains("ListPartition") && myType.FullName.Contains("String")
+                        || myType.FullName.Contains("EmptyPartition") && myType.FullName.Contains("String")
+                        || myType == typeof(IEnumerable<string>))
+                        {
+                            var repeatObjects = (IEnumerable<string>)returnValue;
+                            if (repeatObjects.Count() > 0)
+                            {
+                                foreach (var repeatObject in repeatObjects)
+                                {
+                                    tempResults += $"{repeatObject}\r\n";
+                                }
+                            }
+                        }
+                        else if (myType.FullName.Contains("ReverseIterator") && myType.FullName.Contains("Char"))
+                        {
+                            var reverseChars = (IEnumerable<char>)returnValue;
+                            if (reverseChars.Count() > 0)
+                            {
+                                foreach (var reverseChar in reverseChars)
+                                {
+                                    tempResults += $"{reverseChar}\r\n";
+                                }
+                            }
+                        }
+                        else if (myType.FullName.Contains("TakeWhileIterator") && myType.FullName.Contains("Int32")
+                        || myType.FullName.Contains("DistinctIterator") && myType.FullName.Contains("Int32")
+                        || myType.FullName.Contains("ExceptIterator") && myType.FullName.Contains("Int32")
+                        || myType.FullName.Contains("OfTypeIterator") && myType.FullName.Contains("Int32")
+                        || myType.FullName.Contains("UnionIterator") && myType.FullName.Contains("Int32")
+                        || myType.FullName.Contains("IntersectIterator") && myType.FullName.Contains("Int32")
+                        || myType.FullName.Contains("WhereIterator") && myType.FullName.Contains("Int32")
+                        || myType.FullName.Contains("WhereArrayIterator") && myType.FullName.Contains("Int32")
+                        || myType.FullName.Contains("WhereSelectEnumerableIterator") && myType.FullName.Contains("Int32")
+                        || myType.FullName.Contains("ZipIterator") && myType.FullName.Contains("Int32")
+                        || myType.FullName.Contains("DefaultIfEmptyIterator") && myType.FullName.Contains("Int32")
+                        || myType.FullName.Contains("ListPartition") && myType.FullName.Contains("Int32")
+                        || myType.Name.Contains("RangeIterator")
+                        || myType == typeof(IEnumerable<int>))
+                        {
+                            var takeWhileInts = (IEnumerable<int>)returnValue;
+                            if (takeWhileInts.Count() > 0)
+                            {
+                                foreach (var takeWhileInt in takeWhileInts)
+                                {
+                                    tempResults += $"{takeWhileInt}\r\n";
+                                }
+                            }
+                        }
+                        else if (myType.FullName.Contains("Lookup") && myType.FullName.Contains("Int32"))
+                        {
+                            var lookupInts = (Lookup<int, string>)returnValue;
+                            if (lookupInts.Count() > 0)
+                            {
+                                foreach (var lookupKeys in lookupInts)
+                                {
+                                    foreach (var lookupKey in lookupKeys)
+                                    {
+                                        tempResults += $"{lookupKey}\r\n";
+                                    }
+                                }
+                            }
+                        }
+                        else if (myType.FullName.Contains("Dictionary") && myType.FullName.Contains("String"))
+                        {
+                            var takeWhileInts = (IDictionary<string, string>)returnValue;
+                            if (takeWhileInts.Count() > 0)
+                            {
+                                foreach (var takeWhileInt in takeWhileInts)
+                                {
+                                    tempResults += $"{takeWhileInt}\r\n";
+                                }
+                            }
+                        }
+                        else if (myType.Name.Contains("GroupedEnumerable"))
+                        {
+                            var groupedEnums = (IGrouping<int, bool>)returnValue;
+                            if (groupedEnums.Count() > 0)
+                            {
+                                foreach (var groupedEnum in groupedEnums)
+                                {
+                                    tempResults += $"{groupedEnum}\r\n";
+                                }
+                            }
+                        }
+                        else
+                        {
+                            tempResults += $"Selected LINQ Query is not supported yet!\r\n{myType}";
+                        }
+                        if (tempResults.EndsWith("\r\n"))
+                        {
+                            tempResults = tempResults.Substring(0, tempResults.Length - "\r\n".Length);
+                        }
+                        tempResults = tempResults.Trim();
+                        queryResults = new() { Text = $"{tempResults}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                        LinqPadResults.Children.Add(queryResults);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    exceptionResult = new() { Text = ex.Message, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                    LinqPadResults.Children.Add(exceptionResult);
+                }
+            }).FireAndForget();
+
+        }
         public async Task RunEditorLinqQueryAsync(LinqType linqType)
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
@@ -104,23 +411,18 @@ namespace LinqLanguageEditor2022.ToolWindows
                 _myNamespace = _activeProject.Name;
                 TextBlock runningQueryResult = null;
                 TextBlock NothingSelectedResult = null;
-                TextBlock selectedQueryResult = null;
                 TextBlock exceptionResult = null;
-                TextBlock queryResultMsg = null;
-                TextBlock queryResults = null;
-                TextBlock queryResultEquals = new() { Text = Constants.LinqQueryEquals, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
-                TextBlock queryCodeHeader = new() { Text = Constants.LinqQueryTextHeader, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
 
                 Line line = new() { Margin = new Thickness(0, 0, 0, 20) };
                 if (docView?.TextView == null)
                 {
-                    NothingSelectedResult = new() { Text = Constants.NoActiveDocument, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                    NothingSelectedResult = new() { Text = Constants.NoActiveDocument, FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                     LinqPadResults.Children.Add(NothingSelectedResult);
                     return;
                 }
                 if (docView.TextView.Selection != null && !docView.TextView.Selection.IsEmpty)
                 {
-                    runningQueryResult = new() { Text = Constants.RunningSelectQuery, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                    runningQueryResult = new() { Text = $"{Constants.RunningSelectQuery}\r\n", FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                     LinqPadResults.Children.Add(runningQueryResult);
                     string currentSelection = null;
                     string tempQueryPath = null;
@@ -137,6 +439,10 @@ namespace LinqLanguageEditor2022.ToolWindows
                         {
                             case LinqType.Statement:
                                 CurrentLinqMode = LinqType.Statement;
+                                if (LinqAdvancedOptions.Instance.EnableToolWindowResults == true)
+                                {
+                                    await RunLinqQueriesAsync(currentSelection, LinqType.Statement);
+                                }
                                 tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
                                 queryString = $"{Constants.QueryKindStatement}\r\n{currentSelection}\r\n{Constants.ResultDump};".Trim();
                                 File.WriteAllText(tempQueryPath, $"{queryString}");
@@ -144,6 +450,10 @@ namespace LinqLanguageEditor2022.ToolWindows
                                 break;
                             case LinqType.Method:
                                 CurrentLinqMode = LinqType.Method;
+                                if (LinqAdvancedOptions.Instance.EnableToolWindowResults == true)
+                                {
+                                    await RunLinqQueriesAsync(currentSelection, LinqType.Method);
+                                }
                                 tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
                                 methodName = currentSelection.Substring(0, currentSelection.IndexOf("\r"));
                                 methodNameComplete = methodName.Substring(methodName.LastIndexOf(" ") + 1, methodName.LastIndexOf(")") - methodName.LastIndexOf(" "));
@@ -153,6 +463,10 @@ namespace LinqLanguageEditor2022.ToolWindows
                                 break;
                             case LinqType.File:
                                 CurrentLinqMode = LinqType.File;
+                                if (LinqAdvancedOptions.Instance.EnableToolWindowResults == true)
+                                {
+                                    await RunLinqQueriesAsync(currentSelection, LinqType.File);
+                                }
                                 tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
                                 if (!currentSelection.StartsWith(Constants.QueryStartsWith))
                                 {
@@ -183,259 +497,10 @@ namespace LinqLanguageEditor2022.ToolWindows
                                 LinqPadResults.Children.Add(NothingSelectedResult);
                                 return;
                         }
-                        if (LinqAdvancedOptions.Instance.EnableToolWindowResults == true)
-                        {
-                            var systemLinqEnumerable = typeof(System.Linq.Enumerable).Assembly;
-                            var systemLinqQueryable = typeof(System.Linq.Queryable).Assembly;
-                            var systemDiagnostics = typeof(System.Diagnostics.Debug).Assembly;
-
-                            Script script = CSharpScript.Create(currentSelection, ScriptOptions.Default
-                                    .AddImports("System")
-                                    .AddImports("System.Linq")
-                                    .AddImports("System.Collections")
-                                    .AddImports("System.Collections.Generic")
-                                    .AddImports("System.Diagnostics")
-                                    .AddReferences(systemLinqEnumerable)
-                                    .AddReferences(systemLinqQueryable)
-                                    .AddReferences(systemDiagnostics));
-                            var result = await script.RunAsync();
-                            var allVariables = result.Variables;
-                            var variable = allVariables.Where(n => n.Name == Constants.LinqResultText);
-                            string tempResults = String.Empty;
-
-                            if (variable.First().Name == Constants.LinqResultText)
-                            {
-                                var returnValue = result.GetVariable(Constants.LinqResultText).Value;
-                                var myType = returnValue.GetType();
-                                queryResultMsg = new() { Text = $"{result.Script.Code}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
-                                LinqPadResults.Children.Add(queryCodeHeader);
-                                LinqPadResults.Children.Add(line);
-                                LinqPadResults.Children.Add(queryResultMsg);
-                                LinqPadResults.Children.Add(line);
-                                LinqPadResults.Children.Add(queryResultEquals);
-                                LinqPadResults.Children.Add(line);
-
-                                if (myType == typeof(int) || myType == typeof(string) || myType == typeof(bool) || myType == typeof(float) || myType == typeof(double))
-                                {
-                                    tempResults = $"{result.GetVariable(Constants.LinqResultText).Value}";
-                                }
-                                else if (myType == typeof(string[]))
-                                {
-                                    var stringArrays = (string[])result.GetVariable(variable.First().Name).Value;
-                                    if (stringArrays.Length > 0)
-                                    {
-                                        foreach (var stringArray in stringArrays)
-                                        {
-                                            tempResults += $"{stringArray}\r\n";
-                                        }
-                                    }
-                                }
-                                else if (myType == typeof(int[]))
-                                {
-                                    var intArrays = (int[])result.GetVariable(variable.First().Name).Value;
-                                    if (intArrays.Length > 0)
-                                    {
-                                        foreach (var intArray in intArrays)
-                                        {
-                                            tempResults += $"{intArray}\r\n";
-                                        }
-                                    }
-                                }
-                                else if (myType == typeof(List<string>))
-                                {
-                                    var listStrings = (List<string>)result.GetVariable(variable.First().Name).Value;
-                                    if (listStrings.Count() > 0)
-                                    {
-                                        foreach (var listString in listStrings)
-                                        {
-                                            tempResults += $"{listString}\r\n";
-                                        }
-                                    }
-                                }
-                                else if (myType == typeof(IEnumerable<double>) || (myType.FullName.Contains("OfTypeIterator") && myType.FullName.Contains("Double")))
-                                {
-                                    IEnumerable<double> enumDoubles = (IEnumerable<double>)returnValue;
-                                    if (enumDoubles.Count() > 0)
-                                    {
-                                        foreach (var enumDouble in enumDoubles)
-                                        {
-                                            tempResults += $"{enumDouble}\r\n";
-                                        }
-                                    }
-                                }
-                                else if (myType == typeof(Int64))
-                                {
-                                    var int64 = (Int64)returnValue;
-                                    tempResults += $"{int64}\r\n";
-                                }
-                                else if (myType == typeof(IEnumerable<float>))
-                                {
-                                    IEnumerable<float> enumFloats = (IEnumerable<float>)returnValue;
-                                    if (enumFloats.Count() > 0)
-                                    {
-                                        foreach (var enumFloat in enumFloats)
-                                        {
-                                            tempResults += $"{enumFloat}\r\n";
-                                        }
-                                    }
-                                }
-                                else if (myType.FullName.Contains("SelectArrayIterator") && myType.FullName.Contains("Decimal"))
-                                {
-                                    IEnumerable<decimal> enumDecimals = (IEnumerable<decimal>)returnValue;
-                                    if (enumDecimals.Count() > 0)
-                                    {
-                                        foreach (var enumDecimal in enumDecimals)
-                                        {
-                                            tempResults += $"{enumDecimal}\r\n";
-                                        }
-                                    }
-                                }
-                                else if (myType.FullName.Contains("OrderedEnumerable") && myType.FullName.Contains("DateTime")
-                                || myType == typeof(IEnumerable<DateTime>))
-                                {
-                                    IOrderedEnumerable<DateTime> orderedDates = (IOrderedEnumerable<DateTime>)returnValue;
-                                    if (orderedDates.Count() > 0)
-                                    {
-                                        foreach (var orderedDate in orderedDates)
-                                        {
-                                            tempResults += $"{orderedDate}\r\n";
-                                        }
-                                    }
-                                }
-                                else if (myType.FullName.Contains("OrderedEnumerable") && myType.FullName.Contains("Submission")
-                                || myType.FullName.Contains("GroupJoinIterator") && myType.FullName.Contains("Submission")
-                                || myType.FullName.Contains("SelectManyIterator") && myType.FullName.Contains("String")
-                                || myType.FullName.Contains("SelectIterator") && myType.FullName.Contains("String")
-                                || myType.FullName.Contains("SkipWhileIterator") && myType.FullName.Contains("String")
-                                || myType.FullName.Contains("OfTypeIterator") && myType.FullName.Contains("String")
-                                || myType.FullName.Contains("Concat2Iterator") && myType.FullName.Contains("String")
-                                || myType.FullName.Contains("RepeatIterator") && myType.FullName.Contains("String")
-                                || myType.FullName.Contains("SelectArrayIterator") && myType.FullName.Contains("Double")
-                                || myType.FullName.Contains("WhereArrayIterator") && myType.FullName.Contains("Submission"))
-                                {
-                                    var orderedObjects = (IEnumerable<object>)returnValue;
-                                    if (orderedObjects.Count() > 0)
-                                    {
-                                        foreach (var orderedString in orderedObjects)
-                                        {
-                                            tempResults += $"{orderedObjects}\r\n";
-                                        }
-                                    }
-                                }
-                                else if (myType.FullName.Contains("OrderedEnumerable") && myType.FullName.Contains("Int32"))
-                                {
-                                    IOrderedEnumerable<int> orderedInts = (IOrderedEnumerable<int>)returnValue;
-                                    if (orderedInts.Count() > 0)
-                                    {
-                                        foreach (var orderedInt in orderedInts)
-                                        {
-                                            tempResults += $"{orderedInt}\r\n";
-                                        }
-                                    }
-                                }
-                                else if (myType.FullName.Contains("OrderedEnumerable") && myType.FullName.Contains("String"))
-                                {
-                                    IOrderedEnumerable<string> orderedStrings = (IOrderedEnumerable<string>)returnValue;
-                                    if (orderedStrings.Count() > 0)
-                                    {
-                                        foreach (var orderedString in orderedStrings)
-                                        {
-                                            tempResults += $"{orderedString}\r\n";
-                                        }
-                                    }
-                                }
-                                else if (myType.FullName.Contains("JoinIterator") && myType.FullName.Contains("String")
-                                || myType.FullName.Contains("ListPartition") && myType.FullName.Contains("String")
-                                || myType.FullName.Contains("EmptyPartition") && myType.FullName.Contains("String")
-                                || myType == typeof(IEnumerable<string>))
-                                {
-                                    var repeatObjects = (IEnumerable<string>)returnValue;
-                                    if (repeatObjects.Count() > 0)
-                                    {
-                                        foreach (var repeatObject in repeatObjects)
-                                        {
-                                            tempResults += $"{repeatObject}\r\n";
-                                        }
-                                    }
-                                }
-                                else if (myType.FullName.Contains("ReverseIterator") && myType.FullName.Contains("Char"))
-                                {
-                                    var reverseChars = (IEnumerable<char>)returnValue;
-                                    if (reverseChars.Count() > 0)
-                                    {
-                                        foreach (var reverseChar in reverseChars)
-                                        {
-                                            tempResults += $"{reverseChar}\r\n";
-                                        }
-                                    }
-                                }
-                                else if (myType.FullName.Contains("TakeWhileIterator") && myType.FullName.Contains("Int32")
-                                || myType.FullName.Contains("OfTypeIterator") && myType.FullName.Contains("Int32")
-                                || myType.FullName.Contains("UnionIterator") && myType.FullName.Contains("Int32")
-                                || myType.FullName.Contains("IntersectIterator") && myType.FullName.Contains("Int32")
-                                || myType.FullName.Contains("WhereIterator") && myType.FullName.Contains("Int32")
-                                || myType.FullName.Contains("WhereArrayIterator") && myType.FullName.Contains("Int32")
-                                || myType.FullName.Contains("ZipIterator") && myType.FullName.Contains("Int32")
-                                || myType.FullName.Contains("ExceptIterator") && myType.FullName.Contains("Int32")
-                                || myType.FullName.Contains("DefaultIfEmptyIterator") && myType.FullName.Contains("Int32")
-                                || myType.FullName.Contains("ListPartition") && myType.FullName.Contains("Int32")
-                                || myType.Name.Contains("RangeIterator")
-                                || myType == typeof(IEnumerable<int>))
-                                {
-                                    var takeWhileInts = (IEnumerable<int>)returnValue;
-                                    if (takeWhileInts.Count() > 0)
-                                    {
-                                        foreach (var takeWhileInt in takeWhileInts)
-                                        {
-                                            tempResults += $"{takeWhileInt}\r\n";
-                                        }
-                                    }
-                                }
-                                else if (myType.FullName.Contains("Lookup") && myType.FullName.Contains("Int32"))
-                                {
-                                    var lookupInts = (Lookup<int, string>)returnValue;
-                                    if (lookupInts.Count() > 0)
-                                    {
-                                        foreach (var lookupKeys in lookupInts)
-                                        {
-                                            foreach (var lookupKey in lookupKeys)
-                                            {
-                                                tempResults += $"{lookupKey}\r\n";
-                                            }
-                                        }
-                                    }
-                                }
-                                else if (myType.FullName.Contains("Dictionary") && myType.FullName.Contains("String"))
-                                {
-                                    var takeWhileInts = (IDictionary<string, string>)returnValue;
-                                    if (takeWhileInts.Count() > 0)
-                                    {
-                                        foreach (var takeWhileInt in takeWhileInts)
-                                        {
-                                            tempResults += $"{takeWhileInt}\r\n";
-                                        }
-                                    }
-                                }
-                                else if (myType.Name.Contains("GroupedEnumerable"))
-                                {
-                                    var groupedEnums = (IGrouping<int, bool>)returnValue;
-                                    if (groupedEnums.Count() > 0)
-                                    {
-                                        foreach (var groupedEnum in groupedEnums)
-                                        {
-                                            tempResults += $"{groupedEnum}\r\n";
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    tempResults += $"{myType}\r\n";
-                                }
-                                queryResults = new() { Text = $"{tempResults}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
-                                LinqPadResults.Children.Add(queryResults);
-                                LinqPadResults.Children.Add(line);
-                            }
-                        }
+                        //if (LinqAdvancedOptions.Instance.EnableToolWindowResults == true)
+                        //{
+                        //    await RunLinqQueriesAsync(currentSelection);
+                        //}
                         tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
                         position = await WriteFileAsync(_activeProject, tempQueryPath, currentSelection);
 
