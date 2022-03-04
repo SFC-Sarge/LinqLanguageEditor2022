@@ -1,15 +1,132 @@
-﻿<UserControl x:Class="LinqLanguageEditor2022.Options.AdvancedOptions"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:LinqLanguageEditor2022.Options"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock x:Name="advanceOptionText" HorizontalAlignment="Left" Margin="30,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <CheckBox x:Name="cbOpenInVSPreviewTab" Content="Open Linq Query and result in Visual Studio Preview Tab" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" IsThreeState="False" Checked="cbOpenInVSPreviewTab_Checked" Unchecked="cbOpenInVSPreviewTab_Unchecked"/>
-        <CheckBox x:Name="cbEnableToolWindowResults" Content="Enable Tool Window for Linq Query and results" HorizontalAlignment="Left" Margin="30,66,0,0" VerticalAlignment="Top"  IsThreeState="False"  Checked="cbEnableToolWindowResults_Checked" Unchecked="cbEnableToolWindowResults_Unchecked" />
+﻿<UserControl
+	x:Class="LinqLanguageEditor2022.Options.AdvancedOptions"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="clr-namespace:LinqLanguageEditor2022.Options"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	d:DesignHeight="450"
+	d:DesignWidth="800">
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		<ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Auto">
+			<StackPanel Margin="20, 20" Orientation="Vertical">
+				<TextBlock Margin="0,5"
+					x:Name="advanceOptionText"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					TextWrapping="Wrap" />
+				<CheckBox Margin="0,5"
+					x:Name="cbOpenInVSPreviewTab"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					Checked="cbOpenInVSPreviewTab_Checked"
+					Content="Open Linq Query and result in Visual Studio Preview Tab"
+					IsThreeState="False"
+					Unchecked="cbOpenInVSPreviewTab_Unchecked" />
+				<CheckBox Margin="0,5"
+					x:Name="cbEnableToolWindowResults"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					Checked="cbEnableToolWindowResults_Checked"
+					Content="Enable Tool Window for Linq Query and results"
+					IsThreeState="False"
+					Unchecked="cbEnableToolWindowResults_Unchecked" />
+				<TextBlock Margin="0,5"
+					x:Name="tbResultCodeColor"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					TextWrapping="Wrap" />
+				<ComboBox Name="cmbResultCodeColor" Margin="0,5"
+						  SelectionChanged="cmbResultCodeColor_SelectionChanged"
+						  Height="30" Width="250" HorizontalAlignment="Left"
+						  SelectedIndex="68">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<Rectangle Fill="{Binding Name}" Width="16" Height="16" Margin="0,2,5,2" />
+								<TextBlock Text="{Binding Name}" />
+							</StackPanel>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+				<TextBlock Margin="0,5"
+					x:Name="tbResultColor"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					TextWrapping="Wrap" />
+				<ComboBox Name="cmbResultColor" Margin="0,5"
+						  SelectionChanged="cmbResultColor_SelectionChanged"
+						  Height="30" Width="250" HorizontalAlignment="Left"
+						  SelectedIndex="139">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<Rectangle Fill="{Binding Name}" Width="16" Height="16" Margin="0,2,5,2" />
+								<TextBlock Text="{Binding Name}" />
+							</StackPanel>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+				<TextBlock Margin="0,5"
+					x:Name="tbRunningQueryMsgColor"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					TextWrapping="Wrap" />
+				<ComboBox Name="cmbRunningQueryMsgColor" Margin="0,5"
+						  SelectionChanged="cmbRunningQueryMsgColor_SelectionChanged"
+						  Height="30" Width="250" HorizontalAlignment="Left"
+						  SelectedIndex="63">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<Rectangle Fill="{Binding Name}" Width="16" Height="16" Margin="0,2,5,2" />
+								<TextBlock Text="{Binding Name}" />
+							</StackPanel>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+				<TextBlock Margin="0,5"
+					x:Name="tbResultsEqualMsgColor"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					TextWrapping="Wrap" />
+				<ComboBox Name="cmbResultsEqualMsgColor" Margin="0,5"
+						  SelectionChanged="cmbResultsEqualMsgColor_SelectionChanged"
+						  Height="30" Width="250" HorizontalAlignment="Left"
+						  SelectedIndex="63">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<Rectangle Fill="{Binding Name}" Width="16" Height="16" Margin="0,2,5,2" />
+								<TextBlock Text="{Binding Name}" />
+							</StackPanel>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+				<TextBlock Margin="0,5"
+					x:Name="tbExceptionAdditionMsgColor"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					TextWrapping="Wrap" />
+				<ComboBox Name="cmbExceptionAdditionMsgColor" Margin="0,5"
+						  SelectionChanged="cmbExceptionAdditionMsgColor_SelectionChanged"
+						  Height="30" Width="250" HorizontalAlignment="Left"
+						  SelectedIndex="113">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<Rectangle Fill="{Binding Name}" Width="16" Height="16" Margin="0,2,5,2" />
+								<TextBlock Text="{Binding Name}" />
+							</StackPanel>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+			</StackPanel>
+		</ScrollViewer>
 
-    </Grid>
+	</Grid>
 </UserControl>
