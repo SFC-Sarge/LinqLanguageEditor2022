@@ -21,7 +21,7 @@
         public const string PaneGuid = "A938BB26-03F8-4861-B920-6792A7D4F07C";
         public const string RunSelectedLinqStatement = "Run Selected LINQ Query Statement.";
         public const string RunSelectedLinqMethod = "Run Selected LINQ Query Method.";
-        public const string RunEditorLinqQuery = "Run LINQ Query File.";
+        public const string RunEditorLinqQuery = "Open and Run LINQ Query File.";
         public const string LinqEditorToolWindowTitle = "LINQ Query Tool Window";
         public const string SolutionToolWindowsFolderName = "ToolWindows";
         public const string ProvideFileIcon = "KnownMonikers.RegistrationScript";
@@ -35,8 +35,8 @@
         public const string CodeStyleWrappingOptionPage = @"Code Style\Formatting\Wrapping";
         public const string IntelliSenseOptionPage = "IntelliSense";
         public const string LinqResultText = "result";
-        public const string LinqQueryEquals = "LINQ Query Results: =";
-        public const string LinqQueryTextHeader = "LINQ Query:";
+        public const string LinqQueryEquals = "Selected LINQ Query Results: =";
+        public const string LinqQueryTextHeader = "Selected LINQ Query:";
         public const string LinqStatementTemplate = "using System;\r\nusing System.Collections.Generic;\r\nusing System.Diagnostics;\r\nusing System.Linq;\r\nusing System.Text;\r\nusing System.Threading.Tasks;\r\nnamespace {namespace}\r\n{\r\n\tpublic class {itemname}\r\n\t{\r\n\t\tpublic static void {methodname}()\r\n\t\t{\r\n\t\t\t{$}\r\n\t\t}\r\n\t}\r\n}";
         public const string LinqMethodTemplate = "using System;\r\nusing System.Collections.Generic;\r\nusing System.Diagnostics;\r\nusing System.Linq;\r\nusing System.Text;\r\nusing System.Threading.Tasks;\r\nnamespace {namespace}\r\n{\r\n\tpublic class {itemname}\r\n\t{\r\n\t\t{$}\r\n\t}\r\n}";
     }

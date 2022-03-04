@@ -119,10 +119,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="README.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include=".editorconfig">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

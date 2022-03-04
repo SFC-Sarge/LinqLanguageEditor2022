@@ -94,36 +94,13 @@ namespace LinqLanguageEditor2022.ToolWindows
             IVsTextView nativeView = VsShellUtilities.GetTextView(frame);
             return await nativeView.ToDocumentViewAsync();
         }
-        public async Task RunLinqQueriesAsync(string currentSelection, LinqType linqType)
+        public async Task RunLinqQueriesAsync(string modifiedSelection)
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
-                string modifiedSelection = string.Empty;
                 LinqPadResults.Children.Clear();
-                switch (linqType)
-                {
-                    case LinqType.Statement:
-                        modifiedSelection = currentSelection;
-                        break;
-                    case LinqType.Method:
-                        //TODO: Remove method name line and starting and ending method braces
-                        modifiedSelection = currentSelection;
-                        break;
-                    case LinqType.File:
-                        //TODO: Remove namespace name line, starting and ending namespace braces, class name line, starting and ending class braces, and method name line and starting and ending method braces
-                        modifiedSelection = currentSelection;
-                        break;
-                    case LinqType.None:
-                        //NothingSelectedResult = new() { Text = Constants.NoActiveDocument, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
-                        //LinqPadResults.Children.Add(NothingSelectedResult);
-                        return;
-                    default:
-                        //LinqPadResults.Children.Add(NothingSelectedResult);
-                        return;
-                }
-
                 TextBlock runningQueryResult = null;
                 TextBlock exceptionResult = null;
                 TextBlock queryResultMsg = null;
@@ -152,6 +129,8 @@ namespace LinqLanguageEditor2022.ToolWindows
                     var result = await script.RunAsync();
                     var allVariables = result.Variables;
                     var variable = allVariables.Where(n => n.Name == Constants.LinqResultText);
+                    foreach (var variable1 in result.Variables)
+                        Debug.WriteLine($"{variable1.Name} = {variable1.Value}\r\n of type {variable1.Type}");
                     string tempResults = String.Empty;
 
                     if (variable.First().Name == Constants.LinqResultText)
@@ -162,7 +141,6 @@ namespace LinqLanguageEditor2022.ToolWindows
                         LinqPadResults.Children.Add(queryCodeHeader);
                         LinqPadResults.Children.Add(line);
                         LinqPadResults.Children.Add(queryResultMsg);
-                        LinqPadResults.Children.Add(queryResultEquals);
 
                         if (myType == typeof(int) || myType == typeof(string) || myType == typeof(bool) || myType == typeof(float) || myType == typeof(double))
                         {
@@ -257,8 +235,6 @@ namespace LinqLanguageEditor2022.ToolWindows
                         || myType.FullName.Contains("SelectIterator") && myType.FullName.Contains("String")
                         || myType.FullName.Contains("SkipWhileIterator") && myType.FullName.Contains("String")
                         || myType.FullName.Contains("OfTypeIterator") && myType.FullName.Contains("String")
-                        || myType.FullName.Contains("Concat2Iterator") && myType.FullName.Contains("String")
-                        || myType.FullName.Contains("RepeatIterator") && myType.FullName.Contains("String")
                         || myType.FullName.Contains("SelectArrayIterator") && myType.FullName.Contains("Double")
                         || myType.FullName.Contains("WhereArrayIterator") && myType.FullName.Contains("Submission"))
                         {
@@ -296,6 +272,8 @@ namespace LinqLanguageEditor2022.ToolWindows
                         else if (myType.FullName.Contains("JoinIterator") && myType.FullName.Contains("String")
                         || myType.FullName.Contains("ListPartition") && myType.FullName.Contains("String")
                         || myType.FullName.Contains("EmptyPartition") && myType.FullName.Contains("String")
+                        || myType.FullName.Contains("RepeatIterator") && myType.FullName.Contains("String")
+                        || myType.FullName.Contains("Concat2Iterator") && myType.FullName.Contains("String")
                         || myType == typeof(IEnumerable<string>))
                         {
                             var repeatObjects = (IEnumerable<string>)returnValue;
@@ -356,20 +334,31 @@ namespace LinqLanguageEditor2022.ToolWindows
                                 }
                             }
                         }
+                        else if (myType.FullName.Contains("Dictionary") && myType.FullName.Contains("Int32"))
+                        {
+                            var dictionaryInts = (IDictionary<int, string>)returnValue;
+                            if (dictionaryInts.Count() > 0)
+                            {
+                                foreach (var dictionaryInt in dictionaryInts)
+                                {
+                                    tempResults += $"{dictionaryInt}\r\n";
+                                }
+                            }
+                        }
                         else if (myType.FullName.Contains("Dictionary") && myType.FullName.Contains("String"))
                         {
-                            var takeWhileInts = (IDictionary<string, string>)returnValue;
-                            if (takeWhileInts.Count() > 0)
+                            var dictionaryStrings = (IDictionary<string, string>)returnValue;
+                            if (dictionaryStrings.Count() > 0)
                             {
-                                foreach (var takeWhileInt in takeWhileInts)
+                                foreach (var dictionaryString in dictionaryStrings)
                                 {
-                                    tempResults += $"{takeWhileInt}\r\n";
+                                    tempResults += $"{dictionaryString}\r\n";
                                 }
                             }
                         }
                         else if (myType.Name.Contains("GroupedEnumerable"))
                         {
-                            var groupedEnums = (IGrouping<int, bool>)returnValue;
+                            var groupedEnums = (IEnumerable<object>)returnValue;
                             if (groupedEnums.Count() > 0)
                             {
                                 foreach (var groupedEnum in groupedEnums)
@@ -387,7 +376,15 @@ namespace LinqLanguageEditor2022.ToolWindows
                             tempResults = tempResults.Substring(0, tempResults.Length - "\r\n".Length);
                         }
                         tempResults = tempResults.Trim();
-                        queryResults = new() { Text = $"{tempResults}", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                        if (tempResults.Contains("\r\n"))
+                        {
+                            LinqPadResults.Children.Add(queryResultEquals);
+                            queryResults = new() { Text = $"{tempResults}", FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                        }
+                        else
+                        {
+                            queryResults = new() { Text = $"{Constants.LinqQueryEquals} {tempResults}", FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                        }
                         LinqPadResults.Children.Add(queryResults);
                     }
                 }
@@ -405,6 +402,8 @@ namespace LinqLanguageEditor2022.ToolWindows
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
                 LinqPadResults.Children.Clear();
+                string modifiedSelection = string.Empty;
+
                 DocumentView docView = await VS.Documents.GetActiveDocumentViewAsync();
                 _activeFile = docView?.Document?.FilePath;
                 _activeProject = await VS.Solutions.GetActiveProjectAsync();
@@ -412,7 +411,6 @@ namespace LinqLanguageEditor2022.ToolWindows
                 TextBlock runningQueryResult = null;
                 TextBlock NothingSelectedResult = null;
                 TextBlock exceptionResult = null;
-
                 Line line = new() { Margin = new Thickness(0, 0, 0, 20) };
                 if (docView?.TextView == null)
                 {
@@ -441,31 +439,114 @@ namespace LinqLanguageEditor2022.ToolWindows
                                 CurrentLinqMode = LinqType.Statement;
                                 if (LinqAdvancedOptions.Instance.EnableToolWindowResults == true)
                                 {
-                                    await RunLinqQueriesAsync(currentSelection, LinqType.Statement);
+                                    if (currentSelection.Contains("private") || currentSelection.Contains("public") || currentSelection.Contains("static") || currentSelection.Contains("void"))
+                                    {
+                                        int firstIndexReturnNewLine = currentSelection.IndexOf("{");
+                                        string firstLineSelection = currentSelection.Substring(0, firstIndexReturnNewLine + 1);
+                                        modifiedSelection = currentSelection.Remove(0, firstLineSelection.Length);
+                                        int lastIndexBrace = modifiedSelection.LastIndexOf("}");
+                                        modifiedSelection = modifiedSelection.Substring(0, lastIndexBrace);
+                                        if (modifiedSelection.EndsWith("\r\n\t\t"))
+                                        {
+                                            modifiedSelection = modifiedSelection.Substring(0, modifiedSelection.Length - "\r\n\t\t".Length);
+                                        }
+                                        if (modifiedSelection.EndsWith("\r\n"))
+                                            if (modifiedSelection.EndsWith("\r\n\t\t}"))
+                                            {
+                                                modifiedSelection = modifiedSelection.Substring(0, modifiedSelection.Length - "\r\n\t\t}".Length);
+                                            }
+                                        if (modifiedSelection.EndsWith("\r\n"))
+                                        {
+                                            modifiedSelection = modifiedSelection.Substring(0, modifiedSelection.Length - "\r\n".Length);
+                                        }
+                                        if (modifiedSelection.StartsWith("\r\n"))
+                                        {
+                                            modifiedSelection = modifiedSelection.Substring("\r\n".Length, modifiedSelection.Length - "\r\n".Length);
+                                        }
+                                        modifiedSelection = modifiedSelection.Trim();
+                                        CurrentLinqMode = LinqType.Method;
+                                    }
+                                    else
+                                    {
+                                        modifiedSelection = currentSelection;
+                                    }
+                                    await RunLinqQueriesAsync(modifiedSelection);
                                 }
-                                tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
-                                queryString = $"{Constants.QueryKindStatement}\r\n{currentSelection}\r\n{Constants.ResultDump};".Trim();
-                                File.WriteAllText(tempQueryPath, $"{queryString}");
-
+                                if (CurrentLinqMode == LinqType.Statement)
+                                {
+                                    tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
+                                    queryString = $"{Constants.QueryKindStatement}\r\n{currentSelection}\r\n{Constants.ResultDump};".Trim();
+                                    File.WriteAllText(tempQueryPath, $"{queryString}");
+                                }
+                                else if (CurrentLinqMode == LinqType.Method)
+                                {
+                                    tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
+                                    methodName = currentSelection.Substring(0, currentSelection.IndexOf("\r"));
+                                    methodNameComplete = methodName.Substring(methodName.LastIndexOf(" ") + 1, methodName.LastIndexOf(")") - methodName.LastIndexOf(" "));
+                                    methodCallLine = "{\r\n" + $"{methodNameComplete}" + ";\r\n}";
+                                    queryString = $"{Constants.QueryKindMethod}\r\n{Constants.VoidMain}\r\n{methodCallLine}\r\n{currentSelection}".Trim();
+                                    File.WriteAllText(tempQueryPath, $"{queryString}");
+                                }
                                 break;
                             case LinqType.Method:
                                 CurrentLinqMode = LinqType.Method;
                                 if (LinqAdvancedOptions.Instance.EnableToolWindowResults == true)
                                 {
-                                    await RunLinqQueriesAsync(currentSelection, LinqType.Method);
+                                    if (currentSelection.Contains("private") || currentSelection.Contains("public") || currentSelection.Contains("static") || currentSelection.Contains("void"))
+                                    {
+                                        int firstIndexReturnNewLine = currentSelection.IndexOf("{");
+                                        string firstLineSelection = currentSelection.Substring(0, firstIndexReturnNewLine + 1);
+                                        modifiedSelection = currentSelection.Remove(0, firstLineSelection.Length);
+                                        int lastIndexBrace = modifiedSelection.LastIndexOf("}");
+                                        modifiedSelection = modifiedSelection.Substring(0, lastIndexBrace);
+                                        if (modifiedSelection.EndsWith("\r\n\t\t"))
+                                        {
+                                            modifiedSelection = modifiedSelection.Substring(0, modifiedSelection.Length - "\r\n\t\t".Length);
+                                        }
+                                        if (modifiedSelection.EndsWith("\r\n"))
+                                            if (modifiedSelection.EndsWith("\r\n\t\t}"))
+                                            {
+                                                modifiedSelection = modifiedSelection.Substring(0, modifiedSelection.Length - "\r\n\t\t}".Length);
+                                            }
+                                        if (modifiedSelection.EndsWith("\r\n"))
+                                        {
+                                            modifiedSelection = modifiedSelection.Substring(0, modifiedSelection.Length - "\r\n".Length);
+                                        }
+                                        if (modifiedSelection.StartsWith("\r\n"))
+                                        {
+                                            modifiedSelection = modifiedSelection.Substring("\r\n".Length, modifiedSelection.Length - "\r\n".Length);
+                                        }
+                                        modifiedSelection = modifiedSelection.Trim();
+                                        CurrentLinqMode = LinqType.Method;
+                                    }
+                                    else
+                                    {
+                                        CurrentLinqMode = LinqType.Statement;
+                                        modifiedSelection = currentSelection;
+                                    }
+                                    await RunLinqQueriesAsync(modifiedSelection);
                                 }
-                                tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
-                                methodName = currentSelection.Substring(0, currentSelection.IndexOf("\r"));
-                                methodNameComplete = methodName.Substring(methodName.LastIndexOf(" ") + 1, methodName.LastIndexOf(")") - methodName.LastIndexOf(" "));
-                                methodCallLine = "{\r\n" + $"{methodNameComplete}" + ";\r\n}";
-                                queryString = $"{Constants.QueryKindMethod}\r\n{Constants.VoidMain}\r\n{methodCallLine}\r\n{currentSelection}".Trim();
-                                File.WriteAllText(tempQueryPath, $"{queryString}");
+                                if (CurrentLinqMode == LinqType.Statement)
+                                {
+                                    tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
+                                    queryString = $"{Constants.QueryKindStatement}\r\n{currentSelection}\r\n{Constants.ResultDump};".Trim();
+                                    File.WriteAllText(tempQueryPath, $"{queryString}");
+                                }
+                                else if (CurrentLinqMode == LinqType.Method)
+                                {
+                                    tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
+                                    methodName = currentSelection.Substring(0, currentSelection.IndexOf("\r"));
+                                    methodNameComplete = methodName.Substring(methodName.LastIndexOf(" ") + 1, methodName.LastIndexOf(")") - methodName.LastIndexOf(" "));
+                                    methodCallLine = "{\r\n" + $"{methodNameComplete}" + ";\r\n}";
+                                    queryString = $"{Constants.QueryKindMethod}\r\n{Constants.VoidMain}\r\n{methodCallLine}\r\n{currentSelection}".Trim();
+                                    File.WriteAllText(tempQueryPath, $"{queryString}");
+                                }
                                 break;
                             case LinqType.File:
                                 CurrentLinqMode = LinqType.File;
                                 if (LinqAdvancedOptions.Instance.EnableToolWindowResults == true)
                                 {
-                                    await RunLinqQueriesAsync(currentSelection, LinqType.File);
+                                    await RunLinqQueriesAsync(currentSelection);
                                 }
                                 tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
                                 if (!currentSelection.StartsWith(Constants.QueryStartsWith))
@@ -497,10 +578,6 @@ namespace LinqLanguageEditor2022.ToolWindows
                                 LinqPadResults.Children.Add(NothingSelectedResult);
                                 return;
                         }
-                        //if (LinqAdvancedOptions.Instance.EnableToolWindowResults == true)
-                        //{
-                        //    await RunLinqQueriesAsync(currentSelection);
-                        //}
                         tempQueryPath = $"{Path.GetTempFileName()}{Constants.LinqExt}";
                         position = await WriteFileAsync(_activeProject, tempQueryPath, currentSelection);
 
