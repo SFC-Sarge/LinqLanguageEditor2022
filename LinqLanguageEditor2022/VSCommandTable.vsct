@@ -36,28 +36,12 @@
           <LocCanonicalName>.View.LinqToolWindow</LocCanonicalName>
         </Strings>
       </Button>
-      <Button guid="LinqLanguageEditor2022" id="DisplayLinqPadStatementsResults" priority="0x0001" type="Button">
-        <Parent guid="LinqLanguageEditor2022" id="LinqTWindowToolbarGroup"/>
-        <Icon guid="ImageCatalogGuid" id="Linq"/>
-        <CommandFlag>IconIsMoniker</CommandFlag>
-        <Strings>
-          <ButtonText>Run Selected LINQ Query Statement!</ButtonText>
-        </Strings>
-      </Button>
       <Button guid="LinqLanguageEditor2022" id="DisplayLinqPadMethodResults" priority="0x0002" type="Button">
         <Parent guid="LinqLanguageEditor2022" id="LinqTWindowToolbarGroup"/>
         <Icon guid="ImageCatalogGuid" id="LinkValidator"/>
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
-          <ButtonText>Run Selected Query Method!</ButtonText>
-        </Strings>
-      </Button>
-      <Button guid="LinqLanguageEditor2022" id="LinqEditorLinqPad" priority="0x0003" type="Button">
-        <Parent guid="LinqLanguageEditor2022" id="LinqTWindowToolbarGroup"/>
-        <Icon guid="ImageCatalogGuid" id="Editor"/>
-        <CommandFlag>IconIsMoniker</CommandFlag>
-        <Strings>
-          <ButtonText>Run LINQ Query File!</ButtonText>
+          <ButtonText>Run Selected Query Statement or Method!</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -69,9 +53,7 @@
       <IDSymbol name="LinqToolWindowCommand" value="0x0100" />
       <IDSymbol name="LinqTWindowToolbar" value="0x1000" />
       <IDSymbol name="LinqTWindowToolbarGroup" value="0x1050" />
-      <IDSymbol name="DisplayLinqPadStatementsResults" value="0x0111" />
       <IDSymbol name="DisplayLinqPadMethodResults" value="0x0112" />
-      <IDSymbol name="LinqEditorLinqPad" value="0x0114" />
       <IDSymbol name="LinqEditorGroup" value="0x0001"/>
     </GuidSymbol>
   </Symbols>

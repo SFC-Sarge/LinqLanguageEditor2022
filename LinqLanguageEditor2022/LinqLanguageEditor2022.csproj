@@ -46,8 +46,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Commands\LinqPadMethod.cs" />
-    <Compile Include="Commands\LinqPadStatements.cs" />
-    <Compile Include="Commands\LinqQueryFileEditor.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="LinqEditor\LinqEditorFeatures.cs" />
@@ -60,47 +58,9 @@
     <Compile Include="Options\AdvancedOptions.xaml.cs">
       <DependentUpon>AdvancedOptions.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Options\CodeStyleGeneralOptionPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Options\CodeStyleGeneralOptions.xaml.cs">
-      <DependentUpon>CodeStyleGeneralOptions.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Options\CodeStyleIndentationOptionPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Options\CodeStyleIndentationOptions.xaml.cs">
-      <DependentUpon>CodeStyleIndentationOptions.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Options\CodeStyleNewLineOptionPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Options\CodeStyleNewLineOptions.xaml.cs">
-      <DependentUpon>CodeStyleNewLineOptions.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Options\CodeStyleSpacingOptionPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Options\CodeStyleSpacingOptions.xaml.cs">
-      <DependentUpon>CodeStyleSpacingOptions.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Options\CodeStyleWrappingOptions.xaml.cs">
-      <DependentUpon>CodeStyleWrappingOptions.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Options\CodeStyleWrappingOptionPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Options\IntelliSenseOptionPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Options\IntelliSenseOptions.xaml.cs">
-      <DependentUpon>IntelliSenseOptions.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Options\LinqAdvancedOptionPage.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Options\LinqIntelliSenseOptions.cs" />
-    <Compile Include="Options\LinqCodeStyleOptions.cs" />
     <Compile Include="Options\LinqAdvancedOptions.cs" />
     <Compile Include="Options\LinqOptionsProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -143,30 +103,6 @@
   <ItemGroup>
     <Compile Include="ToolWindows\LinqToolWindow.cs" />
     <Page Include="Options\AdvancedOptions.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Options\CodeStyleGeneralOptions.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Options\CodeStyleIndentationOptions.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Options\CodeStyleNewLineOptions.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Options\CodeStyleSpacingOptions.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Options\CodeStyleWrappingOptions.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Options\IntelliSenseOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

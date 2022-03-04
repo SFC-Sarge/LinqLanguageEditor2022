@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -127,26 +128,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                 ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
                 {
                     await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                    try
-                    {
-                        var activeItem = await VS.Solutions.GetActiveItemAsync();
-                        if (activeItem != null)
-                        {
-                            // ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnBeforeDocumentWindowShow: {activeItem.Name}");
-                        }
-                    }
-                    catch (Exception)
-                    { }
-                    try
-                    {
-                        win = VsShellUtilities.GetWindowObject(pFrame);
-                        if (win != null)
-                        {
-                            // ((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnBeforeDocumentWindowShow: {win.Caption}");
-                        }
-                    }
-                    catch (Exception)
-                    { }
+                    var activeItem = await VS.Solutions.GetActiveItemAsync();
                     win = VsShellUtilities.GetWindowObject(pFrame);
                     string currentFilePath = win.Document.Path;
                     string currentFileTitle = win.Document.Name;
@@ -156,19 +138,6 @@ namespace LinqLanguageEditor2022.ToolWindows
                         ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
                         {
                             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                            //string content = String.Empty;
-                            //using (var reader = new StreamReader(win.Document.FullName))
-                            //{
-                            //    content = await reader.ReadToEndAsync();
-                            //    if (content.StartsWith("<Query Kind="))
-                            //    {
-                            //        content = $"//{content}";
-                            //    }
-                            //}
-                            //using (var writer = new StreamWriter(win.Document.FullName))
-                            //{
-                            //    await writer.WriteAsync(content);
-                            //}
                             Project project = await VS.Solutions.GetActiveProjectAsync();
                             if (project != null)
                             {

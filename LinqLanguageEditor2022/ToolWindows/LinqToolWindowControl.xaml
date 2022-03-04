@@ -20,11 +20,8 @@
         </Grid.ColumnDefinitions>
         <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical">
-                <TextBlock Margin="10 10 0 0" HorizontalAlignment="Center" Text="Linq Query Results"></TextBlock>
+                <TextBlock Margin="10 10 0 0" HorizontalAlignment="Center" Text="Linq Query Results" Foreground="#FF77C8C2" FontWeight="Bold" FontSize="18"></TextBlock>
                 <StackPanel Margin="10 10 0 0" Name="LinqPadResults" Orientation="Vertical" HorizontalAlignment="Left" MaxWidth="500" />
-                <!--<TextBlock Margin="10 10 0 0" HorizontalAlignment="Center" Text="RDT Explorer Window"></TextBlock>
-                <StackPanel Margin="10 10 0 0" Name="LinqPadEditor" Orientation="Vertical" HorizontalAlignment="Left" MaxWidth="400" />
-                <ListBox Margin="0 0 0 0"  x:Name="LinqlistBox" Height="350"  MaxWidth="450"/>-->
             </StackPanel>
         </ScrollViewer>
     </Grid>

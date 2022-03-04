@@ -33,12 +33,6 @@ namespace LinqLanguageEditor2022
 
     [ProvideLanguageService(typeof(LinqLanguageFactory), Constants.LinqLanguageName, 0, ShowHotURLs = false, DefaultToNonHotURLs = true, EnableLineNumbers = true, EnableAsyncCompletion = true, EnableCommenting = true, ShowCompletion = true, AutoOutlining = true, CodeSense = true)]
     [ProvideLanguageEditorOptionPage(typeof(LinqAdvancedOptionPage), Constants.LinqLanguageName, "", Constants.LinqAdvancedOptionPage, null, 0)]
-    [ProvideLanguageEditorOptionPage(typeof(CodeStyleGeneralOptionPage), Constants.LinqLanguageName, "", Constants.CodeStyleGeneralOptionPage, null, 0)]
-    [ProvideLanguageEditorOptionPage(typeof(CodeStyleIndentationOptionPage), Constants.LinqLanguageName, "", Constants.CodeStyleIndentationOptionPage, null, 0)]
-    [ProvideLanguageEditorOptionPage(typeof(CodeStyleNewLineOptionPage), Constants.LinqLanguageName, "", Constants.CodeStyleNewLineOptionPage, null, 0)]
-    [ProvideLanguageEditorOptionPage(typeof(CodeStyleSpacingOptionPage), Constants.LinqLanguageName, "", Constants.CodeStyleSpacingOptionPage, null, 0)]
-    [ProvideLanguageEditorOptionPage(typeof(CodeStyleWrappingOptionPage), Constants.LinqLanguageName, "", Constants.CodeStyleWrappingOptionPage, null, 0)]
-    [ProvideLanguageEditorOptionPage(typeof(IntelliSenseOptionPage), Constants.LinqLanguageName, "", Constants.IntelliSenseOptionPage, null, 0)]
     [ProvideLanguageExtension(typeof(LinqLanguageFactory), Constants.LinqExt)]
     [ProvideEditorFactory(typeof(LinqLanguageFactory), 740, CommonPhysicalViewAttributes = (int)__VSPHYSICALVIEWATTRIBUTES.PVA_SupportsPreview, TrustLevel = __VSEDITORTRUSTLEVEL.ETL_AlwaysTrusted)]
     [ProvideEditorExtension(typeof(LinqLanguageFactory), Constants.LinqExt, 65536, NameResourceID = 740)]

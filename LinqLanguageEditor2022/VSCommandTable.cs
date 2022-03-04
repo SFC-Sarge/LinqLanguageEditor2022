@@ -28,9 +28,7 @@ namespace LinqLanguageEditor2022
         public const int LinqToolWindowCommand = 0x0100;
         public const int LinqTWindowToolbar = 0x1000;
         public const int LinqTWindowToolbarGroup = 0x1050;
-        public const int DisplayLinqPadStatementsResults = 0x0111;
         public const int DisplayLinqPadMethodResults = 0x0112;
-        public const int LinqEditorLinqPad = 0x0114;
         public const int LinqEditorGroup = 0x0001;
     }
 }

@@ -14,14 +14,10 @@
         public const string CurrentSelectionQueryMethod = "Current Selection Query Method Results";
         public const string CurrentSelectionQuery = "Current Selection Query Results";
         public const string RunningSelectQueryMethod = "Running Selected LINQ Query Method.\r\nPlease Wait!";
-        public const string QueryKindStatement = "<Query Kind='Statements' />";
-        public const string QueryKindMethod = "<Query Kind='Program' />";
-        public const string QueryStartsWith = "<Query Kind=";
+        public const string ExceptionAdditionMessage = "Try Selecting less of the LINQ Method code!";
         public const string VoidMain = "void Main()";
         public const string PaneGuid = "A938BB26-03F8-4861-B920-6792A7D4F07C";
-        public const string RunSelectedLinqStatement = "Run Selected LINQ Query Statement.";
-        public const string RunSelectedLinqMethod = "Run Selected LINQ Query Method.";
-        public const string RunEditorLinqQuery = "Open and Run LINQ Query File.";
+        public const string RunSelectedLinqMethod = "Run Selected LINQ Query Statement or Method.";
         public const string LinqEditorToolWindowTitle = "LINQ Query Tool Window";
         public const string SolutionToolWindowsFolderName = "ToolWindows";
         public const string ProvideFileIcon = "KnownMonikers.RegistrationScript";
