@@ -136,11 +136,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         var returnValue = result.GetVariable(Constants.LinqResultText).Value;
                         var myType = returnValue.GetType();
 
-                        if (result.Script.Code.Contains("\t"))
-                        {
-                            tempResults = result.Script.Code.Replace("\t", "");
-                        }
-                        queryResultMsg = new() { Text = $"{tempResults}", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqCodeResultsColor), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                        queryResultMsg = new() { Text = $"{result.Script.Code}", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqCodeResultsColor), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                         LinqPadResults.Children.Add(queryCodeHeader);
                         LinqPadResults.Children.Add(line);
                         LinqPadResults.Children.Add(queryResultMsg);
