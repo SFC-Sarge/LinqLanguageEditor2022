@@ -46,14 +46,24 @@ namespace LinqLanguageEditor2022
 
             AddService(typeof(LinqToolWindowMessenger), (_, _, _) => Task.FromResult<object>(new LinqToolWindowMessenger()));
             ((IServiceContainer)this).AddService(typeof(LinqLanguageFactory), LinqLanguageEditor2022, true);
-            await this.RegisterCommandsAsync();
-
-            this.RegisterToolWindows();
 
             LinqAdvancedOptions linqAdvancedOptions = await LinqAdvancedOptions.GetLiveInstanceAsync();
 
             await linqAdvancedOptions.LoadAsync();
-            if (linqAdvancedOptions.LinqResultsColor.ToString() != "")
+            bool settingsStoreHasValues = false;
+            try
+            {
+                if (linqAdvancedOptions.LinqResultsColor != null)
+                {
+                    settingsStoreHasValues = true;
+                }
+            }
+            catch (NullReferenceException)
+            {
+
+                settingsStoreHasValues = false;
+            }
+            if (settingsStoreHasValues)
             {
                 //Settings Store Values to load.
                 LinqAdvancedOptions.Instance.LinqResultText = linqAdvancedOptions.LinqResultText;
@@ -79,6 +89,9 @@ namespace LinqLanguageEditor2022
                 linqAdvancedOptions.LinqExceptionAdditionMsgColor = Constants.LinqExceptionAdditionMsgColor;
                 await linqAdvancedOptions.SaveAsync();
             }
+            await this.RegisterCommandsAsync();
+
+            this.RegisterToolWindows();
 
         }
     }

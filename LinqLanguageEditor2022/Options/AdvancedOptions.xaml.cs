@@ -40,47 +40,22 @@ namespace LinqLanguageEditor2022.Options
                 //Update Values in the Settings Store.
                 LinqAdvancedOptions linqAdvancedOptions = await LinqAdvancedOptions.GetLiveInstanceAsync();
                 await linqAdvancedOptions.LoadAsync();
-                if (linqAdvancedOptions.LinqResultsColor.ToString() != "")
-                {
-                    //Settings Store Values to load.
-                    cbOpenInVSPreviewTab.IsChecked = linqAdvancedOptions.OpenInVSPreviewTab;
-                    cbEnableToolWindowResults.IsChecked = linqAdvancedOptions.EnableToolWindowResults;
-                    cmbResultCodeColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqCodeResultsColor);
-                    cmbResultColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqResultsColor);
-                    cmbResultsEqualMsgColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqResultsEqualMsgColor);
-                    cmbRunningQueryMsgColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqRunningSelectQueryMsgColor);
-                    cmbExceptionAdditionMsgColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqExceptionAdditionMsgColor);
-                    LinqAdvancedOptions.Instance.LinqResultText = linqAdvancedOptions.LinqResultText;
-                    LinqAdvancedOptions.Instance.OpenInVSPreviewTab = linqAdvancedOptions.OpenInVSPreviewTab;
-                    LinqAdvancedOptions.Instance.EnableToolWindowResults = linqAdvancedOptions.EnableToolWindowResults;
-                    LinqAdvancedOptions.Instance.LinqCodeResultsColor = linqAdvancedOptions.LinqCodeResultsColor;
-                    LinqAdvancedOptions.Instance.LinqResultsColor = linqAdvancedOptions.LinqResultsColor;
-                    LinqAdvancedOptions.Instance.LinqResultsEqualMsgColor = linqAdvancedOptions.LinqResultsEqualMsgColor;
-                    LinqAdvancedOptions.Instance.LinqRunningSelectQueryMsgColor = linqAdvancedOptions.LinqRunningSelectQueryMsgColor;
-                    LinqAdvancedOptions.Instance.LinqExceptionAdditionMsgColor = linqAdvancedOptions.LinqExceptionAdditionMsgColor;
-                    await LinqAdvancedOptions.Instance.SaveAsync();
-                }
-                else
-                {
-                    //Default Values to save to Settings Store.
-                    linqAdvancedOptions.LinqResultText = Constants.LinqResultText;
-                    linqAdvancedOptions.EnableToolWindowResults = Constants.EnableToolWindowResults;
-                    linqAdvancedOptions.OpenInVSPreviewTab = Constants.OpenInVSPreviewTab;
-                    linqAdvancedOptions.LinqRunningSelectQueryMsgColor = Constants.LinqRunningSelectQueryMsgColor;
-                    linqAdvancedOptions.LinqResultsColor = Constants.LinqResultsColor;
-                    linqAdvancedOptions.LinqCodeResultsColor = Constants.LinqCodeResultsColor;
-                    linqAdvancedOptions.LinqResultsEqualMsgColor = Constants.LinqResultsEqualMsgColor;
-                    linqAdvancedOptions.LinqExceptionAdditionMsgColor = Constants.LinqExceptionAdditionMsgColor;
-                    await linqAdvancedOptions.SaveAsync();
-                    linqResultVariableText.Text = linqAdvancedOptions.LinqResultText;
-                    cbOpenInVSPreviewTab.IsChecked = linqAdvancedOptions.OpenInVSPreviewTab;
-                    cbEnableToolWindowResults.IsChecked = linqAdvancedOptions.EnableToolWindowResults;
-                    cmbResultCodeColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqCodeResultsColor);
-                    cmbResultColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqResultsColor);
-                    cmbResultsEqualMsgColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqResultsEqualMsgColor);
-                    cmbRunningQueryMsgColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqRunningSelectQueryMsgColor);
-                    cmbExceptionAdditionMsgColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqExceptionAdditionMsgColor);
-                }
+                cbOpenInVSPreviewTab.IsChecked = linqAdvancedOptions.OpenInVSPreviewTab;
+                cbEnableToolWindowResults.IsChecked = linqAdvancedOptions.EnableToolWindowResults;
+                cmbResultCodeColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqCodeResultsColor);
+                cmbResultColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqResultsColor);
+                cmbResultsEqualMsgColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqResultsEqualMsgColor);
+                cmbRunningQueryMsgColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqRunningSelectQueryMsgColor);
+                cmbExceptionAdditionMsgColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqExceptionAdditionMsgColor);
+                LinqAdvancedOptions.Instance.LinqResultText = linqAdvancedOptions.LinqResultText;
+                LinqAdvancedOptions.Instance.OpenInVSPreviewTab = linqAdvancedOptions.OpenInVSPreviewTab;
+                LinqAdvancedOptions.Instance.EnableToolWindowResults = linqAdvancedOptions.EnableToolWindowResults;
+                LinqAdvancedOptions.Instance.LinqCodeResultsColor = linqAdvancedOptions.LinqCodeResultsColor;
+                LinqAdvancedOptions.Instance.LinqResultsColor = linqAdvancedOptions.LinqResultsColor;
+                LinqAdvancedOptions.Instance.LinqResultsEqualMsgColor = linqAdvancedOptions.LinqResultsEqualMsgColor;
+                LinqAdvancedOptions.Instance.LinqRunningSelectQueryMsgColor = linqAdvancedOptions.LinqRunningSelectQueryMsgColor;
+                LinqAdvancedOptions.Instance.LinqExceptionAdditionMsgColor = linqAdvancedOptions.LinqExceptionAdditionMsgColor;
+                await LinqAdvancedOptions.Instance.SaveAsync();
             }).FireAndForget();
         }
 
