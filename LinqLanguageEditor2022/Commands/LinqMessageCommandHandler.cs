@@ -1,7 +1,7 @@
 ﻿namespace LinqLanguageEditor2022.Commands
 {
     [Command(PackageIds.DisplayLinqPadMethodResults)]
-    internal sealed class LinqPadMethod : BaseCommand<LinqPadMethod>
+    internal sealed class LinqMessageCommandHandler : BaseCommand<LinqMessageCommandHandler>
     {
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {

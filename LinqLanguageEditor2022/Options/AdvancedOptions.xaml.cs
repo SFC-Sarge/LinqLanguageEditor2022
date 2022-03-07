@@ -1,9 +1,8 @@
-﻿using System.ComponentModel;
+﻿
+using System.ComponentModel;
 using System.Reflection;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 using LinqLanguageEditor2022.Extensions;
 
@@ -27,6 +26,7 @@ namespace LinqLanguageEditor2022.Options
             cmbRunningQueryMsgColor.ItemsSource = typeof(Brushes).GetProperties();
             cmbExceptionAdditionMsgColor.ItemsSource = typeof(Brushes).GetProperties();
             cmbResultsEqualMsgColor.ItemsSource = typeof(Brushes).GetProperties();
+            linqResultVariableText.Text = Constants.LinqResultText;
             advanceOptionText.Text = Constants.AdvanceOptionText;
             tbResultCodeColor.Text = Constants.ResultsCodeTextColor;
             tbResultColor.Text = Constants.ResultColor;
@@ -40,7 +40,6 @@ namespace LinqLanguageEditor2022.Options
                 //Update Values in the Settings Store.
                 LinqAdvancedOptions linqAdvancedOptions = await LinqAdvancedOptions.GetLiveInstanceAsync();
                 await linqAdvancedOptions.LoadAsync();
-                //Console.WriteLine(linqAdvancedOptions.LinqResultsColor.ToString());
                 if (linqAdvancedOptions.LinqResultsColor.ToString() != "")
                 {
                     //Settings Store Values to load.
@@ -51,6 +50,7 @@ namespace LinqLanguageEditor2022.Options
                     cmbResultsEqualMsgColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqResultsEqualMsgColor);
                     cmbRunningQueryMsgColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqRunningSelectQueryMsgColor);
                     cmbExceptionAdditionMsgColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqExceptionAdditionMsgColor);
+                    LinqAdvancedOptions.Instance.LinqResultText = linqAdvancedOptions.LinqResultText;
                     LinqAdvancedOptions.Instance.OpenInVSPreviewTab = linqAdvancedOptions.OpenInVSPreviewTab;
                     LinqAdvancedOptions.Instance.EnableToolWindowResults = linqAdvancedOptions.EnableToolWindowResults;
                     LinqAdvancedOptions.Instance.LinqCodeResultsColor = linqAdvancedOptions.LinqCodeResultsColor;
@@ -63,14 +63,16 @@ namespace LinqLanguageEditor2022.Options
                 else
                 {
                     //Default Values to save to Settings Store.
-                    linqAdvancedOptions.EnableToolWindowResults = true;
-                    linqAdvancedOptions.OpenInVSPreviewTab = true;
-                    linqAdvancedOptions.LinqRunningSelectQueryMsgColor = "LightBlue";
-                    linqAdvancedOptions.LinqResultsColor = "Yellow";
-                    linqAdvancedOptions.LinqCodeResultsColor = "LightGreen";
-                    linqAdvancedOptions.LinqResultsEqualMsgColor = "LightBlue";
-                    linqAdvancedOptions.LinqExceptionAdditionMsgColor = "Red";
+                    linqAdvancedOptions.LinqResultText = Constants.LinqResultText;
+                    linqAdvancedOptions.EnableToolWindowResults = Constants.EnableToolWindowResults;
+                    linqAdvancedOptions.OpenInVSPreviewTab = Constants.OpenInVSPreviewTab;
+                    linqAdvancedOptions.LinqRunningSelectQueryMsgColor = Constants.LinqRunningSelectQueryMsgColor;
+                    linqAdvancedOptions.LinqResultsColor = Constants.LinqResultsColor;
+                    linqAdvancedOptions.LinqCodeResultsColor = Constants.LinqCodeResultsColor;
+                    linqAdvancedOptions.LinqResultsEqualMsgColor = Constants.LinqResultsEqualMsgColor;
+                    linqAdvancedOptions.LinqExceptionAdditionMsgColor = Constants.LinqExceptionAdditionMsgColor;
                     await linqAdvancedOptions.SaveAsync();
+                    linqResultVariableText.Text = linqAdvancedOptions.LinqResultText;
                     cbOpenInVSPreviewTab.IsChecked = linqAdvancedOptions.OpenInVSPreviewTab;
                     cbEnableToolWindowResults.IsChecked = linqAdvancedOptions.EnableToolWindowResults;
                     cmbResultCodeColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqCodeResultsColor);
@@ -80,8 +82,6 @@ namespace LinqLanguageEditor2022.Options
                     cmbExceptionAdditionMsgColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqExceptionAdditionMsgColor);
                 }
             }).FireAndForget();
-
-
         }
 
         private void cbOpenInVSPreviewTab_Checked(object sender, System.Windows.RoutedEventArgs e)
@@ -110,7 +110,6 @@ namespace LinqLanguageEditor2022.Options
                 linqAdvancedOptions.EnableToolWindowResults = (bool)cbEnableToolWindowResults.IsChecked;
                 await linqAdvancedOptions.SaveAsync();
             }).FireAndForget();
-
         }
 
         private void cbOpenInVSPreviewTab_Unchecked(object sender, System.Windows.RoutedEventArgs e)
@@ -125,7 +124,6 @@ namespace LinqLanguageEditor2022.Options
                 linqAdvancedOptions.OpenInVSPreviewTab = (bool)cbOpenInVSPreviewTab.IsChecked;
                 await linqAdvancedOptions.SaveAsync();
             }).FireAndForget();
-
         }
 
         private void cbEnableToolWindowResults_Unchecked(object sender, System.Windows.RoutedEventArgs e)

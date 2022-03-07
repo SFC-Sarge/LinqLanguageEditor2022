@@ -151,7 +151,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                                 }
                                 catch (Exception)
                                 { }
-                                if (ItemGroupExists(xdoc, "ItemGroup", "Compile"))
+                                if (ItemGroupExists(xdoc, Constants.ProjectItemGroup, Constants.ProjectCompile))
                                 {
                                     try
                                     {
@@ -159,7 +159,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                                         {
                                             xdoc = UpdateItemGroupItem(xdoc, currentFileTitle, currentFileFullPath);
                                         }
-                                        else if (ItemGroupExists(xdoc, "ItemGroup", "None"))
+                                        else if (ItemGroupExists(xdoc, Constants.ProjectItemGroup, Constants.ProjectNone))
                                         {
                                             try
                                             {
@@ -189,7 +189,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                                     catch (Exception)
                                     { }
                                 }
-                                else if (ItemGroupExists(xdoc, "ItemGroup", "None"))
+                                else if (ItemGroupExists(xdoc, Constants.ProjectItemGroup, Constants.ProjectNone))
                                 {
                                     try
                                     {
@@ -224,7 +224,7 @@ namespace LinqLanguageEditor2022.ToolWindows
             {
                 try
                 {
-                    xdoc.Descendants("ItemGroup").Where(rec => rec.Nodes().IsNullOrEmpty()).Remove();
+                    xdoc.Descendants(Constants.ProjectItemGroup).Where(rec => rec.Nodes().IsNullOrEmpty()).Remove();
                     return xdoc;
                 }
                 catch (Exception)
@@ -252,7 +252,7 @@ namespace LinqLanguageEditor2022.ToolWindows
             {
                 try
                 {
-                    if (!xdoc.Descendants("ItemGroup").Descendants("None").Where(rec => rec.Attribute("Include").Value.EndsWith(currentFileTitle)).IsNullOrEmpty())
+                    if (!xdoc.Descendants(Constants.ProjectItemGroup).Descendants(Constants.ProjectNone).Where(rec => rec.Attribute(Constants.ProjectInclude).Value.EndsWith(currentFileTitle)).IsNullOrEmpty())
                     {
                         return true;
                     }
@@ -267,7 +267,7 @@ namespace LinqLanguageEditor2022.ToolWindows
             {
                 try
                 {
-                    if (!xdoc.Descendants("ItemGroup").Descendants("Compile").Where(rec => rec.Attribute("Include").Value.EndsWith(currentFileTitle)).IsNullOrEmpty())
+                    if (!xdoc.Descendants(Constants.ProjectItemGroup).Descendants(Constants.ProjectCompile).Where(rec => rec.Attribute(Constants.ProjectInclude).Value.EndsWith(currentFileTitle)).IsNullOrEmpty())
                     {
                         return true;
                     }
@@ -281,14 +281,14 @@ namespace LinqLanguageEditor2022.ToolWindows
 
             public XDocument CreateNewCompileItem(XDocument xdoc, string currentFileFullPath)
             {
-                var newCompileItem = xdoc.Descendants("ItemGroup").Descendants("Compile").First(x => x.HasAttributes);
-                newCompileItem.AddAfterSelf(new XElement("Compile", new XAttribute("Include", currentFileFullPath)));
+                var newCompileItem = xdoc.Descendants(Constants.ProjectItemGroup).Descendants(Constants.ProjectCompile).First(x => x.HasAttributes);
+                newCompileItem.AddAfterSelf(new XElement(Constants.ProjectCompile, new XAttribute(Constants.ProjectInclude, currentFileFullPath)));
                 return xdoc;
             }
             public XDocument CreateNewItemGroup(XDocument xdoc, string currentFileFullPath)
             {
-                XElement itemGroup = new("ItemGroup");
-                XElement compile = new("Compile", new XAttribute("Include", currentFileFullPath));
+                XElement itemGroup = new(Constants.ProjectItemGroup);
+                XElement compile = new(Constants.ProjectCompile, new XAttribute(Constants.ProjectInclude, currentFileFullPath));
                 itemGroup.Add(compile);
                 xdoc.Element("Project").Add(itemGroup);
                 return xdoc;
@@ -301,11 +301,11 @@ namespace LinqLanguageEditor2022.ToolWindows
                 }
                 try
                 {
-                    IEnumerable<XElement> xObj = xdoc.Descendants("ItemGroup").Descendants("None").Where(rec => rec.Attribute("Include").Value == currentFileFullPath);
+                    IEnumerable<XElement> xObj = xdoc.Descendants(Constants.ProjectItemGroup).Descendants(Constants.ProjectNone).Where(rec => rec.Attribute(Constants.ProjectInclude).Value == currentFileFullPath);
 
                     foreach (var element in xObj)
                     {
-                        element.Name = "Compile";
+                        element.Name = Constants.ProjectCompile;
                     }
                     return xdoc;
                 }
@@ -317,10 +317,10 @@ namespace LinqLanguageEditor2022.ToolWindows
             {
                 try
                 {
-                    xdoc.Descendants("ItemGroup").Descendants("Compile").Where(rec =>
+                    xdoc.Descendants(Constants.ProjectItemGroup).Descendants(Constants.ProjectCompile).Where(rec =>
                     {
                         ThreadHelper.ThrowIfNotOnUIThread();
-                        return rec.Attribute("Include").Value.EndsWith(caption);
+                        return rec.Attribute(Constants.ProjectInclude).Value.EndsWith(caption);
                     }).Remove();
                     return xdoc;
                 }

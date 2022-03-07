@@ -1,4 +1,5 @@
-﻿global using System;
+﻿
+global using System;
 
 global using Community.VisualStudio.Toolkit;
 
@@ -6,20 +7,16 @@ global using Microsoft.VisualStudio.Shell;
 
 global using Task = System.Threading.Tasks.Task;
 
-using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Windows.Media;
 
 using LinqLanguageEditor2022.LinqEditor;
 using LinqLanguageEditor2022.Options;
 using LinqLanguageEditor2022.ToolWindows;
 
 using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Settings;
 using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.Shell.Settings;
 namespace LinqLanguageEditor2022
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
@@ -56,10 +53,10 @@ namespace LinqLanguageEditor2022
             LinqAdvancedOptions linqAdvancedOptions = await LinqAdvancedOptions.GetLiveInstanceAsync();
 
             await linqAdvancedOptions.LoadAsync();
-            //Console.WriteLine(linqAdvancedOptions.LinqResultsColor.ToString());
             if (linqAdvancedOptions.LinqResultsColor.ToString() != "")
             {
                 //Settings Store Values to load.
+                LinqAdvancedOptions.Instance.LinqResultText = linqAdvancedOptions.LinqResultText;
                 LinqAdvancedOptions.Instance.OpenInVSPreviewTab = linqAdvancedOptions.OpenInVSPreviewTab;
                 LinqAdvancedOptions.Instance.EnableToolWindowResults = linqAdvancedOptions.EnableToolWindowResults;
                 LinqAdvancedOptions.Instance.LinqCodeResultsColor = linqAdvancedOptions.LinqCodeResultsColor;
@@ -72,13 +69,14 @@ namespace LinqLanguageEditor2022
             else
             {
                 //Default Values to save to Settings Store.
-                linqAdvancedOptions.EnableToolWindowResults = true;
-                linqAdvancedOptions.OpenInVSPreviewTab = true;
-                linqAdvancedOptions.LinqRunningSelectQueryMsgColor = "LightBlue";
-                linqAdvancedOptions.LinqResultsColor = "Yellow";
-                linqAdvancedOptions.LinqCodeResultsColor = "LightGreen";
-                linqAdvancedOptions.LinqResultsEqualMsgColor = "LightBlue";
-                linqAdvancedOptions.LinqExceptionAdditionMsgColor = "Red";
+                linqAdvancedOptions.LinqResultText = Constants.LinqResultText;
+                linqAdvancedOptions.EnableToolWindowResults = Constants.EnableToolWindowResults;
+                linqAdvancedOptions.OpenInVSPreviewTab = Constants.OpenInVSPreviewTab;
+                linqAdvancedOptions.LinqRunningSelectQueryMsgColor = Constants.LinqRunningSelectQueryMsgColor;
+                linqAdvancedOptions.LinqResultsColor = Constants.LinqResultsColor;
+                linqAdvancedOptions.LinqCodeResultsColor = Constants.LinqCodeResultsColor;
+                linqAdvancedOptions.LinqResultsEqualMsgColor = Constants.LinqResultsEqualMsgColor;
+                linqAdvancedOptions.LinqExceptionAdditionMsgColor = Constants.LinqExceptionAdditionMsgColor;
                 await linqAdvancedOptions.SaveAsync();
             }
 

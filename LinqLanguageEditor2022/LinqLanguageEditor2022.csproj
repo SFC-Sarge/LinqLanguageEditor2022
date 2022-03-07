@@ -45,7 +45,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Commands\LinqPadMethod.cs" />
+    <Compile Include="Commands\LinqMessageCommandHandler.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Extensions\LinqEnumExtensions.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />

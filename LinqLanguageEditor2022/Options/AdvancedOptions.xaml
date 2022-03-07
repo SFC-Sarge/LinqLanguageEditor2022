@@ -14,7 +14,12 @@
 		</Grid.ColumnDefinitions>
 		<ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Auto">
 			<StackPanel Margin="20, 20" Orientation="Vertical">
-				<TextBlock Margin="0,5"
+                <TextBox Margin="0,5"
+					x:Name="linqResultVariableText"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					TextWrapping="Wrap" />
+                <TextBlock Margin="0,5"
 					x:Name="advanceOptionText"
 					HorizontalAlignment="Left"
 					VerticalAlignment="Top"
@@ -61,7 +66,7 @@
 						  SelectionChanged="cmbResultColor_SelectionChanged"
 						  Height="30" Width="250" HorizontalAlignment="Left" >
 					<ComboBox.ItemTemplate>
-                        <DataTemplate >
+						<DataTemplate >
 							<StackPanel Orientation="Horizontal">
 								<Rectangle Fill="{Binding Name}" Width="16" Height="16" Margin="0,2,5,2" />
 								<TextBlock Text="{Binding Name}" />
