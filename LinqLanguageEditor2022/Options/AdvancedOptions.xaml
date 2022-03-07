@@ -42,8 +42,7 @@
 					TextWrapping="Wrap" />
 				<ComboBox Name="cmbResultCodeColor" Margin="0,5"
 						  SelectionChanged="cmbResultCodeColor_SelectionChanged"
-						  Height="30" Width="250" HorizontalAlignment="Left"
-						  SelectedIndex="68">
+						  Height="30" Width="250" HorizontalAlignment="Left" >
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">
@@ -60,10 +59,9 @@
 					TextWrapping="Wrap" />
 				<ComboBox Name="cmbResultColor" Margin="0,5"
 						  SelectionChanged="cmbResultColor_SelectionChanged"
-						  Height="30" Width="250" HorizontalAlignment="Left"
-						  SelectedIndex="139">
+						  Height="30" Width="250" HorizontalAlignment="Left" >
 					<ComboBox.ItemTemplate>
-						<DataTemplate>
+                        <DataTemplate >
 							<StackPanel Orientation="Horizontal">
 								<Rectangle Fill="{Binding Name}" Width="16" Height="16" Margin="0,2,5,2" />
 								<TextBlock Text="{Binding Name}" />
@@ -78,8 +76,7 @@
 					TextWrapping="Wrap" />
 				<ComboBox Name="cmbRunningQueryMsgColor" Margin="0,5"
 						  SelectionChanged="cmbRunningQueryMsgColor_SelectionChanged"
-						  Height="30" Width="250" HorizontalAlignment="Left"
-						  SelectedIndex="63">
+						  Height="30" Width="250" HorizontalAlignment="Left">
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">
@@ -96,8 +93,7 @@
 					TextWrapping="Wrap" />
 				<ComboBox Name="cmbResultsEqualMsgColor" Margin="0,5"
 						  SelectionChanged="cmbResultsEqualMsgColor_SelectionChanged"
-						  Height="30" Width="250" HorizontalAlignment="Left"
-						  SelectedIndex="63">
+						  Height="30" Width="250" HorizontalAlignment="Left">
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">
@@ -114,8 +110,7 @@
 					TextWrapping="Wrap" />
 				<ComboBox Name="cmbExceptionAdditionMsgColor" Margin="0,5"
 						  SelectionChanged="cmbExceptionAdditionMsgColor_SelectionChanged"
-						  Height="30" Width="250" HorizontalAlignment="Left"
-						  SelectedIndex="113">
+						  Height="30" Width="250" HorizontalAlignment="Left">
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">

@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqLanguageEditor2022", "L
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4DD475F5-9439-463D-9169-2A8BE777D965}"
 	ProjectSection(SolutionItems) = preProject
+		BrushesIndex.txt = BrushesIndex.txt
 		LICENSE = LICENSE
 		README.md = README.md
 		Walkthrough Create Language Editor.md = Walkthrough Create Language Editor.md

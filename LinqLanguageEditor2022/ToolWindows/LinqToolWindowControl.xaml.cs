@@ -55,6 +55,7 @@ namespace LinqLanguageEditor2022.ToolWindows
         public enum LinqType
         {
             None = 0,
+            //Statement
             Statement = 1,
             Method = 2,
         }
@@ -99,14 +100,14 @@ namespace LinqLanguageEditor2022.ToolWindows
                 LinqPadResults.Children.Clear();
                 TextBlock runningQueryResult = null;
                 TextBlock exceptionResult = null;
-                TextBlock exceptionAdditionMsg = new() { Text = $"{Constants.ExceptionAdditionMessage}", Foreground = LinqAdvancedOptions.Instance.LinqExceptionAdditionMsgColor, FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                TextBlock exceptionAdditionMsg = new() { Text = $"{Constants.ExceptionAdditionMessage}", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqExceptionAdditionMsgColor), FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                 TextBlock queryResultMsg = null;
                 TextBlock queryResults = null;
-                TextBlock queryResultEquals = new() { Text = $"{Constants.LinqQueryEquals}", Foreground = LinqAdvancedOptions.Instance.LinqResultsEqualMsgColor, FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
-                TextBlock queryCodeHeader = new() { Text = $"{Constants.LinqQueryTextHeader}", Foreground = LinqAdvancedOptions.Instance.LinqResultsEqualMsgColor, FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                TextBlock queryResultEquals = new() { Text = $"{Constants.LinqQueryEquals}", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqResultsEqualMsgColor), FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                TextBlock queryCodeHeader = new() { Text = $"{Constants.LinqQueryTextHeader}", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqResultsEqualMsgColor), FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
 
                 Line line = new() { Margin = new Thickness(0, 0, 0, 20) };
-                runningQueryResult = new() { Text = $"{Constants.RunningSelectQuery}\r\n", Foreground = LinqAdvancedOptions.Instance.LinqRunningSelectQueryMsgColor, FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                runningQueryResult = new() { Text = $"{Constants.RunningSelectQuery}\r\n", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqRunningSelectQueryMsgColor), FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                 LinqPadResults.Children.Add(runningQueryResult);
                 try
                 {
@@ -134,7 +135,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                     {
                         var returnValue = result.GetVariable(Constants.LinqResultText).Value;
                         var myType = returnValue.GetType();
-                        queryResultMsg = new() { Text = $"{result.Script.Code}", Foreground = LinqAdvancedOptions.Instance.LinqCodeResultsColor, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                        queryResultMsg = new() { Text = $"{result.Script.Code}", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqCodeResultsColor), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                         LinqPadResults.Children.Add(queryCodeHeader);
                         LinqPadResults.Children.Add(line);
                         LinqPadResults.Children.Add(queryResultMsg);
@@ -376,18 +377,18 @@ namespace LinqLanguageEditor2022.ToolWindows
                         if (tempResults.Contains("\r\n"))
                         {
                             LinqPadResults.Children.Add(queryResultEquals);
-                            queryResults = new() { Text = $"{tempResults}", Foreground = LinqAdvancedOptions.Instance.LinqResultsColor, FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                            queryResults = new() { Text = $"{tempResults}", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqResultsColor), FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                         }
                         else
                         {
-                            queryResults = new() { Text = $"{Constants.LinqQueryEquals} {tempResults}", Foreground = LinqAdvancedOptions.Instance.LinqResultsColor, FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                            queryResults = new() { Text = $"{Constants.LinqQueryEquals} {tempResults}", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqResultsColor), FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                         }
                         LinqPadResults.Children.Add(queryResults);
                     }
                 }
                 catch (Exception ex)
                 {
-                    exceptionResult = new() { Text = $"{ex.Message}\r\n", Foreground = LinqAdvancedOptions.Instance.LinqExceptionAdditionMsgColor, FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                    exceptionResult = new() { Text = $"{ex.Message}\r\n", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqExceptionAdditionMsgColor), FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                     LinqPadResults.Children.Add(exceptionResult);
                     LinqPadResults.Children.Add(exceptionAdditionMsg);
                 }
@@ -407,8 +408,8 @@ namespace LinqLanguageEditor2022.ToolWindows
                 _activeProject = await VS.Solutions.GetActiveProjectAsync();
                 _myNamespace = _activeProject.Name;
                 TextBlock runningQueryResult = null;
-                TextBlock exceptionAdditionMsg = new() { Text = $"{Constants.ExceptionAdditionMessage}", Foreground = LinqAdvancedOptions.Instance.LinqExceptionAdditionMsgColor, FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
-                TextBlock NothingSelectedResult = new() { Text = Constants.NoActiveDocument, Foreground = LinqAdvancedOptions.Instance.LinqRunningSelectQueryMsgColor, FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                TextBlock exceptionAdditionMsg = new() { Text = $"{Constants.ExceptionAdditionMessage}", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqExceptionAdditionMsgColor), FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                TextBlock NothingSelectedResult = new() { Text = Constants.NoActiveDocument, Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqRunningSelectQueryMsgColor), FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                 TextBlock exceptionResult = null;
                 Line line = new() { Margin = new Thickness(0, 0, 0, 20) };
                 if (docView?.TextView == null)
@@ -418,7 +419,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                 }
                 if (docView.TextView.Selection != null && !docView.TextView.Selection.IsEmpty)
                 {
-                    runningQueryResult = new() { Text = $"{Constants.RunningSelectQuery}\r\n", Foreground = LinqAdvancedOptions.Instance.LinqRunningSelectQueryMsgColor, FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                    runningQueryResult = new() { Text = $"{Constants.RunningSelectQuery}\r\n", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqRunningSelectQueryMsgColor), FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                     LinqPadResults.Children.Add(runningQueryResult);
                     string currentSelection = null;
                     string tempQueryPath = null;
@@ -517,7 +518,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                     }
                     catch (Exception ex)
                     {
-                        exceptionResult = new() { Text = $"{ex.Message}\r\n", Foreground = LinqAdvancedOptions.Instance.LinqResultsColor, FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                        exceptionResult = new() { Text = $"{ex.Message}\r\n", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqResultsColor), FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                         LinqPadResults.Children.Add(exceptionResult);
                         LinqPadResults.Children.Add(exceptionAdditionMsg);
                     }

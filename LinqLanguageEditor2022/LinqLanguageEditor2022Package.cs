@@ -6,18 +6,20 @@ global using Microsoft.VisualStudio.Shell;
 
 global using Task = System.Threading.Tasks.Task;
 
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Windows.Media;
 
 using LinqLanguageEditor2022.LinqEditor;
 using LinqLanguageEditor2022.Options;
 using LinqLanguageEditor2022.ToolWindows;
 
 using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Settings;
 using Microsoft.VisualStudio.Shell.Interop;
-
-
+using Microsoft.VisualStudio.Shell.Settings;
 namespace LinqLanguageEditor2022
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
@@ -33,6 +35,8 @@ namespace LinqLanguageEditor2022
 
     [ProvideLanguageService(typeof(LinqLanguageFactory), Constants.LinqLanguageName, 0, ShowHotURLs = false, DefaultToNonHotURLs = true, EnableLineNumbers = true, EnableAsyncCompletion = true, EnableCommenting = true, ShowCompletion = true, AutoOutlining = true, CodeSense = true)]
     [ProvideLanguageEditorOptionPage(typeof(LinqAdvancedOptionPage), Constants.LinqLanguageName, "", Constants.LinqAdvancedOptionPage, null, 0)]
+    [ProvideProfile(typeof(LinqAdvancedOptionPage), Constants.LinqLanguageName, Constants.LinqAdvancedOptionPage, 0, 0, true)]
+
     [ProvideLanguageExtension(typeof(LinqLanguageFactory), Constants.LinqExt)]
     [ProvideEditorFactory(typeof(LinqLanguageFactory), 740, CommonPhysicalViewAttributes = (int)__VSPHYSICALVIEWATTRIBUTES.PVA_SupportsPreview, TrustLevel = __VSEDITORTRUSTLEVEL.ETL_AlwaysTrusted)]
     [ProvideEditorExtension(typeof(LinqLanguageFactory), Constants.LinqExt, 65536, NameResourceID = 740)]
@@ -47,6 +51,34 @@ namespace LinqLanguageEditor2022
 
             AddService(typeof(LinqToolWindowMessenger), (_, _, _) => Task.FromResult<object>(new LinqToolWindowMessenger()));
             ((IServiceContainer)this).AddService(typeof(LinqLanguageFactory), LinqLanguageEditor2022, true);
+
+            LinqAdvancedOptions linqAdvancedOptions = await LinqAdvancedOptions.GetLiveInstanceAsync();
+
+            if (linqAdvancedOptions.LinqResultsColor != null || linqAdvancedOptions.LinqResultsColor != "")
+            {
+                //Settings Store Values to load.
+                await linqAdvancedOptions.LoadAsync();
+                LinqAdvancedOptions.Instance.OpenInVSPreviewTab = linqAdvancedOptions.OpenInVSPreviewTab;
+                LinqAdvancedOptions.Instance.EnableToolWindowResults = linqAdvancedOptions.EnableToolWindowResults;
+                LinqAdvancedOptions.Instance.LinqCodeResultsColor = linqAdvancedOptions.LinqCodeResultsColor;
+                LinqAdvancedOptions.Instance.LinqResultsColor = linqAdvancedOptions.LinqResultsColor;
+                LinqAdvancedOptions.Instance.LinqResultsEqualMsgColor = linqAdvancedOptions.LinqResultsEqualMsgColor;
+                LinqAdvancedOptions.Instance.LinqRunningSelectQueryMsgColor = linqAdvancedOptions.LinqRunningSelectQueryMsgColor;
+                LinqAdvancedOptions.Instance.LinqExceptionAdditionMsgColor = linqAdvancedOptions.LinqExceptionAdditionMsgColor;
+                await LinqAdvancedOptions.Instance.SaveAsync();
+            }
+            else
+            {
+                //Default Values to save to Settings Store.
+                linqAdvancedOptions.EnableToolWindowResults = true;
+                linqAdvancedOptions.OpenInVSPreviewTab = true;
+                linqAdvancedOptions.LinqRunningSelectQueryMsgColor = "LightBlue";
+                linqAdvancedOptions.LinqResultsColor = "Yellow";
+                linqAdvancedOptions.LinqCodeResultsColor = "LightGreen";
+                linqAdvancedOptions.LinqResultsEqualMsgColor = "LightBlue";
+                linqAdvancedOptions.LinqExceptionAdditionMsgColor = "Red";
+                await linqAdvancedOptions.SaveAsync();
+            }
 
             await this.RegisterCommandsAsync();
 

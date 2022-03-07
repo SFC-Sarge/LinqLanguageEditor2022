@@ -47,7 +47,10 @@
   <ItemGroup>
     <Compile Include="Commands\LinqPadMethod.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Converters\SystemColorToSolidBrushConverter.cs" />
+    <Compile Include="Extensions\LinqEnumExtensions.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
+    <Compile Include="Extensions\WPFExtensions.cs" />
     <Compile Include="LinqEditor\LinqEditorFeatures.cs" />
     <Compile Include="LinqEditor\LinqEditorLightBulb.cs" />
     <Compile Include="LinqEditor\LinqLanguageFactory.cs" />
