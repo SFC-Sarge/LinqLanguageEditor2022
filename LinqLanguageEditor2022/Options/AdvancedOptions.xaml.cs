@@ -39,10 +39,11 @@ namespace LinqLanguageEditor2022.Options
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                 //Update Values in the Settings Store.
                 LinqAdvancedOptions linqAdvancedOptions = await LinqAdvancedOptions.GetLiveInstanceAsync();
-                if (linqAdvancedOptions.LinqResultsColor != null || linqAdvancedOptions.LinqResultsColor != "")
+                await linqAdvancedOptions.LoadAsync();
+                //Console.WriteLine(linqAdvancedOptions.LinqResultsColor.ToString());
+                if (linqAdvancedOptions.LinqResultsColor.ToString() != "")
                 {
                     //Settings Store Values to load.
-                    await linqAdvancedOptions.LoadAsync();
                     cbOpenInVSPreviewTab.IsChecked = linqAdvancedOptions.OpenInVSPreviewTab;
                     cbEnableToolWindowResults.IsChecked = linqAdvancedOptions.EnableToolWindowResults;
                     cmbResultCodeColor.SelectedIndex = LinqEnumExtensions.EnumIndexFromString<ResultsColorOptions>(linqAdvancedOptions.LinqCodeResultsColor);

@@ -54,10 +54,11 @@ namespace LinqLanguageEditor2022
 
             LinqAdvancedOptions linqAdvancedOptions = await LinqAdvancedOptions.GetLiveInstanceAsync();
 
-            if (linqAdvancedOptions.LinqResultsColor != null || linqAdvancedOptions.LinqResultsColor != "")
+            await linqAdvancedOptions.LoadAsync();
+            //Console.WriteLine(linqAdvancedOptions.LinqResultsColor.ToString());
+            if (linqAdvancedOptions.LinqResultsColor.ToString() != "")
             {
                 //Settings Store Values to load.
-                await linqAdvancedOptions.LoadAsync();
                 LinqAdvancedOptions.Instance.OpenInVSPreviewTab = linqAdvancedOptions.OpenInVSPreviewTab;
                 LinqAdvancedOptions.Instance.EnableToolWindowResults = linqAdvancedOptions.EnableToolWindowResults;
                 LinqAdvancedOptions.Instance.LinqCodeResultsColor = linqAdvancedOptions.LinqCodeResultsColor;
