@@ -1,11 +1,7 @@
-﻿
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace LinqLanguageEditor2022.ToolWindows
 {
-    /// <summary>
-    /// Interaction logic for RadioListBox.xaml
-    /// </summary>
     public partial class RadioListBox : ListBox
     {
         public RadioListBox()
@@ -27,20 +23,13 @@ namespace LinqLanguageEditor2022.ToolWindows
             }
         }
 
-        //private void ItemRadioClick(object sender, RoutedEventArgs e)
-        //{
-        //    ListBoxItem sel = (e.Source as RadioButton).TemplatedParent as ListBoxItem;
-        //    int newIndex = this.ItemContainerGenerator.IndexFromContainer(sel); ;
-        //    this.SelectedIndex = newIndex;
-        //}
+        protected override void OnSelectionChanged(System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            base.OnSelectionChanged(e);
 
-        //protected override void OnSelectionChanged(SelectionChangedEventArgs e)
-        //{
-        //    base.OnSelectionChanged(e);
-
-        //    CheckRadioButtons(e.RemovedItems, false);
-        //    CheckRadioButtons(e.AddedItems, true);
-        //}
+            CheckRadioButtons(e.RemovedItems, false);
+            CheckRadioButtons(e.AddedItems, true);
+        }
 
         private void CheckRadioButtons(System.Collections.IList radioButtons, bool isChecked)
         {
@@ -59,6 +48,9 @@ namespace LinqLanguageEditor2022.ToolWindows
 
         private void ItemRadioClick(object sender, System.Windows.RoutedEventArgs e)
         {
+            ListBoxItem sel = (e.Source as RadioButton).TemplatedParent as ListBoxItem;
+            int newIndex = this.ItemContainerGenerator.IndexFromContainer(sel); ;
+            this.SelectedIndex = newIndex;
 
         }
     }

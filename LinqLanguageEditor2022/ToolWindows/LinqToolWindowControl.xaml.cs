@@ -392,7 +392,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                     LinqPadResults.Children.Add(exceptionResult);
                     LinqPadResults.Children.Add(exceptionAdditionMsg);
                     bool resultVarableFound = false;
-                    //TODO: Add variables to list and let user select result variable they want.
+
                     foreach (var resultVariable in result.Variables)
                     {
                         Debug.WriteLine($"{resultVariable.Name} = {resultVariable.Value}\r\n of type {resultVariable.Type}");
@@ -406,6 +406,10 @@ namespace LinqLanguageEditor2022.ToolWindows
                         ResultDialogWindow resultDialogWindow = new ResultDialogWindow();
                         resultDialogWindow.Visibility = Visibility.Visible;
                         resultDialogWindow.Topmost = true;
+                        foreach (var resultVariable in result.Variables)
+                        {
+                            resultDialogWindow.ResultsVar += $"{resultVariable.Name},";
+                        }
                         var myResult = resultDialogWindow.ShowDialog();
                         if ((bool)myResult)
                         {

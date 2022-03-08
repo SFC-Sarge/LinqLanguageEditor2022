@@ -18,16 +18,17 @@
                         SizeToContent="WidthAndHeight"
                         ResizeMode="NoResize"
                         ShowInTaskbar="False"
-                        WindowStartupLocation="CenterOwner"  >
+                        WindowStartupLocation="CenterOwner" Loaded="DialogWindow_Loaded"  >
     <Grid Margin="10">
         <Grid.Resources>
             <!-- Default settings for controls -->
+            <!-- Margin is Left, Top, Right and Bottom-->
             <Style TargetType="{x:Type TextBlock}">
-                <Setter Property="Margin" Value="0,3,5,5" />
-                <Setter Property="Padding" Value="0,0,0,5" />
+                <Setter Property="Margin" Value="0,3,5,10" />
+                <Setter Property="Padding" Value="0,0,0,10" />
             </Style>
             <Style TargetType="{x:Type ListBox}">
-                <Setter Property="Margin" Value="0,0,0,5" />
+                <Setter Property="Margin" Value="0,10,0,10" />
             </Style>
             <Style TargetType="{x:Type Button}">
                 <Setter Property="Width" Value="70" />
@@ -45,14 +46,12 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <!-- Left,Top,Right,Bottom margins-->
         <TextBlock x:Name="tbResultChange" Grid.Column="0" Grid.Row="0" Text="Select LINQ Query Result Variable!"></TextBlock>
-        <TextBlock Grid.Column="0" Grid.Row="1" Text="Result Variable:"></TextBlock>
-        <rlb:RadioListBox Grid.Column="1" Grid.Row="1" SelectionChanged="RadioListBox_SelectionChanged"
+        <TextBlock x:Name="CurrentSelection" Grid.Column="0" Grid.Row="1" Text="Select a LINQ Query Result Variable to use:"></TextBlock>
+        <rlb:RadioListBox Grid.Column="0" Grid.Row="2" SelectionChanged="RadioListBox_SelectionChanged"
             x:Name="RadioListBox1" VerticalAlignment="Top" HorizontalAlignment="Left" >
         </rlb:RadioListBox>
 
