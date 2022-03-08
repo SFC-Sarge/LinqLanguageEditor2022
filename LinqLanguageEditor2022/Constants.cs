@@ -32,7 +32,6 @@
         public const string LinqQueryTextHeader = "Selected LINQ Query:";
         public const string PaneGuid = "A938BB26-03F8-4861-B920-6792A7D4F07C";
 
-
         //Package Class
         public const string ProvideFileIcon = "KnownMonikers.RegistrationScript";
         public const string ProvideMenuResource = "Menus.ctmenu";
@@ -45,6 +44,7 @@
         //Default LINQ Result Variable Name:
         public const string LinqResultText = "result";
         public const string LinqResultMessageText = "Select LINQ Results Variable to Return";
+        public const string LinqResultVarMessageText = "was not found!\r\nWould you like to Select a different LINQ Query return variable from the Selected LINQ Query?";
 
         //Where to Open Editor
         public const string LinqEditorOpenPreviewTabMessage = "Open Linq Query and result in Visual Studio Preview Tab";
@@ -73,5 +73,7 @@
         public const string ProjectInclude = "Include";
         public const string ProjectNone = "None";
 
+        //MsgDialog Settings:
+        public const string ResultVarChangeMsg = "The default LINQ result variable does not exist in the selected LINQ Query!\r\nPlease select a LINQ result variable that exists in the selected LINQ Query from the list below.\r\nThen click the [OK] button to run the selected LINQ Query again.";
     }
 }

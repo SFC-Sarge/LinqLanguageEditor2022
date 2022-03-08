@@ -26,7 +26,7 @@ namespace LinqLanguageEditor2022.Options
             cmbRunningQueryMsgColor.ItemsSource = typeof(Brushes).GetProperties();
             cmbExceptionAdditionMsgColor.ItemsSource = typeof(Brushes).GetProperties();
             cmbResultsEqualMsgColor.ItemsSource = typeof(Brushes).GetProperties();
-            linqResultVariableText.Text = Constants.LinqResultText;
+            LinqResultsText.Text = Constants.LinqResultMessageText;
             advanceOptionText.Text = Constants.AdvanceOptionText;
             tbResultCodeColor.Text = Constants.ResultsCodeTextColor;
             tbResultColor.Text = Constants.ResultColor;
@@ -188,6 +188,20 @@ namespace LinqLanguageEditor2022.Options
                 await linqAdvancedOptions.SaveAsync();
             }).FireAndForget();
         }
+        private void linqResultVariableText_SelectionChanged(object sender, System.Windows.RoutedEventArgs e)
+        {
+            ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+            {
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                LinqAdvancedOptions.Instance.LinqResultText = ((TextBox)e.Source).Text;
+                await LinqAdvancedOptions.Instance.SaveAsync();
+                //Update Values in the Settings Store.
+                LinqAdvancedOptions linqAdvancedOptions = await LinqAdvancedOptions.GetLiveInstanceAsync();
+                linqAdvancedOptions.LinqResultText = ((TextBox)e.Source).Text;
+                await linqAdvancedOptions.SaveAsync();
+            }).FireAndForget();
+        }
+
         public enum ResultsColorOptions
         {
             [Description("#FFF0F8FF")]
@@ -472,6 +486,20 @@ namespace LinqLanguageEditor2022.Options
             Yellow = 139,
             [Description("#FF9ACD32")]
             YellowGreen = 140,
+        }
+
+        private void linqResultVariableText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+            {
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                LinqAdvancedOptions.Instance.LinqResultText = ((TextBox)e.Source).Text;
+                await LinqAdvancedOptions.Instance.SaveAsync();
+                //Update Values in the Settings Store.
+                LinqAdvancedOptions linqAdvancedOptions = await LinqAdvancedOptions.GetLiveInstanceAsync();
+                linqAdvancedOptions.LinqResultText = ((TextBox)e.Source).Text;
+                await linqAdvancedOptions.SaveAsync();
+            }).FireAndForget();
         }
     }
 }

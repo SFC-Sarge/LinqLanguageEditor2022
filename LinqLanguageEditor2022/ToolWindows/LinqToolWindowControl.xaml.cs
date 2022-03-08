@@ -22,7 +22,6 @@ using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TextManager.Interop;
 
-using static LinqLanguageEditor2022.ToolWindows.LinqToolWindowControl;
 
 using Path = System.IO.Path;
 using Project = Community.VisualStudio.Toolkit.Project;
@@ -91,7 +90,7 @@ namespace LinqLanguageEditor2022.ToolWindows
             IVsTextView nativeView = VsShellUtilities.GetTextView(frame);
             return await nativeView.ToDocumentViewAsync();
         }
-        public async Task RunLinqQueriesAsync(string modifiedSelection)
+        public async Task RunLinqQueriesAsync(string modifiedSelection, string resultVar)
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
@@ -101,6 +100,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                 TextBlock runningQueryResult = null;
                 TextBlock exceptionResult = null;
                 TextBlock exceptionAdditionMsg = new() { Text = $"{Constants.ExceptionAdditionMessage}", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqExceptionAdditionMsgColor), FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
+                //TextBlock resultVarNotFound = null;
                 TextBlock queryResultMsg = null;
                 TextBlock queryResults = null;
                 TextBlock queryResultEquals = new() { Text = $"{Constants.LinqQueryEquals}", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqResultsEqualMsgColor), FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
@@ -109,6 +109,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                 Line line = new() { Margin = new Thickness(0, 0, 0, 20) };
                 runningQueryResult = new() { Text = $"{Constants.RunningSelectQuery}\r\n", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqRunningSelectQueryMsgColor), FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                 LinqPadResults.Children.Add(runningQueryResult);
+                ScriptState result = null;
                 try
                 {
                     var systemLinqEnumerable = typeof(System.Linq.Enumerable).Assembly;
@@ -124,16 +125,14 @@ namespace LinqLanguageEditor2022.ToolWindows
                             .AddReferences(systemLinqEnumerable)
                             .AddReferences(systemLinqQueryable)
                             .AddReferences(systemDiagnostics));
-                    var result = await script.RunAsync();
+                    result = await script.RunAsync();
                     var allVariables = result.Variables;
-                    var variable = allVariables.Where(n => n.Name == Constants.LinqResultText);
-                    foreach (var variable1 in result.Variables)
-                        Debug.WriteLine($"{variable1.Name} = {variable1.Value}\r\n of type {variable1.Type}");
+                    var variable = allVariables.Where(n => n.Name == resultVar);
                     string tempResults = String.Empty;
 
-                    if (variable.First().Name == Constants.LinqResultText)
+                    if (variable.First().Name == resultVar)
                     {
-                        var returnValue = result.GetVariable(Constants.LinqResultText).Value;
+                        var returnValue = result.GetVariable(resultVar).Value;
                         var myType = returnValue.GetType();
 
                         queryResultMsg = new() { Text = $"{result.Script.Code}", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqCodeResultsColor), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
@@ -143,7 +142,7 @@ namespace LinqLanguageEditor2022.ToolWindows
 
                         if (myType == typeof(int) || myType == typeof(string) || myType == typeof(bool) || myType == typeof(float) || myType == typeof(double))
                         {
-                            tempResults = $"{result.GetVariable(Constants.LinqResultText).Value}";
+                            tempResults = $"{result.GetVariable(resultVar).Value}";
                         }
                         else if (myType == typeof(string[]))
                         {
@@ -392,6 +391,31 @@ namespace LinqLanguageEditor2022.ToolWindows
                     exceptionResult = new() { Text = $"{ex.Message}\r\n", Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(LinqAdvancedOptions.Instance.LinqExceptionAdditionMsgColor), FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 5) };
                     LinqPadResults.Children.Add(exceptionResult);
                     LinqPadResults.Children.Add(exceptionAdditionMsg);
+                    bool resultVarableFound = false;
+                    //TODO: Add variables to list and let user select result variable they want.
+                    foreach (var resultVariable in result.Variables)
+                    {
+                        Debug.WriteLine($"{resultVariable.Name} = {resultVariable.Value}\r\n of type {resultVariable.Type}");
+                        if (resultVariable.Name == resultVar)
+                        {
+                            resultVarableFound = true;
+                        }
+                    }
+                    if (!resultVarableFound)
+                    {
+                        ResultDialogWindow resultDialogWindow = new ResultDialogWindow();
+                        resultDialogWindow.Visibility = Visibility.Visible;
+                        resultDialogWindow.Topmost = true;
+                        var myResult = resultDialogWindow.ShowDialog();
+                        if ((bool)myResult)
+                        {
+                            await RunLinqQueriesAsync(modifiedSelection, TempResultVar.ResultVar);
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
                 }
             }).FireAndForget();
 
@@ -484,7 +508,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                                         CurrentLinqMode = LinqType.Statement;
                                         modifiedSelection = currentSelection;
                                     }
-                                    await RunLinqQueriesAsync(modifiedSelection);
+                                    await RunLinqQueriesAsync(modifiedSelection, LinqAdvancedOptions.Instance.LinqResultText);
                                 }
                                 if (CurrentLinqMode == LinqType.Statement)
                                 {

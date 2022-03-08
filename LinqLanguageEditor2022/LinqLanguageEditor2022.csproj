@@ -51,6 +51,13 @@
     <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="LinqEditor\LinqEditorFeatures.cs" />
     <Compile Include="LinqEditor\LinqLanguageFactory.cs" />
+    <Compile Include="ToolWindows\RadioListBox.xaml.cs">
+      <DependentUpon>RadioListBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ToolWindows\ResultDialogViewModel.cs" />
+    <Compile Include="ToolWindows\ResultDialogWindow.xaml.cs">
+      <DependentUpon>ResultDialogWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Options\AdvancedOptions.xaml.cs">
       <DependentUpon>AdvancedOptions.xaml</DependentUpon>
     </Compile>
@@ -68,6 +75,7 @@
       <DependentUpon>source.extension.vsixmanifest</DependentUpon>
     </Compile>
     <Compile Include="LinqToolWindowMessenger.cs" />
+    <Compile Include="TempResultVar.cs" />
     <Compile Include="VSCommandTable.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -98,6 +106,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ToolWindows\LinqToolWindow.cs" />
+    <Page Include="ToolWindows\RadioListBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ToolWindows\ResultDialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Options\AdvancedOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

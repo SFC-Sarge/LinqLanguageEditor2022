@@ -60,7 +60,6 @@ namespace LinqLanguageEditor2022
             }
             catch (NullReferenceException)
             {
-
                 settingsStoreHasValues = false;
             }
             if (settingsStoreHasValues)
