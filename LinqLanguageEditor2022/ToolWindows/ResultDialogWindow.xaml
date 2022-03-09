@@ -12,7 +12,6 @@
                         Height="400"
                         d:DesignHeight="600"
                         d:DesignWidth="400"
-                        Closing="Window_Closing"
                         MinHeight="200"
                         MinWidth="300"
                         SizeToContent="WidthAndHeight"
@@ -46,12 +45,14 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <!-- Left,Top,Right,Bottom margins-->
-        <TextBlock x:Name="tbResultChange" Grid.Column="0" Grid.Row="0" Text="Select LINQ Query Result Variable!"></TextBlock>
-        <TextBlock x:Name="CurrentSelection" Grid.Column="0" Grid.Row="1" Text="Select a LINQ Query Result Variable to use:"></TextBlock>
-        <rlb:RadioListBox Grid.Column="0" Grid.Row="2" SelectionChanged="RadioListBox_SelectionChanged"
+        <TextBlock x:Name="tbResultDialgoTitle" Grid.Column="0" Grid.Row="0" Text="Selected Result LINQ Query Variable Not Found!" Foreground="Red" FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" ></TextBlock>
+        <TextBlock x:Name="tbResultChange" Grid.Column="0" Grid.Row="1" Text="Selected Result LINQ Query Variable Not Found!" ></TextBlock>
+        <TextBlock x:Name="CurrentSelection" Grid.Column="0" Grid.Row="2" Text="Select a LINQ Query Result Variable to use:"></TextBlock>
+        <rlb:RadioListBox Grid.Column="0" Grid.Row="3" SelectionChanged="RadioListBox_SelectionChanged"
             x:Name="RadioListBox1" VerticalAlignment="Top" HorizontalAlignment="Left" >
         </rlb:RadioListBox>
 

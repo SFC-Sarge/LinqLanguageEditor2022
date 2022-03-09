@@ -7,7 +7,6 @@ namespace LinqLanguageEditor2022.ToolWindows
         public RadioListBox()
         {
             InitializeComponent();
-
             SelectionMode = SelectionMode.Single;
         }
 
@@ -26,7 +25,6 @@ namespace LinqLanguageEditor2022.ToolWindows
         protected override void OnSelectionChanged(System.Windows.Controls.SelectionChangedEventArgs e)
         {
             base.OnSelectionChanged(e);
-
             CheckRadioButtons(e.RemovedItems, false);
             CheckRadioButtons(e.AddedItems, true);
         }
@@ -39,7 +37,7 @@ namespace LinqLanguageEditor2022.ToolWindows
 
                 if (lbi != null)
                 {
-                    RadioButton radio = lbi.Template.FindName("radio", lbi) as RadioButton;
+                    RadioButton radio = lbi.Template.FindName(Constants.RadioButtonName, lbi) as RadioButton;
                     if (radio != null)
                         radio.IsChecked = isChecked;
                 }
@@ -51,7 +49,6 @@ namespace LinqLanguageEditor2022.ToolWindows
             ListBoxItem sel = (e.Source as RadioButton).TemplatedParent as ListBoxItem;
             int newIndex = this.ItemContainerGenerator.IndexFromContainer(sel); ;
             this.SelectedIndex = newIndex;
-
         }
     }
 }

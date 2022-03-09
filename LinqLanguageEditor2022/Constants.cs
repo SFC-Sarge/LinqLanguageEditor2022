@@ -23,6 +23,9 @@
         public const string RunningSelectQueryMethod = "Running Selected LINQ Query Method.\r\n\r\nPlease Wait!";
         public const string ExceptionAdditionMessage = "Try Selecting the complete LINQ Query code line or the entire LINQ Query Method code block!";
         public const string RunSelectedLinqMethod = "Run Selected LINQ Query Statement or Method.";
+        public const string CurrentLinqMethodSupport = "Selected LINQ Query is not supported yet!";
+        public const string SelectResultVariableNotFound = "Result Variable for LINQ Query not found!";
+        public const string CompilaitonFailure = "LINQ Query Compilation Failure!";
         public const string LinqQueryEquals = "Current Selected LINQ Query Results: =";
 
         //ToolWindow Names
@@ -63,6 +66,13 @@
         public const string LinqResultsColor = "Yellow";
         public const string LinqExceptionAdditionMsgColor = "Red";
 
+        //CScriptImports
+        public const string SystemImport = "System";
+        public const string SystemLinqImport = $"{SystemImport}.Linq";
+        public const string SystemCollectionsImport = $"{SystemImport}.Collections";
+        public const string SystemCollectionsGenericImports = $"{SystemCollectionsImport}.Generic";
+        public const string SystemDiagnosticsImports = $"{SystemImport}.Diagnostics";
+
         //Options Settings:
         public const string OptionCategoryResults = "Results";
         public const string LinqAdvancedOptionPageGuid = "05F5CC22-0DF4-4D38-9B25-F54AAF567201";
@@ -74,6 +84,7 @@
         public const string ProjectNone = "None";
 
         //MsgDialog Settings:
-        public const string ResultVarChangeMsg = "The default LINQ result variable does not exist in the selected LINQ Query!\r\nPlease select a LINQ result variable that exists in the selected LINQ Query from the list below.\r\nThen click the [OK] button to run the selected LINQ Query again.";
+        public const string ResultVarChangeMsg = "The current default LINQ result variable does not exist in this selected LINQ Query!\r\n\r\nPlease select a LINQ result variable that exists in the selected LINQ Query from the list below.\r\n\r\nThen click the [OK] button to run the selected LINQ Query again.";
+        public const string RadioButtonName = "radio";
     }
 }

@@ -7,15 +7,11 @@ namespace LinqLanguageEditor2022.ToolWindows
 {
     public partial class ResultDialogWindow : DialogWindow
     {
-        public string ResultsVar = null;
+        public string ResultsVar { get; set; } = null;
         public ResultDialogWindow()
         {
             InitializeComponent();
             tbResultChange.Text = Constants.ResultVarChangeMsg;
-        }
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
         }
 
         private void okButton_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -27,6 +23,7 @@ namespace LinqLanguageEditor2022.ToolWindows
 
         private void cancelButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            TempResultVar.ResultVar = Constants.LinqResultText;
             DialogResult = false;
             Close();
         }
@@ -45,7 +42,6 @@ namespace LinqLanguageEditor2022.ToolWindows
                 ResultsVar = ResultsVar.Trim().Substring(0, ResultsVar.Length - 1);
             }
             RadioListBox1.ItemsSource = ResultsVar.Split(',');
-
         }
     }
 }

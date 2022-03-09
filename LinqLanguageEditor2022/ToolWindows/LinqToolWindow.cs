@@ -58,7 +58,6 @@ namespace LinqLanguageEditor2022.ToolWindows
                         var activeItem = await VS.Solutions.GetActiveItemAsync();
                         if (activeItem != null)
                         {
-                            //((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterFirstDocumentLock: {activeItem.Name}");
                         }
                     }
                     catch (Exception)
@@ -76,7 +75,6 @@ namespace LinqLanguageEditor2022.ToolWindows
                         var activeItem = await VS.Solutions.GetActiveItemAsync();
                         if (activeItem != null)
                         {
-                            //((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnBeforeLastDocumentUnlock: {activeItem.Name}");
                         }
                     }
                     catch (Exception)
@@ -94,7 +92,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         var activeItem = await VS.Solutions.GetActiveItemAsync();
                         if (activeItem != null)
                         {
-                            //((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterSave: {activeItem.Name}");
+
                         }
                     }
                     catch (Exception)

@@ -54,7 +54,6 @@
     <Compile Include="ToolWindows\RadioListBox.xaml.cs">
       <DependentUpon>RadioListBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ToolWindows\ResultDialogViewModel.cs" />
     <Compile Include="ToolWindows\ResultDialogWindow.xaml.cs">
       <DependentUpon>ResultDialogWindow.xaml</DependentUpon>
     </Compile>
