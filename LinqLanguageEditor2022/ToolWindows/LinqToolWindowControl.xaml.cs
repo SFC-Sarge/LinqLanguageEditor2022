@@ -53,7 +53,6 @@ namespace LinqLanguageEditor2022.ToolWindows
         public enum LinqType
         {
             None = 0,
-            //Statement
             Statement = 1,
             Method = 2,
         }
@@ -141,32 +140,31 @@ namespace LinqLanguageEditor2022.ToolWindows
                                         modifiedSelection = modifiedSelection.Substring(0, lastIndexBrace);
                                         if (modifiedSelection.EndsWith("\r\n}\r\n}\r\n"))
                                         {
-                                            modifiedSelection = modifiedSelection.Substring(0, modifiedSelection.Length - "\r\n}\r\n}\r\n".Length);
+                                            modifiedSelection = modifiedSelection.TrimSuffix("\r\n}\r\n}\r\n");
                                         }
                                         if (modifiedSelection.EndsWith("\r\n}\r\n"))
                                         {
-                                            modifiedSelection = modifiedSelection.Substring(0, modifiedSelection.Length - "\r\n}\r\n".Length);
+                                            modifiedSelection = modifiedSelection.TrimSuffix("\r\n}\r\n");
                                         }
                                         if (modifiedSelection.EndsWith("\r\n\t\t}\r\n\t"))
                                         {
-                                            modifiedSelection = modifiedSelection.Substring(0, modifiedSelection.Length - "\r\n\t\t}\r\n\t".Length);
+                                            modifiedSelection = modifiedSelection.TrimSuffix("\r\n\t\t}\r\n\t");
                                         }
                                         if (modifiedSelection.EndsWith("\r\n\t\t"))
                                         {
-                                            modifiedSelection = modifiedSelection.Substring(0, modifiedSelection.Length - "\r\n\t\t".Length);
+                                            modifiedSelection = modifiedSelection.TrimSuffix("\r\n\t\t");
+                                        }
+                                        if (modifiedSelection.EndsWith("\r\n\t\t}"))
+                                        {
+                                            modifiedSelection = modifiedSelection.TrimSuffix("\r\n\t\t}");
                                         }
                                         if (modifiedSelection.EndsWith("\r\n"))
-                                            if (modifiedSelection.EndsWith("\r\n\t\t}"))
-                                            {
-                                                modifiedSelection = modifiedSelection.Substring(0, modifiedSelection.Length - "\r\n\t\t}".Length);
-                                            }
-                                        if (modifiedSelection.EndsWith("\r\n"))
                                         {
-                                            modifiedSelection = modifiedSelection.Substring(0, modifiedSelection.Length - "\r\n".Length);
+                                            modifiedSelection = modifiedSelection.TrimSuffix("\r\n");
                                         }
                                         if (modifiedSelection.StartsWith("\r\n"))
                                         {
-                                            modifiedSelection = modifiedSelection.Substring("\r\n".Length, modifiedSelection.Length - "\r\n".Length);
+                                            modifiedSelection = modifiedSelection.TrimPrefix("\r\n");
                                         }
                                         modifiedSelection = modifiedSelection.Trim();
                                         CurrentLinqMode = LinqType.Method;
@@ -177,17 +175,17 @@ namespace LinqLanguageEditor2022.ToolWindows
                                         modifiedSelection = currentSelection.Substring(1);
                                         if (modifiedSelection.StartsWith("\r\n"))
                                         {
-                                            modifiedSelection = modifiedSelection.Substring("\r\n".Length, modifiedSelection.Length - "\r\n".Length);
+                                            modifiedSelection = modifiedSelection.TrimPrefix("\r\n");
                                         }
                                         if (modifiedSelection.EndsWith("\r\n}"))
                                         {
-                                            modifiedSelection = modifiedSelection.Substring(0, modifiedSelection.Length - "\r\n}".Length);
+                                            modifiedSelection = modifiedSelection.TrimSuffix("\r\n}");
                                         }
                                     }
                                     else if (currentSelection.EndsWith("\r\n}"))
                                     {
                                         CurrentLinqMode = LinqType.Statement;
-                                        modifiedSelection = currentSelection.Substring(0, currentSelection.Length - "\r\n}".Length);
+                                        modifiedSelection = modifiedSelection.TrimSuffix("\r\n}");
                                     }
                                     else
                                     {
@@ -522,7 +520,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                         }
                         if (tempResults.EndsWith("\r\n"))
                         {
-                            tempResults = tempResults.Substring(0, tempResults.Length - "\r\n".Length);
+                            tempResults = tempResults.TrimSuffix("\r\n");
                         }
                         tempResults = tempResults.Trim();
                         if (tempResults.Contains("\r\n"))
@@ -663,14 +661,13 @@ namespace LinqLanguageEditor2022.ToolWindows
             string className = Path.GetFileNameWithoutExtension(file);
             if (className.EndsWith(Constants.LinqTmpExt))
             {
-                className = className.Substring(0, className.Length - 4);
+                className = className.TrimSuffix(Constants.LinqTmpExt);
             }
             string titleCase = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(className.ToLower());
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                //LinqPadResults.Children.Clear();
                 currentSelection = currentSelection.Replace("\r\n{", "\r\n\t\t{")
                     .Replace("\r\n//", "\r\n\t\t\t//")
                     .Replace("\r\nvar", "\r\n\t\t\tvar")

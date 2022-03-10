@@ -39,7 +39,7 @@ namespace LinqLanguageEditor2022.ToolWindows
             RadioListBox1.Items.Clear();
             if (ResultsVar.Trim().EndsWith(","))
             {
-                ResultsVar = ResultsVar.Trim().Substring(0, ResultsVar.Length - 1);
+                ResultsVar = ResultsVar.TrimSuffix(",");
             }
             RadioListBox1.ItemsSource = ResultsVar.Split(',');
         }
