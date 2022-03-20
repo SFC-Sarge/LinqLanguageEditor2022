@@ -13,8 +13,10 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
+using LinqLanguageEditor2022.LinqEditor;
 using LinqLanguageEditor2022.Options;
 
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.VisualStudio.PlatformUI;
@@ -264,7 +266,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                     var systemLinqEnumerable = typeof(Enumerable).Assembly;
                     var systemLinqQueryable = typeof(Queryable).Assembly;
                     var systemDiagnostics = typeof(Debug).Assembly;
-
+                    var metadata = MetadataReference.CreateFromFile(typeof(LinqOutlining).Assembly.Location);
                     Script script = CSharpScript.Create(modifiedSelection, ScriptOptions.Default
                             .AddImports(Constants.SystemImport)
                             .AddImports(Constants.SystemLinqImport)
@@ -273,6 +275,7 @@ namespace LinqLanguageEditor2022.ToolWindows
                             .AddImports(Constants.SystemDiagnosticsImports)
                             .AddReferences(systemLinqEnumerable)
                             .AddReferences(systemLinqQueryable)
+                            .AddReferences(metadata)
                             .AddReferences(systemDiagnostics));
                     result = await script.RunAsync();
                     var allVariables = result.Variables;
