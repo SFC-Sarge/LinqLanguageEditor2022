@@ -105,14 +105,4 @@ The above query does not work returns nothing but the script and an empty result
 
 ![Query Statement Results in LinqPad Dump window](https://user-images.githubusercontent.com/67446778/148123386-17154680-8a19-4171-a382-df701d6139f8.png)
 
-
-
-## LPRun7 Info  
-
-[LPRun7](https://www.linqpad.net/)
-
-
-![LPRun7](https://user-images.githubusercontent.com/67446778/148120780-69d97423-63e8-4a08-8638-a9ceb6dd0f39.png)
-
-
 > Note: You must have [Community.VisualStudio.Toolkit](https://github.com/VsixCommunity/Community.VisualStudio.Toolkit) installed for your extension project.
