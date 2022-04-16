@@ -19,8 +19,6 @@ Linq Editor for Visual Studio is a Visual Studio 2022 Extension, that allows dev
 
 >Note: This is not a replacement for [LinqPad](https://www.linqpad.net/), which in my opinon is the best Linq Query builder/tester on the market. I recommend you try LinqPad and then purchase a license for it.
 
-This works by using "LinqPad Launchers for Command-Line Support"! LPRun7-x64.exe runs the query and then returns the script and results of the script to the Visual Studio 2022 Toolwindow called:
-
 ## My Linq Query Tool Window 
 
 ![My Linq Query Tool Window](https://user-images.githubusercontent.com/67446778/148121369-fac645c0-009b-46a6-9db3-516b87e11d1e.png)
@@ -32,36 +30,6 @@ It also currently creates a Output window called:
 
 ![LinqPad Dump](https://user-images.githubusercontent.com/67446778/148121472-8676afc8-faaf-4313-ac5e-1b00da586d46.png)
 
-
-The Toolwindow Toolbar button calls the following using process:
-
-`LPRun7-x64.exe -fx=6.0 (selected query to run)   // Run query under .NET 6.0`
-
-
- ```csharp
-{
-   using Process process = new();
-    process.StartInfo = new ProcessStartInfo()
-    {
-        UseShellExecute = false,
-        CreateNoWindow = true,
-        WindowStyle = ProcessWindowStyle.Hidden,
-        FileName = fileLPRun7,
-        Arguments = $"{fileLPRun7Args} {tempQueryPath}",
-        RedirectStandardError = true,
-        RedirectStandardOutput = true
-    };
-    process.Start();
-    queryResult = await process.StandardOutput.ReadToEndAsync();
-    process.WaitForExit();
-  }
-  ```
-
-
-and returns the query results to the **My Linq Query Tool Window** and **LinqPad Dump** windows.
-
->Important Note: When running a selected Linq Query Statement you must have the value to be returned assigned to "result". This is becuase, I have not been able to determine from a multi-line statement which result you want returned so which ever statement run will only return the "result". 
->i.e. The following code snippet has a result variable: var result. This is the result and get returned, if this is not named result then you will get an empty return value from the Linq Query Statement.
 
 This example works and returns a result.
 
@@ -135,6 +103,15 @@ The above query does not work returns nothing but the script and an empty result
 
 
 ![Query Statement Results in LinqPad Dump window](https://user-images.githubusercontent.com/67446778/148123386-17154680-8a19-4171-a382-df701d6139f8.png)
+
+
+
+## LPRun7 Info  
+
+[LPRun7](https://www.linqpad.net/)
+
+
+![LPRun7](https://user-images.githubusercontent.com/67446778/148120780-69d97423-63e8-4a08-8638-a9ceb6dd0f39.png)
 
 
 > Note: You must have [Community.VisualStudio.Toolkit](https://github.com/VsixCommunity/Community.VisualStudio.Toolkit) installed for your extension project.
