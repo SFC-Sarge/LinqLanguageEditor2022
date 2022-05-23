@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <RestoreSuccess Condition=" '$(RestoreSuccess)' == '' ">True</RestoreSuccess>
+    <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
+    <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>
+    <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\DannyMcNaught\.nuget\packages\;C:\Program Files (x86)\DevExpress 21.2\Components\Offline Packages;C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages;C:\Program Files (x86)\Syncfusion\Essential Studio\WPF\20.1.0.55\ToolboxNuGetPackages</NuGetPackageFolders>
+    <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
+    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">6.2.0</NuGetToolVersion>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <SourceRoot Include="C:\Users\DannyMcNaught\.nuget\packages\" />
+    <SourceRoot Include="C:\Program Files (x86)\DevExpress 21.2\Components\Offline Packages\" />
+    <SourceRoot Include="C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages\" />
+    <SourceRoot Include="C:\Program Files (x86)\Syncfusion\Essential Studio\WPF\20.1.0.55\ToolboxNuGetPackages\" />
+  </ItemGroup>
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)microsoft.codeanalysis.bannedapianalyzers\3.3.2\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.props" Condition="Exists('$(NuGetPackageRoot)microsoft.codeanalysis.bannedapianalyzers\3.3.2\build\Microsoft.CodeAnalysis.BannedApiAnalyzers.props')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.vssdk.buildtools\17.1.4054\build\Microsoft.VSSDK.BuildTools.props" Condition="Exists('$(NuGetPackageRoot)microsoft.vssdk.buildtools\17.1.4054\build\Microsoft.VSSDK.BuildTools.props')" />
+    <Import Project="$(NuGetPackageRoot)community.visualstudio.vsct\16.0.29.6\build\Community.VisualStudio.VSCT.props" Condition="Exists('$(NuGetPackageRoot)community.visualstudio.vsct\16.0.29.6\build\Community.VisualStudio.VSCT.props')" />
+    <Import Project="$(NuGetPackageRoot)community.visualstudio.toolkit.17\17.0.394\build\Community.VisualStudio.Toolkit.17.props" Condition="Exists('$(NuGetPackageRoot)community.visualstudio.toolkit.17\17.0.394\build\Community.VisualStudio.Toolkit.17.props')" />
+  </ImportGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgMicrosoft_VisualStudio_Threading_Analyzers Condition=" '$(PkgMicrosoft_VisualStudio_Threading_Analyzers)' == '' ">C:\Users\DannyMcNaught\.nuget\packages\microsoft.visualstudio.threading.analyzers\17.0.64</PkgMicrosoft_VisualStudio_Threading_Analyzers>
+    <PkgMicrosoft_CodeAnalysis_BannedApiAnalyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_BannedApiAnalyzers)' == '' ">C:\Users\DannyMcNaught\.nuget\packages\microsoft.codeanalysis.bannedapianalyzers\3.3.2</PkgMicrosoft_CodeAnalysis_BannedApiAnalyzers>
+    <PkgMicrosoft_VisualStudio_SDK_Analyzers Condition=" '$(PkgMicrosoft_VisualStudio_SDK_Analyzers)' == '' ">C:\Users\DannyMcNaught\.nuget\packages\microsoft.visualstudio.sdk.analyzers\16.10.10</PkgMicrosoft_VisualStudio_SDK_Analyzers>
+    <PkgMicrosoft_VSSDK_BuildTools Condition=" '$(PkgMicrosoft_VSSDK_BuildTools)' == '' ">C:\Users\DannyMcNaught\.nuget\packages\microsoft.vssdk.buildtools\17.1.4054</PkgMicrosoft_VSSDK_BuildTools>
+    <PkgMicrosoft_CodeAnalysis_Analyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_Analyzers)' == '' ">C:\Users\DannyMcNaught\.nuget\packages\microsoft.codeanalysis.analyzers\3.3.3</PkgMicrosoft_CodeAnalysis_Analyzers>
+    <PkgCommunity_VisualStudio_Toolkit_Analyzers Condition=" '$(PkgCommunity_VisualStudio_Toolkit_Analyzers)' == '' ">C:\Users\DannyMcNaught\.nuget\packages\community.visualstudio.toolkit.analyzers\1.0.394</PkgCommunity_VisualStudio_Toolkit_Analyzers>
+  </PropertyGroup>
+</Project>

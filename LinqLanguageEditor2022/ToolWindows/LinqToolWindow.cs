@@ -58,7 +58,6 @@ namespace LinqLanguageEditor2022.ToolWindows
                         var activeItem = await VS.Solutions.GetActiveItemAsync();
                         if (activeItem != null)
                         {
-                            //Your code here.
                         }
                     }
                     catch (Exception)
@@ -76,13 +75,10 @@ namespace LinqLanguageEditor2022.ToolWindows
                         var activeItem = await VS.Solutions.GetActiveItemAsync();
                         if (activeItem != null)
                         {
-                            //Your coe here.
                         }
                     }
                     catch (Exception)
-                    {
-                        //Your exception code here.
-                    }
+                    { }
                 }).FireAndForget();
                 return VSConstants.S_OK;
             }
@@ -96,13 +92,11 @@ namespace LinqLanguageEditor2022.ToolWindows
                         var activeItem = await VS.Solutions.GetActiveItemAsync();
                         if (activeItem != null)
                         {
-                            //Your code here.
+
                         }
                     }
                     catch (Exception)
-                    {
-                        //Your exception code here.
-                    }
+                    { }
                 }).FireAndForget();
 
                 return VSConstants.S_OK;
@@ -117,13 +111,11 @@ namespace LinqLanguageEditor2022.ToolWindows
                         var activeItem = await VS.Solutions.GetActiveItemAsync();
                         if (activeItem != null)
                         {
-                            //Your code here.
+                            //((LinqToolWindowControl)this.Content).LinqlistBox.Items.Add($"OnAfterAttributeChange: {activeItem.Name}");
                         }
                     }
                     catch (Exception)
-                    {
-                        //Your exception code here.
-                    }
+                    { }
                 }).FireAndForget();
 
                 return VSConstants.S_OK;

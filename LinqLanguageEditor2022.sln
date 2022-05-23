@@ -1,101 +1,30 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.0.32112.339
+VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqLanguageEditor2022", "LinqLanguageEditor2022\LinqLanguageEditor2022.csproj", "{DB8E8034-CAB0-4846-A752-BD9013930DF4}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4DD475F5-9439-463D-9169-2A8BE777D965}"
-	ProjectSection(SolutionItems) = preProject
-		LICENSE = LICENSE
-		README.md = README.md
-		Walkthrough Create Language Editor.md = Walkthrough Create Language Editor.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "media", "media", "{25F65B1A-F0EF-4A3D-9616-CC6BF9F7189B}"
-	ProjectSection(SolutionItems) = preProject
-		media\147e072b8f501c4479f060dea2af8059.jpeg = media\147e072b8f501c4479f060dea2af8059.jpeg
-		media\192bfffef3a2537634f60b770192e177.jpeg = media\192bfffef3a2537634f60b770192e177.jpeg
-		media\1e4af38860c8bf55b16b4887c0491e0f.jpeg = media\1e4af38860c8bf55b16b4887c0491e0f.jpeg
-		media\2f2ccf9bc82dc4ac1c77a9ceee27c1d5.jpeg = media\2f2ccf9bc82dc4ac1c77a9ceee27c1d5.jpeg
-		C:\Users\DannyMcNaught\OneDrive - Computer Question\Documents\media\31880e84106e0cc841b6e0422ca46131.png = C:\Users\DannyMcNaught\OneDrive - Computer Question\Documents\media\31880e84106e0cc841b6e0422ca46131.png
-		media\31880e84106e0cc841b6e0422ca46131.png = media\31880e84106e0cc841b6e0422ca46131.png
-		media\3eb76b93ca1e1d854cf0f403f53d3d36.jpeg = media\3eb76b93ca1e1d854cf0f403f53d3d36.jpeg
-		media\4c0656a20349fad8f8c38b2d5567c5fd.png = media\4c0656a20349fad8f8c38b2d5567c5fd.png
-		media\5432c4336de18482faf48d2b91c89aaf.jpeg = media\5432c4336de18482faf48d2b91c89aaf.jpeg
-		media\5970e54e44dac5c4f5b36b8359791348.jpeg = media\5970e54e44dac5c4f5b36b8359791348.jpeg
-		C:\Users\DannyMcNaught\OneDrive - Computer Question\Documents\media\62f8ccded5d1d0d5b5279bd386ccac37.png = C:\Users\DannyMcNaught\OneDrive - Computer Question\Documents\media\62f8ccded5d1d0d5b5279bd386ccac37.png
-		media\62f8ccded5d1d0d5b5279bd386ccac37.png = media\62f8ccded5d1d0d5b5279bd386ccac37.png
-		media\67eba2f8c13afbcc79da39f618416c88.jpeg = media\67eba2f8c13afbcc79da39f618416c88.jpeg
-		..\VSIXLinqPadForVS\media\7bb60303d0eddd645440cddd9afafb78.png = ..\VSIXLinqPadForVS\media\7bb60303d0eddd645440cddd9afafb78.png
-		media\8cffe1e703de3a72f7913bb55b1113b4.jpeg = media\8cffe1e703de3a72f7913bb55b1113b4.jpeg
-		media\97efe002205b1d849ebb882a73ddda8b.jpeg = media\97efe002205b1d849ebb882a73ddda8b.jpeg
-		media\9b9c5714d309e44777b3dff0291855ad.jpeg = media\9b9c5714d309e44777b3dff0291855ad.jpeg
-		media\AddConstantsFile.png = media\AddConstantsFile.png
-		media\AddExistingLPFile.png = media\AddExistingLPFile.png
-		media\AddLanguageEditorFactory.png = media\AddLanguageEditorFactory.png
-		media\AddNewEmptyFile.png = media\AddNewEmptyFile.png
-		media\AddNewFileExtension.png = media\AddNewFileExtension.png
-		media\b2450046dbd16ad9358e10af86896c19.jpeg = media\b2450046dbd16ad9358e10af86896c19.jpeg
-		C:\Users\DannyMcNaught\OneDrive - Computer Question\Documents\media\c124b315274f77c03410bf4703606152.png = C:\Users\DannyMcNaught\OneDrive - Computer Question\Documents\media\c124b315274f77c03410bf4703606152.png
-		media\c124b315274f77c03410bf4703606152.png = media\c124b315274f77c03410bf4703606152.png
-		media\c4898794fcbe018022ed9505ed868911.png = media\c4898794fcbe018022ed9505ed868911.png
-		media\CommunityProjectToolWindow.png = media\CommunityProjectToolWindow.png
-		media\ConfirmRenameReferences.png = media\ConfirmRenameReferences.png
-		media\ContinueWithoutCode.png = media\ContinueWithoutCode.png
-		media\Create New Project Dialog.png = media\Create New Project Dialog.png
-		media\CreateNewProject.png = media\CreateNewProject.png
-		C:\Users\DannyMcNaught\OneDrive - Computer Question\Documents\media\ddb0b8eff4f290fed90a759f3c72bd88.png = C:\Users\DannyMcNaught\OneDrive - Computer Question\Documents\media\ddb0b8eff4f290fed90a759f3c72bd88.png
-		media\ddb0b8eff4f290fed90a759f3c72bd88.png = media\ddb0b8eff4f290fed90a759f3c72bd88.png
-		media\de5b397887e865e5d17ff637cb2d1604.png = media\de5b397887e865e5d17ff637cb2d1604.png
-		media\DebugToExp.png = media\DebugToExp.png
-		media\Display light bulb suggestions Pic1.png = media\Display light bulb suggestions Pic1.png
-		media\Display light bulb suggestions Pic2.png = media\Display light bulb suggestions Pic2.png
-		media\Display light bulb suggestions Pic3.png = media\Display light bulb suggestions Pic3.png
-		media\Display light bulb suggestions Pic4.png = media\Display light bulb suggestions Pic4.png
-		media\e7e89dc99bf7bc0771aac7c84f1982c4.png = media\e7e89dc99bf7bc0771aac7c84f1982c4.png
-		media\f5f44becac0b33803ab3de58bf47bcf2.png = media\f5f44becac0b33803ab3de58bf47bcf2.png
-		media\f6179e956990e203ffe28057f53c8071.jpeg = media\f6179e956990e203ffe28057f53c8071.jpeg
-		media\FirstBuild.png = media\FirstBuild.png
-		media\IncludeinVSIX.png = media\IncludeinVSIX.png
-		media\LinPad Methods Add.png = media\LinPad Methods Add.png
-		media\LinqPadQueryEditor.png = media\LinqPadQueryEditor.png
-		media\LinqPadStatementsAdd.png = media\LinqPadStatementsAdd.png
-		media\LoadToolWindow.png = media\LoadToolWindow.png
-		media\LPRun7Properties.png = media\LPRun7Properties.png
-		media\MicrosoftCodeAnalysis.png = media\MicrosoftCodeAnalysis.png
-		media\MicrosoftCodeAnalysisCSharp.png = media\MicrosoftCodeAnalysisCSharp.png
-		media\MicrosoftCSharp.png = media\MicrosoftCSharp.png
-		media\NewSolutionExplorer.png = media\NewSolutionExplorer.png
-		media\PreviewRenameApply.png = media\PreviewRenameApply.png
-		media\ProjectName.png = media\ProjectName.png
-		media\QueryStatementResults.png = media\QueryStatementResults.png
-		media\QueryStatementResults2.png = media\QueryStatementResults2.png
-		media\RenameClickApply.png = media\RenameClickApply.png
-		media\RenameMyToolWindow.png = media\RenameMyToolWindow.png
-		media\RunButton.png = media\RunButton.png
-		media\SampleResultsFromSelection.png = media\SampleResultsFromSelection.png
-		media\Sc4898794fcbe018022ed9505ed868911.png = media\Sc4898794fcbe018022ed9505ed868911.png
-		media\SelectFileToAdd.png = media\SelectFileToAdd.png
-		media\SolutionExplorerBaseLine.png = media\SolutionExplorerBaseLine.png
-		media\ToolWindowDisplay.png = media\ToolWindowDisplay.png
-		media\ToolWindowTemplate.png = media\ToolWindowTemplate.png
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DB8E8034-CAB0-4846-A752-BD9013930DF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DB8E8034-CAB0-4846-A752-BD9013930DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB8E8034-CAB0-4846-A752-BD9013930DF4}.Debug|x64.ActiveCfg = Debug|x64
+		{DB8E8034-CAB0-4846-A752-BD9013930DF4}.Debug|x64.Build.0 = Debug|x64
 		{DB8E8034-CAB0-4846-A752-BD9013930DF4}.Debug|x86.ActiveCfg = Debug|x86
 		{DB8E8034-CAB0-4846-A752-BD9013930DF4}.Debug|x86.Build.0 = Debug|x86
 		{DB8E8034-CAB0-4846-A752-BD9013930DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB8E8034-CAB0-4846-A752-BD9013930DF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB8E8034-CAB0-4846-A752-BD9013930DF4}.Release|x64.ActiveCfg = Release|x64
+		{DB8E8034-CAB0-4846-A752-BD9013930DF4}.Release|x64.Build.0 = Release|x64
 		{DB8E8034-CAB0-4846-A752-BD9013930DF4}.Release|x86.ActiveCfg = Release|x86
 		{DB8E8034-CAB0-4846-A752-BD9013930DF4}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
@@ -103,6 +32,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {840065D6-CF2E-43D5-80E9-4066692CBBF0}
+		SolutionGuid = {CE2DB968-B240-4864-881A-C59C0630BA8A}
 	EndGlobalSection
 EndGlobal

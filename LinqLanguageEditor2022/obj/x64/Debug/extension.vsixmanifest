@@ -1,0 +1,24 @@
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011">
+  <Metadata>
+    <Identity Id="LinqLanguageEditor2022.BF208545-2FC0-4EAD-8A40-127D737B9793" Version="1.200" Language="en-US" Publisher="Danny McNaught" />
+    <DisplayName>LinqLanguageEditor2022</DisplayName>
+    <Description xml:space="preserve">Linq Language Editor for Visual Studio 2022</Description>
+    <MoreInfo>https://github.com/SFC-Sarge/LinqLanguageEditor2022</MoreInfo>
+    <GettingStartedGuide>README.html</GettingStartedGuide>
+    <Icon>Resources\LinqIcon.png</Icon>
+    <PreviewImage>Resources\LinqIcon.png</PreviewImage>
+    <Tags>LINQ, Editor, ToolWindow</Tags>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
+      <ProductArchitecture>amd64</ProductArchitecture>
+    </InstallationTarget>
+  </Installation>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" Path="LinqLanguageEditor2022.pkgdef" />
+    <Asset Type="Microsoft.VisualStudio.MefComponent" Path="LinqLanguageEditor2022.dll" TargetVersion="[17.0, 18.0)" />
+  </Assets>
+</PackageManifest>

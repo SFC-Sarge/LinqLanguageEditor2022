@@ -1,7 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Windows.Media;
-
-using Microsoft.VisualStudio.Settings;
 
 namespace LinqLanguageEditor2022.Options
 {

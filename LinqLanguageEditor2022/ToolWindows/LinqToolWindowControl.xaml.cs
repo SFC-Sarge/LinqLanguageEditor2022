@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
+
 using LinqLanguageEditor2022.LinqEditor;
 using LinqLanguageEditor2022.Options;
 
@@ -79,6 +80,8 @@ namespace LinqLanguageEditor2022.ToolWindows
                 LinqPadResults.Children.Clear();
             }).FireAndForget();
         }
+        public string missingNamespace = String.Empty;
+        public string badNamespaceString = "The type or namespace name '";
 
         public async Task<DocumentView> OpenDocumentWithSpecificEditorAsync(string file, Guid editorType, Guid LogicalView)
         {
@@ -373,11 +376,11 @@ namespace LinqLanguageEditor2022.ToolWindows
 
                     {
 
-                        if (ex.Message.Contains("Person"))
+                        if (ex.Message.Contains(badNamespaceString))
 
                         {
 
-                            await RunLinqQueriesAsync(modifiedSelection, LinqAdvancedOptions.Instance.LinqResultText, "Person");
+                            await RunLinqQueriesAsync(modifiedSelection, LinqAdvancedOptions.Instance.LinqResultText, missingNamespace);
 
 
 
@@ -697,6 +700,12 @@ namespace LinqLanguageEditor2022.ToolWindows
                 catch (Exception ex)
                 {
                     bool resultVarableFound = false;
+                    if (ex.Message.Contains(badNamespaceString))
+                    {
+                        var missingNamespace = GetMissingNamespace(ex);
+                        await RunLinqQueriesAsync(modifiedSelection, LinqAdvancedOptions.Instance.LinqResultText, missingNamespace);
+                        return;
+                    }
                     if (result == null)
                     {
                         BadLinqQuerySelection(ex.Message, null);
@@ -748,6 +757,12 @@ namespace LinqLanguageEditor2022.ToolWindows
             }).FireAndForget();
 
         }
+
+        private static string GetMissingNamespace(Exception ex)
+        {
+            return ex.Message.Substring(ex.Message.IndexOf("'") + 1, ex.Message.LastIndexOf("'") - ex.Message.IndexOf("'") - 1);
+        }
+
         public async Task RunLinqQueriesAsync(string modifiedSelection, string resultVar, string dataType)
 
         {
@@ -759,8 +774,8 @@ namespace LinqLanguageEditor2022.ToolWindows
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
 
             {
-
                 Type globalsType = Type.GetType($"Namespace.{dataType}");
+
 
                 LinqPadResults.Children.Clear();
 
@@ -870,13 +885,13 @@ namespace LinqLanguageEditor2022.ToolWindows
 
                             {
 
-                                foreach (var stringArray in stringArrays)
 
-                                {
+                            }
+                            foreach (var stringArray in stringArrays)
 
-                                    tempResults += $"{stringArray}\r\n";
+                            {
 
-                                }
+                                tempResults += $"{stringArray}\r\n";
 
                             }
 

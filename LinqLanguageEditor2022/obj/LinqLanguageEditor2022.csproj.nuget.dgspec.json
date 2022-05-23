@@ -1,0 +1,97 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\DannyMcNaught\\source\\repos\\VSIX Projects\\LinqLanguageEditor2022\\LinqLanguageEditor2022\\LinqLanguageEditor2022.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\DannyMcNaught\\source\\repos\\VSIX Projects\\LinqLanguageEditor2022\\LinqLanguageEditor2022\\LinqLanguageEditor2022.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\DannyMcNaught\\source\\repos\\VSIX Projects\\LinqLanguageEditor2022\\LinqLanguageEditor2022\\LinqLanguageEditor2022.csproj",
+        "projectName": "LinqLanguageEditor2022",
+        "projectPath": "C:\\Users\\DannyMcNaught\\source\\repos\\VSIX Projects\\LinqLanguageEditor2022\\LinqLanguageEditor2022\\LinqLanguageEditor2022.csproj",
+        "packagesPath": "C:\\Users\\DannyMcNaught\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DannyMcNaught\\source\\repos\\VSIX Projects\\LinqLanguageEditor2022\\LinqLanguageEditor2022\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\DevExpress 21.2\\Components\\Offline Packages",
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Syncfusion\\Essential Studio\\WPF\\20.1.0.55\\ToolboxNuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\DannyMcNaught\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 21.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Syncfusion Toolbox for WPF.config"
+        ],
+        "originalTargetFrameworks": [
+          "net48"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\DevExpress 21.2\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files (x86)\\Syncfusion\\Essential Studio\\WinUI\\20.1.0.55\\NuGetPackages": {},
+          "C:\\Users\\DannyMcNaught\\.templateengine\\packages": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.devexpress.com/PoPxc6c6Vj1Jhug427CvDJkAwtDRLsmoCTRdugRfpTf8FR1KxU/api": {}
+        },
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {
+          "dependencies": {
+            "Community.VisualStudio.Toolkit.17": {
+              "include": "Compile, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[17.0.394, )"
+            },
+            "Community.VisualStudio.VSCT": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[16.0.29.6, )"
+            },
+            "Microsoft.CSharp": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "Microsoft.CodeAnalysis": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "Microsoft.CodeAnalysis.CSharp": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "Microsoft.CodeAnalysis.CSharp.Scripting": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "Microsoft.VSSDK.BuildTools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[17.1.4054, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}
